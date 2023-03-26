@@ -35,7 +35,7 @@ import FaqMenu from '../../components/faqMenu/faqMenu';
 import Heading from '../../components/content/heading';
 import ContentImage from '../../components/content/contentImage';
 import Divider from '../../components/content/divider';
-import {Api} from '../../api/api';
+import { fetchData } from '~/utils/fetchData';
 
 export default {
     name: 'protectedAreas',
@@ -63,20 +63,9 @@ export default {
             seo: ''
         };
     },
-    asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`protected-areas?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            return {
-                seo: response.data.seo,
-                data:response.data.data
-            }
-        });
-    },
+		async asyncData(context) {
+			return fetchData('protected-areas', context);
+		},
     created() {
         let breadCrumbs = [
             {name: 'breadCrumbs.faqAreas'}

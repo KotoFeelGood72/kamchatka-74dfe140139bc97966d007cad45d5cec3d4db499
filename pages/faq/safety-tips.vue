@@ -3,7 +3,6 @@
         <FaqMenu/>
         <div class="container--middle page-content text--small">
             <div v-for="(elements, index) in data" :key="'elements-' + index">
-                <!-- <Heading>{{elements.name}}</Heading> -->
                   <Heading v-if="elements.name"
                          tag="p"
                          color="granite"
@@ -39,7 +38,7 @@ import FaqMenu from '../../components/faqMenu/faqMenu';
 import Heading from '../../components/content/heading';
 import ContentImage from '../../components/content/contentImage';
 import Divider from '../../components/content/divider';
-import {Api} from '../../api/api';
+import { fetchData } from '~/utils/fetchData';
 export default {
     name: 'entryRules',
     components: {
@@ -66,20 +65,9 @@ export default {
             seo: ''
         };
     },
-    asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`safety-tips?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            return {
-                seo: response.data.seo,
-                data:response.data.data.tips
-            }
-        });
-    },
+		async asyncData(context) {
+			return fetchData('safety-tips', context);
+		},
     created() {
         let breadCrumbs = [
             {name: 'breadCrumbs.faqSafety'}
@@ -92,7 +80,6 @@ export default {
 <style lang="scss" scoped>
     @import "~assets/scss/config";
     @import "~assets/scss/mixins";
-    @import "wow.js/css/libs/animate.css";
     .heading--title {
         margin-top:60px;
         line-height: 1.5;

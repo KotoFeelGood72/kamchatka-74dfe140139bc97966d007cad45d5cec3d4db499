@@ -46,16 +46,16 @@
                 ]
 						}
         },
-        // watch: {
-        //     thisIsTransparent(val) {
-        //         this.isTransparent = val;
-        //     },
-        // },
-        // computed: {
-        //     thisIsTransparent() {
-        //         return this.$store.getters["getIsTransparent"]();
-        //     }
-        // },
+        watch: {
+            thisIsTransparent(val) {
+                this.isTransparent = val;
+            },
+        },
+        computed: {
+            thisIsTransparent() {
+                return this.$store.getters["getIsTransparent"]();
+            }
+        },
         props: ["isFixed", "headerBlack"],
         components: {Lang, Menu},
         methods: {
@@ -69,26 +69,26 @@
                 window.scrollTo(0, 0);
             },
             checkIsTransparent() {
-                // let path = this.$route.path;
-                // let isTransparent =
-                    // path.startsWith("/activities") ||
-                    // path.startsWith("/activity") ||
-                    // path.startsWith("/blog") ||
-                    // path.startsWith("/faq") ||
-                    // path.startsWith("/about") ||
-                    // path.startsWith("/contacts") ||
-                    // path.endsWith("/tours/") ||
-                    // path.endsWith("/activities/") ||
-                    // path.endsWith("/upcoming-tours/") ||
-                    // path.endsWith("/en") ||
-                    // path === "/";
-                // this.$store.dispatch("changeIsTransparent", isTransparent);
-                // this.isTransparent = isTransparent;
+                let path = this.$route.path;
+                let isTransparent =
+                    path.startsWith("/activities") ||
+                    path.startsWith("/activity") ||
+                    path.startsWith("/blog") ||
+                    path.startsWith("/faq") ||
+                    path.startsWith("/about") ||
+                    path.startsWith("/contacts") ||
+                    path.endsWith("/tours/") ||
+                    path.endsWith("/activities/") ||
+                    path.endsWith("/upcoming-tours/") ||
+                    path.endsWith("/en") ||
+                    path === "/";
+                this.$store.dispatch("changeIsTransparent", isTransparent);
+                this.isTransparent = isTransparent;
             }
         },
         mounted() {
-            // this.checkIsTransparent();
-            function headerHiddens() {	
+            this.checkIsTransparent();
+            function headerHiddens() {
                 let headerAnimationHidden = document.querySelector('.header-anim-hidden');
                 let prevScroll = window.scrollY;
 

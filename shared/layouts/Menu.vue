@@ -25,15 +25,12 @@
 <script>
     import ContactUs from "./ContactUs";
     import Socials from "./Socials";
-    import SearchModal from "../../components/search/searchModal";
-    // import {mixin as clickaway} from "vue-clickaway";
     import Lang from "./lang";
     import {mapState, mapActions, mapMutations} from 'vuex'
 
     export default {
         name: "Menu",
-        // mixins: [clickaway],
-        components: {Lang, SearchModal, Socials, ContactUs},
+        components: {Lang, Socials, ContactUs},
         data() {
             return {
                 menuStatus: false,

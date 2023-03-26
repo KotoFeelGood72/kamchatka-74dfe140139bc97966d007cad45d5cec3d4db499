@@ -45,7 +45,7 @@ import FaqMenu from '../../components/faqMenu/faqMenu';
 import Heading from '../../components/content/heading';
 import ContentImage from '../../components/content/contentImage';
 import Divider from '../../components/content/divider';
-import {Api} from '../../api/api';
+import { fetchData } from '~/utils/fetchData';
 import $ from 'jquery';
 
 export default {
@@ -74,88 +74,21 @@ export default {
             seo: ''
         };
     },
-    asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`where-to-stay?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            return {
-                seo: response.data.seo,
-                data:response.data.data
-            }
-        });
-    },
+		async asyncData(context) {
+			return fetchData('where-to-stay', context);
+		},
     created() {
         let breadCrumbs = [
             {name: 'breadCrumbs.faqStay'}
         ];
         this.$store.dispatch('changeBreadcrumbs', breadCrumbs);
     },
-     updated(){
-             [].forEach.call(document.querySelectorAll('.animate-counter'), function(div) {
-            if(parseInt(div.innerText) != NaN){
-            div.classList.add('detected-animation')
-        }
-    });
-    },
-    mounted(){
-  [].forEach.call(document.querySelectorAll('.animate-counter'), function(div) {
-            if(parseInt(div.innerText) != NaN){
-            div.classList.add('detected-animation')
-        }
-    });
-       var Visible = function () {
-      [].forEach.call(document.querySelectorAll('.animate-counter'), function(div) {
-      var target = div;
-      var targetPosition = {
-          top: window.pageYOffset + target.getBoundingClientRect().top,
-          left: window.pageXOffset + target.getBoundingClientRect().left,
-          right: window.pageXOffset + target.getBoundingClientRect().right,
-          bottom: window.pageYOffset + target.getBoundingClientRect().bottom
-        },
-        windowPosition = {
-          top: window.pageYOffset,
-          left: window.pageXOffset,
-          right: window.pageXOffset + document.documentElement.clientWidth,
-          bottom: window.pageYOffset + document.documentElement.clientHeight
-        };
-      if (targetPosition.bottom > windowPosition.top &&
-        targetPosition.top < windowPosition.bottom &&
-        targetPosition.right > windowPosition.left &&
-        targetPosition.left < windowPosition.right) {
-            let values = parseInt(div.innerText)
-          if(div.classList.contains('detected-animation')){
-          div.classList.remove('detected-animation')
-
-            $({ Counter: 0 }).animate({ Counter: parseInt(div.innerText) }, {
-              duration: 2500,
-              easing: 'swing',
-              step: function () {
-                div.innerText=Math.ceil(this.Counter);
-              },
-              complete:function(){
-                  div.innerText = values
-              }
-            });
-
-        }
-      }
-    });
-    };
-      window.addEventListener('scroll', function() {
-      Visible ();
-    });
-    }
 };
 </script>
 
 <style lang="scss" scoped>
     @import "~assets/scss/config";
     @import "~assets/scss/mixins";
-    @import "wow.js/css/libs/animate.css";
     .text-controllerfaq{
         font-family: "Montserrat";
         font-weight: 400;

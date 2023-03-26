@@ -11,7 +11,7 @@
 import FaqMenu from '../../components/faqMenu/faqMenu';
 import FaqContacts from '../../components/faqMenu/faqContacts';
 import According from '../../components/according/according';
-import {Api} from '../../api/api';
+import { fetchData } from '~/utils/fetchData';
 
 export default {
     name: 'faq',
@@ -48,23 +48,9 @@ export default {
             seo: ''
         };
     },
-    asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`faq?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            return {
-                seo: response.data.seo,
-                data: response.data.data.faq.map((item) => {
-                    item.active = false;
-                    return item;
-                })
-            }
-        });
-    },
+		async asyncData(context) {
+			return fetchData('faq', context);
+		},
     created() {
         let breadCrumbs = [
             {name: 'faq.title'}
