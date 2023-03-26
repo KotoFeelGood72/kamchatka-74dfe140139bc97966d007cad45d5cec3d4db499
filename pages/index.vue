@@ -69,11 +69,7 @@ export default {
                 dataActivities: null,
                 seo: null,
                 tours: null,
-                blocks: null,
             },
-            pageLoaded: false,
-            addEvent: true,
-            initialY: null,
             showMenu: false,
         };
     },

@@ -17,7 +17,7 @@
                 template,
                 components: {
                     heading,
-                    InfoSlider
+                    // InfoSlider
                 }
             };
             const component = template ? dynComponent : heading;

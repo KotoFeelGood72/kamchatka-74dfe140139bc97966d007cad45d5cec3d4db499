@@ -41,8 +41,7 @@ import ContactUs from '../../shared/layouts/ContactUs';
 import Socials from '../../shared/layouts/Socials';
 import FooterMenu from '../../shared/layouts/FooterMenu';
 import RussianGerb from '../../shared/layouts/RussianGerb.vue';
-import {Api} from "../../api/api";
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 
 export default {

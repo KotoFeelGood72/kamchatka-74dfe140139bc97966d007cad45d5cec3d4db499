@@ -125,8 +125,8 @@
 </template>
 
 <script>
-    import Vue from "vue";
-    import Modal from '../../components/modal/modal';
+    // import Vue from "vue";
+    // import Modal from '../../components/modal/modal';
     import {mapGetters} from 'vuex';
 
     export default {

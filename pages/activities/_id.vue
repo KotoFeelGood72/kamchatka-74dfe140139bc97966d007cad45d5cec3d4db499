@@ -88,7 +88,7 @@ export default {
     ContentImage,
     Heading,
     PageHeader,
-    ArrowLong
+    // ArrowLong
   },
   head() {
     return {

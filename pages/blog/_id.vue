@@ -5,63 +5,6 @@
       v-if="blog.content"
       :template="`<div class='text--small content-block animated-blog blog__item_ullishka'><div class='container blog__item_ullishka'>` + blog.content + `</div></div>`"
     />
-
-<!--    <div class="container">-->
-<!--      <social-sharing-->
-<!--        :url="this.url"-->
-<!--        :title="blog.name"-->
-<!--        :description="this.seo && false ? this.seo.description : ''"-->
-<!--        inline-template-->
-<!--      >-->
-<!--        <div class="blog__social">-->
-<!--          <network network="telegram" :class="$parent.myClasses">-->
-<!--            <nuxt-img-->
-<!--                loading="lazy"-->
-<!--                format="webp"-->
-<!--                quality="75"-->
-<!--                src="~assets/img/blog/svg/telegram_icon.svg"-->
-<!--                alt="Телеграм"-->
-<!--            />-->
-<!--          </network>-->
-<!--          <network network="vk" :class="$parent.myClasses">-->
-<!--            <nuxt-img-->
-<!--                loading="lazy"-->
-<!--                format="webp"-->
-<!--                quality="75"-->
-<!--                src="~assets/img/blog/svg/vkontakte.svg"-->
-<!--                alt="ВКонтакте"-->
-<!--            />-->
-<!--          </network>-->
-<!--          <network network="facebook" :class="$parent.myClasses">-->
-<!--            <nuxt-img-->
-<!--                loading="lazy"-->
-<!--                format="webp"-->
-<!--                quality="75"-->
-<!--                src="~assets/img/blog/svg/facebook.svg"-->
-<!--                alt="Фейсбук"-->
-<!--            />-->
-<!--          </network>-->
-<!--           <network network="twitter" :class="$parent.myClasses">-->
-<!--            <nuxt-img-->
-<!--                loading="lazy"-->
-<!--                format="webp"-->
-<!--                quality="75"-->
-<!--                src="~assets/img/blog/svg/tw.svg"-->
-<!--                alt="Фейсбук"-->
-<!--            />-->
-<!--          </network>-->
-<!--           <network network="whatsapp" :class="$parent.myClasses">-->
-<!--            <nuxt-img-->
-<!--                loading="lazy"-->
-<!--                format="webp"-->
-<!--                quality="75"-->
-<!--                src="~assets/img/blog/svg/wa.svg"-->
-<!--                alt="Фейсбук"-->
-<!--            />-->
-<!--          </network>-->
-<!--        </div>-->
-<!--      </social-sharing>-->
-<!--    </div>-->
   </div>
 </template>
 

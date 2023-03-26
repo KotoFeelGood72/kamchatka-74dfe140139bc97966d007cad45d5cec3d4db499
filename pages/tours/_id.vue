@@ -189,7 +189,7 @@ import $ from "jquery";
 export default {
     name: "tourSlug",
     components: {
-        ArrowLong,
+        // ArrowLong,
         Grid,
         GridLoc,
         Dynamic,
@@ -433,7 +433,7 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/mixins";
 @import "~@/assets/scss/config";
-@import "wow.js/css/libs/animate.css";
+// @import "wow.js/css/libs/animate.css";
 // Fix__rublia
 
 /deep/ .inner_video {

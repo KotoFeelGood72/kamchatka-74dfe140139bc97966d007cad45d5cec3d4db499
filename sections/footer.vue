@@ -1,7 +1,6 @@
 <template>
     <footer class="home-section home-footer">
         <div class="home-footer__overlay active">
-<!--            <img class="home-footer__overlay-img" src="@/assets/img/home/footer-bg.jpg" alt="">-->
         </div>
         <div class="container home-footer__content">
             <div class="row home-footer__row home-footer__row_first">
