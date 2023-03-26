@@ -1,8 +1,8 @@
 <template>
 	<section>
 			<div class="main-top-block">
-				<src-video v-if="nameVideo" :videoName="nameVideo" classVideo="video-main-page"/>
-				<page-header v-if="loadedPage" class="header__padding">
+				<src-video videoName="home-timelaps" classVideo="video-main-page"/>
+				<page-header class="header__padding">
 						<div v-html="data.mainBanner.title"></div>
 						<h3 v-html="data.mainBanner.text"/>
 				</page-header>
@@ -23,6 +23,7 @@
 <script>
 import { Api } from "../api/api";
 import { mapGetters } from "vuex";
+import { fetchData } from '~/utils/fetchData';
 
 // Block main page
 
@@ -63,17 +64,14 @@ export default {
     data() {
         return {
             loadedTours: false,
-            loadedPage: false,
             dataPage: {
                 loadedActivities: false,
                 dataActivities: null,
                 seo: null,
-                homeHeader: null,
                 tours: null,
                 blocks: null,
             },
             pageLoaded: false,
-            nameVideo: '',
             addEvent: true,
             initialY: null,
             showMenu: false,
@@ -124,29 +122,10 @@ export default {
                 })
         },
     },
-    async asyncData({route, params, store}) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-            return await Api.get(`main?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-                return {
-                    seo: response.data.seo,
-                    data: response.data.data,
-                    homeHeader: response?.data?.data?.video[0],
-                    loadedPage: true
-                }
-            }
-        );
-    },
+		async asyncData(context) {
+			return fetchData('main', context);
+		},
     mounted() {
-        if(this.SCREEN.width > 500) {
-            this.nameVideo = 'home-timelaps';
-        } else {
-            this.nameVideo = "home-timelaps-mobiles";
-        }
         this.asyncActivities();
         this.asyncTours();
     },

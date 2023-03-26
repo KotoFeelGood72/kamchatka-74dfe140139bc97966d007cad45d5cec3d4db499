@@ -132,9 +132,6 @@ export default {
     router: {
       base: "/",
     },
-    // serverMiddleware: [
-    //     '~/middleware/redirectsSlash.js'
-    // ],
     render: {
         asyncScripts: true,
         http2: {

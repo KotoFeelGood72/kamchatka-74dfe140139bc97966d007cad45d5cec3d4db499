@@ -21,9 +21,9 @@
 <script>
 import Heading from '../components/content/heading';
 import ContactUs from '../shared/layouts/ContactUs';
-import {Api} from '../api/api';
 import PageHeader from "../components/content/pageHeader";
 import parallax from '../components/parallax/index';
+import { fetchData } from '~/utils/fetchData';
 
 export default {
     name: 'contacts',
@@ -76,20 +76,9 @@ export default {
             ]
         }
     },
-    asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`contacts?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            return {
-                seo: response.data.seo,
-                data:response.data.data
-            }
-        });
-    },
+    async asyncData(context) {
+			return fetchData('contacts', context);
+		},
     created() {
         let breadCrumbs = [{
             name: 'contactsPage.title'
@@ -100,9 +89,8 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-    @import "~assets/scss/config";
-    @import "~assets/scss/mixins";
-    @import "wow.js/css/libs/animate.css";
+    @import "~@/assets/scss/config";
+    @import "~@/assets/scss/mixins";
     .contacts {
         background-image: url('~assets/img/contacts/bg-section.png');
         background-color: color(black);
