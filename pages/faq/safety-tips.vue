@@ -2,7 +2,7 @@
     <div class="faq-content safety-tips">
         <FaqMenu/>
         <div class="container--middle page-content text--small">
-            <div v-for="(elements, index) in data" :key="'elements-' + index">
+            <div v-for="(elements, index) in data.tips" :key="'elements-' + index">
                   <Heading v-if="elements.name"
                          tag="p"
                          color="granite"

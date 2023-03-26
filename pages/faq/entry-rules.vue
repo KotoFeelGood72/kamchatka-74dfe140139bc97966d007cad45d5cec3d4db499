@@ -1,8 +1,8 @@
 <template>
   <div class="faq-content entry-rules">
     <FaqMenu />
-    <div v-if="data.length" class="container--middle page-content text--small">
-      <div v-for="(entry, index) in data" :key="index">
+    <div v-if="data.rules" class="container--middle page-content text--small">
+      <div v-for="(entry, index) in data.rules" :key="index">
         <Heading
           v-if="entry.title && entry.underlineTitle"
           tag="p"
@@ -33,7 +33,7 @@ import FaqMenu from "../../components/faqMenu/faqMenu";
 import Heading from "../../components/content/heading";
 import ContentImage from "../../components/content/contentImage";
 import Divider from "../../components/content/divider";
-import { Api } from "../../api/api";
+import { fetchData } from '~/utils/fetchData';
 
 export default {
   name: "entryRules",
@@ -81,22 +81,9 @@ export default {
       seo: ""
     };
   },
-  asyncData({ route, params, store }) {
-    let lang = "";
-    if (route.name.indexOf("_en") >= 0) {
-      lang = "en";
-    } else {
-      lang = "ru";
-    }
-    return Api.get(`entry-rules?lang=${store.$i18n.locale}&router=${route.path}`).then(
-      response => {
-        return {
-          seo: response.data.seo,
-          data: response.data.data ? response.data.data.rules : []
-        };
-      }
-    );
-  },
+	async asyncData(context) {
+			return fetchData('entry-rules', context);
+		},
   created() {
     let breadCrumbs = [{ name: "breadCrumbs.faqEntry" }];
     this.$store.dispatch("changeBreadcrumbs", breadCrumbs);
@@ -105,9 +92,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/_config.scss";
-@import "~assets/scss/_mixins.scss";
-@import "wow.js/css/libs/animate.css";
+@import "~assets/scss/config";
+@import "~assets/scss/mixins";
 .container--middle {
   @include respond-to(lg) {
     max-width: initial !important;
