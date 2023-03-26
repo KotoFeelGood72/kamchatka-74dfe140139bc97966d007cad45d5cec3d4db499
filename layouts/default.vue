@@ -1,14 +1,15 @@
 <template>
     <div id="app">
-        <!-- <div v-if="isLoad" class="preloader">
+        <div v-if="isLoad" class="preloader">
             <div class="preloader__wrapper">
                 <img src="~assets/img/preload/loading.gif" alt class="preload__img" />
                 <div class="preloader__progress" style="width: 0"></div>
             </div>
-        </div> -->
+        </div>
 
-        <div>
+        <div v-show="notReady">
             <!-- <parallax v-if="$route.path == '/' && isParallax"></parallax> -->
+            <client-only>
                 <BaseHeader
                     v-if="$route.name !== '404' && $route.name !== null"
                     :headerBlack="headerBlack"
@@ -17,12 +18,17 @@
                 <Breadcrumbs
                     v-if="breadcrumbs.length && $route.name !== '404' && $route.name !== null && $route.path !== '/' && $route.path !== '/en' && $route.path !== '/create-tour/'"
                 />
+            </client-only>
             <div
                 :class="[{'fixed-container': $route.path !== '/' && $route.path !== '/en' && $route.name !== null},
                       {'fixed-container--transparent': isTransparent}]"
             >
                 <nuxt />
             </div>
+            <!--        <client-only>-->
+            <!--            <ModalSuggestions time-show-modal="30000" :key="$route.path"/>-->
+            <!--        </client-only>-->
+            <client-only>
                 <BaseFooter
                     v-if="$route.name !== '404' && $route.name !== null && $route.path !== '/' && $route.path !== '/en'"
                 />
@@ -30,12 +36,20 @@
                     v-if="isShowFeedback"
                     @toggleFeedback="$store.dispatch('changeIsShowFeedback', !isShowFeedback)"
                 />
+            </client-only>
         </div>
+        <!-- Яндекс и Google аналитика -->
         <div v-if="lang == 'ru'">
+            <client-only>
+                <!-- Yandex.Metrika counter -->
                 <noscript><div><img src="https://mc.yandex.ru/watch/61444693" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+            </client-only>
         </div>
         <div v-else-if="lang == 'en'">
+            <client-only>
+                <!-- Yandex.Metrika counter -->
                 <noscript><div><img src="https://mc.yandex.ru/watch/62640601" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+            </client-only>
         </div>
     </div>
 </template>
@@ -47,7 +61,7 @@ import Feedback from "../components/feedback/feedback"
 import BaseHeader from "../shared/layouts/BaseHeader"
 import BaseFooter from "../shared/layouts/BaseFooter"
 import Breadcrumbs from "../components/breadcrumbs/breadcrumbs"
-// import ModalSuggestions from "../components/modal/Suggestions"
+import ModalSuggestions from "../components/modal/Suggestions"
 import { mapState } from "vuex";
 
 
@@ -65,7 +79,7 @@ export default {
                     href: 'https://enjoykamchatka.ru' + this.$route.path
                 }
             ],
-            // script: [{ src: "../../../../../../../../libs/script.js" }]
+            script: [{ src: "../../../../../../../../libs/script.js" }]
         }
     },
     components: {
@@ -73,29 +87,29 @@ export default {
         BaseHeader,
         BaseFooter,
         Breadcrumbs,
-        // ModalSuggestions,
+        ModalSuggestions,
         // parallax
     },
     data() {
         return {
-            // isLoad: true,
-            // notReady: false,
-            // progressWidth: 0,
-            // isTransparent: false,
-            // screen: this.$store.getters.SCREEN,
+            isLoad: true,
+            notReady: false,
+            progressWidth: 0,
+            isTransparent: false,
+            screen: this.$store.getters.SCREEN,
             headerBlack: false,
             isParallax: true
         };
     },
-    // watch: {
-    //     thisIsTransparent(val) {
-    //         this.isTransparent = val;
-    //         // console.log(val);
-    //     },
-    //     $route() {
-    //         this.$store.commit("changeRouterfalse");
-    //     }
-    // },
+    watch: {
+        thisIsTransparent(val) {
+            this.isTransparent = val;
+            // console.log(val);
+        },
+        $route() {
+            this.$store.commit("changeRouterfalse");
+        }
+    },
     computed: {
         ...mapState(["breadcrumbs", "lang"]),
         isShowFeedback() {
@@ -106,86 +120,86 @@ export default {
         }
     },
     methods: {
-        // checkIsTransparent() {
-        //     let path = this.$route.path;
-        //     let isTransparent =
-        //         path.startsWith("/activities") ||
-        //         path.startsWith("/blog") ||
-        //         path.startsWith("/faq") ||
-        //         path.startsWith("/about") ||
-        //         path.startsWith("/contacts") ||
-        //         path.endsWith("/tours/") ||
-        //         path.endsWith("/activities/") ||
-        //         path.endsWith("/upcoming-tours/") ||
-        //         path.endsWith("/en") ||
+        checkIsTransparent() {
+            let path = this.$route.path;
+            let isTransparent =
+                path.startsWith("/activities") ||
+                path.startsWith("/blog") ||
+                path.startsWith("/faq") ||
+                path.startsWith("/about") ||
+                path.startsWith("/contacts") ||
+                path.endsWith("/tours/") ||
+                path.endsWith("/activities/") ||
+                path.endsWith("/upcoming-tours/") ||
+                path.endsWith("/en") ||
 
-        //         path === "/";
-        //     this.$store.dispatch("changeIsTransparent", isTransparent);
-        //     this.isTransparent = isTransparent;
-        // },
-        // listenResize() {
-        //     this.$store.commit("SCREENW", window.innerWidth);
-        //     this.$store.commit("SCREENH", window.innerHeight);
-        // },
+                path === "/";
+            this.$store.dispatch("changeIsTransparent", isTransparent);
+            this.isTransparent = isTransparent;
+        },
+        listenResize() {
+            this.$store.commit("SCREENW", window.innerWidth);
+            this.$store.commit("SCREENH", window.innerHeight);
+        },
     },
     mounted() {
-        // if (this.screen.width < 500 || this.screen.height < 500) {
-        //     this.$store.commit("changeRouter");
-        //     this.notReady = true;
-        //     setTimeout(() => {
-        //         this.isLoad = false;
-        //     }, 300);
+        if (this.screen.width < 500 || this.screen.height < 500) {
+            this.$store.commit("changeRouter");
+            this.notReady = true;
+            setTimeout(() => {
+                this.isLoad = false;
+            }, 300);
 
-        // } else {
-        //     this.notReady = true;
-        //     setTimeout(() => {
-        //         this.isLoad = false;
-        //     }, 200);
-        // }
+        } else {
+            this.notReady = true;
+            setTimeout(() => {
+                this.isLoad = false;
+            }, 200);
+        }
 
-        // this.$router.afterEach((to, from) => {
-        //     let path = to.path;
-        //     if (to.path == "/") {
-        //         this.isParallax = false;
-        //     }
-        //     let isTransparent =
-        //         path.startsWith("/blog") ||
-        //         path.startsWith("/faq") ||
-        //         path.startsWith("/about") ||
-        //         path.startsWith("/contacts") ||
-        //         path.endsWith("/tours/") ||
-        //         path.endsWith("/activities/") ||
-        //         path.endsWith("/upcoming-tours/") ||
-        //         path.endsWith("/en") ||
-        //         path === "/";
-        //     this.$store.dispatch("changeIsTransparent", isTransparent);
-        // });
-        // window.addEventListener("resize", this.listenResize);
-        // this.checkIsTransparent();
+        this.$router.afterEach((to, from) => {
+            let path = to.path;
+            if (to.path == "/") {
+                this.isParallax = false;
+            }
+            let isTransparent =
+                path.startsWith("/blog") ||
+                path.startsWith("/faq") ||
+                path.startsWith("/about") ||
+                path.startsWith("/contacts") ||
+                path.endsWith("/tours/") ||
+                path.endsWith("/activities/") ||
+                path.endsWith("/upcoming-tours/") ||
+                path.endsWith("/en") ||
+                path === "/";
+            this.$store.dispatch("changeIsTransparent", isTransparent);
+        });
+        window.addEventListener("resize", this.listenResize);
+        this.checkIsTransparent();
 
-        // this.$store.watch(this.$store.getters.getIsParallax, isParallax => {
-        //     this.isParallax = isParallax;
-        //     // console.log(isParallax);
-        // });
+        this.$store.watch(this.$store.getters.getIsParallax, isParallax => {
+            this.isParallax = isParallax;
+            // console.log(isParallax);
+        });
     },
     created() {
         this.$store.dispatch("changeLang", this.$i18n.locale);
-        // if (process.client) {
-        //     window.addEventListener("resize", this.listenResize);
-        //     this.listenResize();
-        //     let _this = this;
-        //     window.addEventListener("scroll", function() {
-        //         if (pageYOffset+170> this.screen.height) {
-        //             _this.headerBlack = true;
-        //         } else {
-        //             _this.headerBlack = false;
-        //         }
-        //     });
-        // }
+        if (process.client) {
+            window.addEventListener("resize", this.listenResize);
+            this.listenResize();
+            let _this = this;
+            window.addEventListener("scroll", function() {
+                if (pageYOffset+170> this.screen.height) {
+                    _this.headerBlack = true;
+                } else {
+                    _this.headerBlack = false;
+                }
+            });
+        }
     },
-    // destroyed() {
-    //     window.removeEventListener("resize", this.listenResize);
-    // }
+    destroyed() {
+        window.removeEventListener("resize", this.listenResize);
+    }
 };
 </script>
 
@@ -195,7 +209,7 @@ export default {
 @import "../assets/scss/mixins";
 @import "../assets/libs/bootstrap/bootstrap-grid";
 @import "../assets/fonts/stylesheet.css";
-// @import "../assets/fonts/icomoon/style.css";
+@import "../assets/fonts/icomoon/style.css";
 
 * {
     padding: 0;
