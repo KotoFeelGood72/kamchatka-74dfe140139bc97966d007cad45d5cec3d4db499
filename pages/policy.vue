@@ -54,40 +54,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .policy {
-        background-color: #171920;
-        padding-bottom: 30px;
-        /deep/ > div * {
-            padding-left: 25px;
-            color: white;
-            line-height: 1.5;
-        }
-        /deep/h1, h2, h3, h4 {
-            padding-left: 0;
-            margin-bottom: 15px;
-            margin-top: 30px;
-            color: #1DCFFF;
-            line-height: 1.5;
-        }
-        /deep/> div > h1 {
-            margin-top: 0px;
-            padding-top: 60px;
-            line-height: 1.5;
-        }
-        /deep/li {
-            padding-left: 0;
-            margin-left: 35px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-        /deep/p {
-            margin: 10px 0;
-            font-family: 'Montserrat';
-            font-weight: 400;
-            line-height: 1.5;
-        }
+    // .policy {
+    //     background-color: #171920;
+    //     padding-bottom: 30px;
+    //     /deep/ > div * {
+    //         padding-left: 25px;
+    //         color: white;
+    //         line-height: 1.5;
+    //     }
+    //     /deep/h1, h2, h3, h4 {
+    //         padding-left: 0;
+    //         margin-bottom: 15px;
+    //         margin-top: 30px;
+    //         color: #1DCFFF;
+    //         line-height: 1.5;
+    //     }
+    //     /deep/> div > h1 {
+    //         margin-top: 0px;
+    //         padding-top: 60px;
+    //         line-height: 1.5;
+    //     }
+    //     /deep/li {
+    //         padding-left: 0;
+    //         margin-left: 35px;
+    //         margin-top: 10px;
+    //         margin-bottom: 10px;
+    //         line-height: 1.5;
+    //     }
+    //     /deep/p {
+    //         margin: 10px 0;
+    //         font-family: 'Montserrat';
+    //         font-weight: 400;
+    //         line-height: 1.5;
+    //     }
 
-    }
+    // }
 
 </style>

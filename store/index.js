@@ -1,15 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {Api} from "../api/api";
-import { store as toursStore } from '~/store/tours'
 
 
 Vue.use(Vuex);
 
 const store = () => new Vuex.Store({
-		modules: {
-			tours: toursStore,
-		},
     state: {
         lang: 'ru',
         breadcrumbs: [],

@@ -15,7 +15,6 @@
 				<kam-slider :data="dataPage.dataActivities"/>
 			</div>
 			<contact-queue :critical="true" />
-			<!-- <tripadvisor-reviews :critical="true" /> -->
 			<tripSlider/>
 			<home-footer/>
 	</section>
@@ -29,7 +28,7 @@ import { mapGetters } from "vuex";
 
 import srcVideo from "../components/srcVideo/srcVideo";
 import PageHeader from "../components/content/pageHeaderMain";
-import Tours from '../components/tours/toursComponent';
+import Tours from '../components/tours/card';
 import AboutUsHome from '../sections/about-us';
 import ContactQueue from '../components/ContactQueue/ContactQueue';
 import HomeFooter from '../sections/footer';
@@ -114,16 +113,16 @@ export default {
                     }
                 })
         },
-        // asyncTours() {
-        //     const lang = this.currentRouteName === 'ru' ? 'ru' : 'en';
-        //     Api.get(`mainTours?lang=${lang}&router=${this.currentRoutePath}`)
-        //         .then((response) => {
-        //             if(response.status === 200) {
-        //                 this.dataPage.tours = response.data.data.tours
-        //                 this.loadedTours = true;
-        //             }
-        //         })
-        // },
+        asyncTours() {
+            const lang = this.currentRouteName === 'ru' ? 'ru' : 'en';
+            Api.get(`mainTours?lang=${lang}&router=${this.currentRoutePath}`)
+                .then((response) => {
+                    if(response.status === 200) {
+                        this.dataPage.tours = response.data.data.tours
+                        this.loadedTours = true;
+                    }
+                })
+        },
     },
     async asyncData({route, params, store}) {
         let lang = '';
@@ -149,7 +148,7 @@ export default {
             this.nameVideo = "home-timelaps-mobiles";
         }
         this.asyncActivities();
-        // this.asyncTours();
+        this.asyncTours();
     },
 };
 </script>

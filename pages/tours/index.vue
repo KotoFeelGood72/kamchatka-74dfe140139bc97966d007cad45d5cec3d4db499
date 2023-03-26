@@ -28,7 +28,7 @@
 import {Api} from "../../api/api";
 import srcVideo from "~/components/srcVideo/srcVideo";
 import PageHeader from '../../components/content/pageHeaderWithDesc';
-import ToursComponent from "../../components/tours/toursComponent";
+import ToursComponent from "../../components/tours/card";
 import Heading from "../../components/content/heading.vue";
 
 export default {
