@@ -88,7 +88,7 @@
         },
         mounted() {
             // this.checkIsTransparent();
-            function headerHiddens() {
+            function headerHiddens() {	
                 let headerAnimationHidden = document.querySelector('.header-anim-hidden');
                 let prevScroll = window.scrollY;
 
