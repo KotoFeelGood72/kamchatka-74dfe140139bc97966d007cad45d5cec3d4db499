@@ -30,9 +30,11 @@ import srcVideo from "~/components/srcVideo/srcVideo";
 import PageHeader from '../../components/content/pageHeaderWithDesc';
 import ToursComponent from "../../components/tours/card";
 import Heading from "../../components/content/heading.vue";
+import seoHead from "../../mixins/seo-head";
 
 export default {
     name: 'Tours',
+		mixins: [seoHead],
     components: {
 			Heading,
 			ToursComponent,

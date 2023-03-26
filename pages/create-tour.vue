@@ -229,6 +229,7 @@
 <script>
 import Heading from '../components/content/headingStep';
 import {Api} from '../api/api';
+import seoHead from '../mixins/seo-head';
 //import vueCustomScrollbar from 'vue-custom-scrollbar';
 // import '../assets/scss/_scrollBar.scss';
 import FormFeedback from '../components/feedback/section/formFeedback';
@@ -237,23 +238,12 @@ import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import 'vue2-datepicker/locale/ru';
 import { mapState } from 'vuex';
-import arrow_long from  "@/assets/img/icons/arrow_long.svg?inline";
+// import arrow_long from  "@/assets/img/icons/arrow_long.svg?inline";
 
 export default {
     name: 'createTour',
+		mixins: [seoHead],
     components: {FormFeedback, Heading, animButton, DatePicker, arrow_long},
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: 'https://new.enjoykamchatka.ru/contacts-header.png'},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: 'https://new.enjoykamchatka.ru/contacts-header.png' }
-            ]
-        }
-    },
     data() {
         return {
             coords: [56.322434, 160.844915],

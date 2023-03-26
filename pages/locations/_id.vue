@@ -20,8 +20,10 @@ import {Api} from '../../api/api';
 import Dynamic from "../../components/dynamic";
 import Heading from "../../components/content/heading";
 import $ from 'jquery'
+import seoHead from '../../mixins/seo-head';
 export default {
     name: 'locationSlug',
+		mixins: [seoHead],
     components: {
         Heading,
         Dynamic,
@@ -43,18 +45,6 @@ export default {
                 contentLayout: '<div style="background: red; width: 50px; color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
             },
         };
-    },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: this.location && this.location.bannerImage ? this.location.bannerImage.src : ''},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: this.location && this.location.bannerImage ? this.location.bannerImage.src : ''}
-            ]
-        }
     },
     asyncData ({ route, params, error, payload, store }) {
         let lang = '';

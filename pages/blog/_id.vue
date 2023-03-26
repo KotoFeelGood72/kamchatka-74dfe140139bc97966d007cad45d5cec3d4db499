@@ -12,6 +12,7 @@
 import PageHeader from "../../components/content/pageHeader";
 import { Api } from "../../api/api";
 import Dynamic from "../../components/dynamic";
+import seoHead from "../../mixins/seo-head";
 
 export default {
   name: "blogEntry",
@@ -19,43 +20,12 @@ export default {
     Dynamic,
     PageHeader
   },
+	mixins: [seoHead],
   data() {
     return {
         blog: "",
         seo: "",
         url: ""
-    };
-  },
-  head() {
-    return {
-      title: this.seo ? this.seo.title : "",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: this.seo ? this.seo.description : ""
-        },
-        {
-          hid: "image",
-          name: "image",
-          content: this.blog && this.blog.banner ? this.blog.banner.src : ""
-        },
-        {
-          hid: "og:title",
-          name: "og:title",
-          content: this.seo ? this.seo.title : ""
-        },
-        {
-          hid: "og:description",
-          name: "og:description",
-          content: this.seo ? this.seo.description : ""
-        },
-        {
-          hid: "og:image",
-          name: "og:image",
-          content: this.blog && this.blog.banner ? this.blog.banner.src : ""
-        }
-      ]
     };
   },
   asyncData({ route, params, error, payload, store }) {

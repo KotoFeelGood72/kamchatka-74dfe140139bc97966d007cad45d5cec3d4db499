@@ -8,6 +8,8 @@
         </div>
 
         <div v-show="notReady">
+            <!-- <parallax v-if="$route.path == '/' && isParallax"></parallax> -->
+            <client-only>
                 <BaseHeader
                     v-if="$route.name !== '404' && $route.name !== null"
                     :headerBlack="headerBlack"
@@ -16,12 +18,17 @@
                 <Breadcrumbs
                     v-if="breadcrumbs.length && $route.name !== '404' && $route.name !== null && $route.path !== '/' && $route.path !== '/en' && $route.path !== '/create-tour/'"
                 />
+            </client-only>
             <div
                 :class="[{'fixed-container': $route.path !== '/' && $route.path !== '/en' && $route.name !== null},
                       {'fixed-container--transparent': isTransparent}]"
             >
                 <nuxt />
             </div>
+            <!--        <client-only>-->
+            <!--            <ModalSuggestions time-show-modal="30000" :key="$route.path"/>-->
+            <!--        </client-only>-->
+            <client-only>
                 <BaseFooter
                     v-if="$route.name !== '404' && $route.name !== null && $route.path !== '/' && $route.path !== '/en'"
                 />
@@ -29,6 +36,20 @@
                     v-if="isShowFeedback"
                     @toggleFeedback="$store.dispatch('changeIsShowFeedback', !isShowFeedback)"
                 />
+            </client-only>
+        </div>
+        <!-- Яндекс и Google аналитика -->
+        <div v-if="lang == 'ru'">
+            <client-only>
+                <!-- Yandex.Metrika counter -->
+                <noscript><div><img src="https://mc.yandex.ru/watch/61444693" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+            </client-only>
+        </div>
+        <div v-else-if="lang == 'en'">
+            <client-only>
+                <!-- Yandex.Metrika counter -->
+                <noscript><div><img src="https://mc.yandex.ru/watch/62640601" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+            </client-only>
         </div>
     </div>
 </template>

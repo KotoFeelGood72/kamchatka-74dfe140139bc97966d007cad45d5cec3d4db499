@@ -56,10 +56,12 @@ import {Api} from '../api/api';
 import parallax from '../components/parallax/index';
 import Vue from 'vue';
 import ContactQueue from '../components/ContactQueue/ContactQueue'
+import seoHead from '../mixins/seo-head';
 // import TripadvisorReviews from "../components/content/TripadvisorReviews";
 
 export default {
     name: 'aboutUs',
+		mixins: [seoHead],
     components: {
         // TripadvisorReviews,
         PageHeader,
@@ -68,18 +70,6 @@ export default {
         videoEmbed,
         parallax,
         ContactQueue
-    },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: this.data && this.data.intro ? this.data.intro.bannerImage.src : ''},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: this.data && this.data.intro ? this.data.intro.bannerImage.src : '' }
-            ]
-        }
     },
     data() {
         return {

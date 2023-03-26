@@ -30,25 +30,15 @@ import According from '../../components/according/according';
 import { fetchData } from '~/utils/fetchData';
 import Heading from '../../components/content/heading';
 import ContentImage from '../../components/content/contentImage';
+import seoHead from '../../mixins/seo-head';
 export default {
     name: 'howToDress',
+		mixins: [seoHead],
     components: {
         ContentImage,
         Heading,
         According,
         FaqMenu
-    },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: 'https://new.enjoykamchatka.ru/contacts-header.png'},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: 'https://new.enjoykamchatka.ru/contacts-header.png' }
-            ]
-        }
     },
     data() {
         return {

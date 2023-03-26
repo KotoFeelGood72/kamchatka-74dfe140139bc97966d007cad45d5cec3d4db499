@@ -37,6 +37,7 @@ import ContentImage from '../../components/content/contentImage';
 import {Api} from '../../api/api';
 import PageHeader from '../../components/content/pageHeader';
 import parallax from '../../components/parallax/index';
+import seoHead from '../../mixins/seo-head';
 
 export default {
     name: 'blog',
@@ -46,18 +47,7 @@ export default {
         ContentImage,
         parallax
     },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: this.data && this.data.intro && this.data.intro.bannerImage ? this.data.intro.bannerImage.src : ''},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: this.data && this.data.intro && this.data.intro.bannerImage ? this.data.intro.bannerImage.src : ''}
-            ]
-        }
-    },
+		mixins: [seoHead],
     data() {
         return {
             data: '',

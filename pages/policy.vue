@@ -13,22 +13,12 @@
 <script>
 import Heading from "../components/content/headingStep";
 import {Api} from "../api/api";
+import seoHead from "../mixins/seo-head";
 
 export default {
     name: 'politic',
     components: {Heading},
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: 'https://new.enjoykamchatka.ru/contacts-header.png'},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: 'https://new.enjoykamchatka.ru/contacts-header.png' }
-            ]
-        }
-    },
+		mixins: [seoHead],
     data() {
         return {
             policy: '',

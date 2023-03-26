@@ -185,9 +185,11 @@ import GridLoc from '../../components/grid/gridLocations';
 // import ArrowLong from "../../components/icons/arrow-long";
 import imgAnimation from '../../components/img/imgAnimation'
 import $ from "jquery";
+import seoHead from "../../mixins/seo-head";
 
 export default {
     name: "tourSlug",
+		mixins: [seoHead],
     components: {
         // ArrowLong,
         Grid,

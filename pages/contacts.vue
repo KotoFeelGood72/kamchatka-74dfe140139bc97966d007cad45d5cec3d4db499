@@ -24,15 +24,17 @@ import ContactUs from '../shared/layouts/ContactUs';
 import PageHeader from "../components/content/pageHeader";
 import parallax from '../components/parallax/index';
 import { fetchData } from '~/utils/fetchData';
+import seoHead from "@/mixins/seo-head";
 
 export default {
-    name: 'contacts',
-    components: {
-        PageHeader,
-        Heading,
-        ContactUs,
-        parallax
-    },
+	name: 'contacts',
+	components: {
+		PageHeader,
+		Heading,
+		ContactUs,
+		parallax
+	},
+		mixins: [seoHead],
     data() {
         return {
             layers: [
@@ -61,18 +63,6 @@ export default {
                     image: 'url("/parallax/contacts/4.png")'
                 }
                 }
-            ]
-        }
-    },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: 'https://new.enjoykamchatka.ru/contacts-header.png'},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: 'https://new.enjoykamchatka.ru/contacts-header.png' }
             ]
         }
     },
