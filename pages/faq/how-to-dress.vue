@@ -27,28 +27,18 @@
 <script>
 import FaqMenu from '../../components/faqMenu/faqMenu';
 import According from '../../components/according/according';
-import {Api} from '../../api/api';
+import { fetchData } from '~/utils/fetchData';
 import Heading from '../../components/content/heading';
 import ContentImage from '../../components/content/contentImage';
+import seoHead from '../../mixins/seo-head';
 export default {
     name: 'howToDress',
+		mixins: [seoHead],
     components: {
         ContentImage,
         Heading,
         According,
         FaqMenu
-    },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: 'https://new.enjoykamchatka.ru/contacts-header.png'},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: 'https://new.enjoykamchatka.ru/contacts-header.png' }
-            ]
-        }
     },
     data() {
         return {
@@ -72,28 +62,9 @@ export default {
             seo: ''
         };
     },
-    methods: {
-        init() {
-            Api.get(`how-to-dress?lang=${this.$i18n.locale}&router=${this.$route.path}`).then((response) => {
-                this.seo = response.data.seo;
-                this.data = response.data.data;
-            });
-        }
-    },
-    asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`how-to-dress?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            return {
-                seo: response.data.seo,
-                data:response.data.data
-            }
-        });
-    },
+		async asyncData(context) {
+			return fetchData('how-to-dress', context);
+		},
     created() {
         let breadCrumbs = [
             {name: 'breadCrumbs.faqDress'}
@@ -107,7 +78,6 @@ export default {
 <style lang="scss" scoped>
     @import "~assets/scss/config";
     @import "~assets/scss/mixins";
-    @import "wow.js/css/libs/animate.css";
 
     .faq-content {
         @include respond-to(md) {

@@ -1,8 +1,8 @@
 <script>
     import heading from "./content/heading";
-    // import InfoSlider from "./infoSlider/infoSlider";
+    import InfoSlider from "./infoSlider/infoSlider";
     export default {
-        // components: {InfoSlider},
+        components: {InfoSlider},
         functional: true,
         props: {
             template: {
@@ -17,7 +17,7 @@
                 template,
                 components: {
                     heading,
-                    // InfoSlider
+                    InfoSlider
                 }
             };
             const component = template ? dynComponent : heading;

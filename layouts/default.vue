@@ -10,7 +10,7 @@
         <div v-show="notReady">
             <!-- <parallax v-if="$route.path == '/' && isParallax"></parallax> -->
             <client-only>
-                <BaseHeader
+                <Header
                     v-if="$route.name !== '404' && $route.name !== null"
                     :headerBlack="headerBlack"
                     :isFixed="$route.path !== null"
@@ -29,7 +29,7 @@
             <!--            <ModalSuggestions time-show-modal="30000" :key="$route.path"/>-->
             <!--        </client-only>-->
             <client-only>
-                <BaseFooter
+                <Footer
                     v-if="$route.name !== '404' && $route.name !== null && $route.path !== '/' && $route.path !== '/en'"
                 />
                 <Feedback
@@ -38,19 +38,9 @@
                 />
             </client-only>
         </div>
-        <!-- Яндекс и Google аналитика -->
-        <div v-if="lang == 'ru'">
-            <client-only>
-                <!-- Yandex.Metrika counter -->
-                <noscript><div><img src="https://mc.yandex.ru/watch/61444693" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-            </client-only>
-        </div>
-        <div v-else-if="lang == 'en'">
-            <client-only>
-                <!-- Yandex.Metrika counter -->
-                <noscript><div><img src="https://mc.yandex.ru/watch/62640601" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-            </client-only>
-        </div>
+				<client-only>
+            <noscript><div><img src="https://mc.yandex.ru/watch/61444693" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+        </client-only>
     </div>
 </template>
 
@@ -58,8 +48,8 @@
 import Vue from "vue";
 import ImgCom from "../components/img/imgCom";
 import Feedback from "../components/feedback/feedback"
-import BaseHeader from "../shared/layouts/BaseHeader"
-import BaseFooter from "../shared/layouts/BaseFooter"
+import Header from "@/shared/Header"
+import Footer from "@/shared/Footer"
 import Breadcrumbs from "../components/breadcrumbs/breadcrumbs"
 import ModalSuggestions from "../components/modal/Suggestions"
 import { mapState } from "vuex";
@@ -84,8 +74,8 @@ export default {
     },
     components: {
         Feedback,
-        BaseHeader,
-        BaseFooter,
+        Header,
+        Footer,
         Breadcrumbs,
         ModalSuggestions,
         // parallax

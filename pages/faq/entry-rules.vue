@@ -1,8 +1,8 @@
 <template>
   <div class="faq-content entry-rules">
     <FaqMenu />
-    <div v-if="data.length" class="container--middle page-content text--small">
-      <div v-for="(entry, index) in data" :key="index">
+    <div v-if="data.rules" class="container--middle page-content text--small">
+      <div v-for="(entry, index) in data.rules" :key="index">
         <Heading
           v-if="entry.title && entry.underlineTitle"
           tag="p"
@@ -33,47 +33,17 @@ import FaqMenu from "../../components/faqMenu/faqMenu";
 import Heading from "../../components/content/heading";
 import ContentImage from "../../components/content/contentImage";
 import Divider from "../../components/content/divider";
-import { Api } from "../../api/api";
+import { fetchData } from '~/utils/fetchData';
+import seoHead from "../../mixins/seo-head";
 
 export default {
   name: "entryRules",
+	mixins: [seoHead],
   components: {
     FaqMenu,
     ContentImage,
     Divider,
     Heading
-  },
-  head() {
-    return {
-      title: this.seo ? this.seo.title : "",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: this.seo ? this.seo.description : ""
-        },
-        {
-          hid: "image",
-          name: "image",
-          content: "https://new.enjoykamchatka.ru/contacts-header.png"
-        },
-        {
-          hid: "og:title",
-          name: "og:title",
-          content: this.seo ? this.seo.title : ""
-        },
-        {
-          hid: "og:description",
-          name: "og:description",
-          content: this.seo ? this.seo.description : ""
-        },
-        {
-          hid: "og:image",
-          name: "og:image",
-          content: "https://new.enjoykamchatka.ru/contacts-header.png"
-        }
-      ]
-    };
   },
   data() {
     return {
@@ -81,22 +51,9 @@ export default {
       seo: ""
     };
   },
-  asyncData({ route, params, store }) {
-    let lang = "";
-    if (route.name.indexOf("_en") >= 0) {
-      lang = "en";
-    } else {
-      lang = "ru";
-    }
-    return Api.get(`entry-rules?lang=${store.$i18n.locale}&router=${route.path}`).then(
-      response => {
-        return {
-          seo: response.data.seo,
-          data: response.data.data ? response.data.data.rules : []
-        };
-      }
-    );
-  },
+	async asyncData(context) {
+			return fetchData('entry-rules', context);
+		},
   created() {
     let breadCrumbs = [{ name: "breadCrumbs.faqEntry" }];
     this.$store.dispatch("changeBreadcrumbs", breadCrumbs);
@@ -105,9 +62,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/_config.scss";
-@import "~assets/scss/_mixins.scss";
-@import "wow.js/css/libs/animate.css";
+@import "~assets/scss/config";
+@import "~assets/scss/mixins";
 .container--middle {
   @include respond-to(lg) {
     max-width: initial !important;

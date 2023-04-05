@@ -1,70 +1,42 @@
 <template>
-    <div v-if="activity" class="activity-location">
-        <PageHeader class="activity-location__header" v-if="activity.bannerImage" :data="activity.bannerImage">{{ activity.name }}</PageHeader>
-        <dynamic v-if="activity.content" :template="`<div class='text--small activity-location__content content-block'><div class='container--middle-tour animate-activities'>` + activity.content + `</div></div>`"/>
+    <div v-if="data" class="activity-location">
+        <PageHeader class="activity-location__header" v-if="data.bannerImage" :data="data.bannerImage">{{ data.name }}</PageHeader>
+        <dynamic v-if="data.content" :template="`<div class='text--small activity-location__content content-block'><div class='container--middle-tour animate-activities'>` + activity.content + `</div></div>`"/>
         <!-- <animated-number :value='20000' :formatValue='formatToPrice' :duration='4000'/> -->
         <div class="container activity-location__bottom">
-            <Heading v-if="activity.locations && activity.locations.length" class="location-title" tag="h2">{{ $t('locations') }}</Heading>
-            <grid v-if="activity && activity.locations && activity.locations.length" :data="activity.locations" urlParent="/locations/"/>
+            <Heading v-if="data.locations && data.locations.length" class="location-title" tag="h2">{{ $t('locations') }}</Heading>
+            <grid v-if="data && data.locations && data.locations.length" :data="data.locations" urlParent="/locations/"/>
         </div>
     </div>
 </template>
 
 <script>
 import PageHeader from '../../../components/content/pageHeader';
-import {Api} from '../../../api/api';
 import Heading from "../../../components/content/heading";
 import Dynamic from "../../../components/dynamic";
 import Grid from "../../../components/grid/grid";
-// import AnimatedNumber from "animated-number-vue";
+import seoHead from "@/mixins/seo-head";
+import { fetchData } from '~/utils/fetchData';
 import $ from 'jquery';
 export default {
     name: 'activitySlug',
+		mixins: [seoHead],
     components: {
         Grid,
         Dynamic,
         Heading,
         PageHeader,
-        // AnimatedNumber
     },
     data() {
         return {
-            activity: {},
+            data: {},
             seo: '',
 
         };
     },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: this.activity && this.activity.bannerImage ? this.activity.bannerImage.src : ''},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: this.activity && this.activity.bannerImage ? this.activity.bannerImage.src : ''}
-            ]
-        }
-    },
-    asyncData ({ route, params, error, payload, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        console.log(`activity/${params.activity}?lang=${store.$i18n.locale}&router=${route.path}`)
-        return Api.get(`activity/${params.activity}?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            if(response.data.data.length === 0){
-                error({ statusCode: 404 })
-            }
-            return {
-                seo: response.data.seo,
-                activity:response.data.data
-            }
-        });
-
-    },
+		async asyncData(context) {
+			return fetchData('activity', context);
+		},
     methods: {
         init() {
             Api.get(`activity/${this.$route.params.activity}?lang=${this.$i18n.locale}&router=${this.$route.path}`).then((response) => {

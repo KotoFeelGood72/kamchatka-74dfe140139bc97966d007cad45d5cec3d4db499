@@ -39,49 +39,10 @@
                 </div>
             </div>
             <div class="row">
-<!--                <div class="col-sm-6 col-md-3 feedback__field" :class="{'error-field' : errorPhoneCode && !model.phoneCode}">-->
-<!--                    <select v-model="model.phoneCode" :class="{'not-empty': model.phoneCode}" class="feedback__field-select">-->
-<!--                        <option-->
-<!--                            v-for="(code, id) in codeCountries"-->
-<!--                            :value="code.code"-->
-<!--                            :key="`code-${id}`"-->
-<!--                        >-->
-<!--                            {{ code.name }} {{ code.code }}-->
-<!--                        </option>-->
-<!--                    </select>-->
-<!--                    <span class="bar"/>-->
-<!--                    <label class="feedback-modal-prehover" for="feedbackTel" v-html="$t('feedback.code')"/>-->
-<!--                    <span class="error"-->
-<!--                          v-if="errorPhoneCode && !model.phoneCode"-->
-<!--                          v-html="$t('feedback.empty')"/>-->
-<!--                </div>-->
                 <div
                     class="col-sm-6 col-md-6 feedback__field"
                     :class="{'error-field' : errorPhone && !model.phone}"
                 >
-<!--                    <input-mask-->
-<!--                        v-model="model.phone"-->
-<!--                        id="feedbackTel"-->
-<!--                        autocomplete="false"-->
-<!--                        mask="(999)999-99-99"-->
-<!--                        maskChar="_"-->
-<!--                        required="true"-->
-<!--                        name="tel"-->
-<!--                        type="text"-->
-<!--                    ></input-mask>-->
-<!--                    <input-mask-->
-<!--                        v-if="$i18n.locale === 'ru'"-->
-<!--                        v-model="model.phone"-->
-<!--                        id="feedbackTel"-->
-<!--                        autocomplete="false"-->
-<!--                        mask="+7(999)999-99-99"-->
-<!--                        maskChar="_"-->
-<!--                        required="true"-->
-<!--                        name="tel"-->
-<!--                        type="text"-->
-<!--                    ></input-mask>-->
-<!--                        v-else-->
-
                     <input-mask
                         v-model="model.phone"
                         id="feedbackTel"
@@ -237,7 +198,6 @@ import animButton from "../../../components/button/button";
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import $ from 'jquery';
-import codeCountriesJson from "../../../assets/code.json"
 
 export default {
     name: "formFeedback",
@@ -312,7 +272,6 @@ export default {
             .catch(error => {
                 console.log(error);
             });
-        this.codeCountries = codeCountriesJson.countries;
     },
     methods: {
         nowDateFunc(date) {
@@ -336,31 +295,11 @@ export default {
             } else {
                 this.errorFio = "";
             }
-            // if (!this.model.phoneCode) {
-            //     isValidate = false;
-            //     this.errorPhoneCode = "feedback.empty"
-            // }
             if (!this.model.phone) {
                 isValidate = false;
                 this.errorPhone = "feedback.empty";
             } else {
-                // Это вместо валидации
                 this.errorPhone = "";
-
-                // if (
-                //     this.model.phone
-                //         .replace(/-/g, "")
-                //         .replace(/_/g, "")
-                //         .replace("(", "")
-                //         .replace(")", "")
-                //         .replace("+", "").length !== 11
-                //     && this.$i18n.locale === 'ru'
-                // ) {
-                //     isValidate = false;
-                //     this.errorPhone = "feedback.noValidPhone";
-                // } else {
-                //     this.errorPhone = "";
-                // }
             }
             if (!this.model.email) {
                 isValidate = false;
@@ -389,8 +328,6 @@ export default {
         },
         submitForm() {
             if (this.validateForm()) {
-                // debugger;
-                // const fullPhoneNumber = `${this.model.phoneCode}${this.model.phone}`
                 let formData = new FormData();
                 let sessid = this.fieldsHidden.filter(item => {
                     return item.name === "sessid";

@@ -32,30 +32,20 @@
 import PageHeader from '../../components/content/pageHeader';
 import VideoEmbed from '../../components/content/videoEmbed';
 import Heading from '../../components/content/heading';
-import {Api} from '../../api/api';
 import ContentImage from '../../components/content/contentImage';
 import parallax from '../../components/parallax/index';
+import seoHead from "@/mixins/seo-head";
+import { fetchData } from '~/utils/fetchData';
 
 export default {
     name: 'activityAll',
+		mixins: [seoHead],
     components: {
         ContentImage,
         Heading,
         VideoEmbed,
         PageHeader,
         parallax
-    },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: this.data && this.data.intro && this.data.intro.bannerImage ? this.data.intro.bannerImage.src : ''},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: this.data && this.data.intro && this.data.intro.bannerImage ? this.data.intro.bannerImage.src : ''}
-            ]
-        }
     },
     data() {
         return {
@@ -101,20 +91,9 @@ export default {
             this.$store.dispatch('changeIsShowFeedback', !this.$store.getters['getIsShowFeedback']());
         }
     },
-    asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`activities?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            return {
-                seo: response.data.seo,
-                data:response.data.data
-            }
-        });
-    },
+		async asyncData(context) {
+			return fetchData('activities', context);
+		},
     created() {
 
         let name = '';

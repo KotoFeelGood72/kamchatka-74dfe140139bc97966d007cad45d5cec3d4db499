@@ -1,11 +1,11 @@
 <template>
 	<div class="global-slider_w">
-		<div class="global_slider swiper-container">
+		<div class="trip_slider swiper-container">
 			<div class="swiper-wrapper">
 				<div class="swiper-slide" v-for="(slide, index) in data" :key="'slide-' + index">
 					<div class="global_slide_w">
 						<div class="global_slideContent">
-							<div class="global_slideCount"></div>
+							<div class="trip_slider--count"></div>
 							<div class="global_slideTxt">
 								<h3 class="size-big">
 									<nuxt-link
@@ -17,8 +17,8 @@
 								<p class="size-medium" v-html="slide.text"/>
 							</div>
 							<div class="global_slideNavigation">
-								<div class="global_slideNavPrev"><Icon icon="bi:chevron-left" /></div>
-								<div class="global_slideNavNext"><Icon icon="bi:chevron-right" /></div>
+								<div class="trip_slideNavPrev"><Icon icon="bi:chevron-left" /></div>
+								<div class="trip_slideNavNext"><Icon icon="bi:chevron-right" /></div>
 							</div>
 						</div>
 						<div class="global_slideImg_w">
@@ -45,16 +45,16 @@ import { Icon } from '@iconify/vue2';
 export default {
 		props: ["data", "url"],
 		mounted() {
-			this.globalSLider = new Swiper('.global_slider', {
+			this.tripSlider = new Swiper('.trip_slider', {
 				speed: 600,
 				slidesPerView: '1',
 				effect: 'fade',
 				navigation: {
-					nextEl: '.global_slideNavNext',
-					prevEl: '.global_slideNavPrev'
+					nextEl: '.trip_slideNavNext',
+					prevEl: '.trip_slideNavPrev'
 				},
 				pagination: {
-					el: '.global_slideCount',
+					el: '.trip_slider--count',
 					type: 'fraction',
 					renderFraction: function (currentClass, totalClass) {
 						return `<span class="double_count ${currentClass}"></span>
@@ -63,7 +63,6 @@ export default {
 					}
 				}
 			});
-
 		},
 		components: {
 			Icon,
@@ -90,7 +89,7 @@ export default {
 	height: 100%;
 	position: relative;
 }
-.global_slideCount {
+.trip_slider--count {
 	font-size: 50px;
 	color: $white;
 	font-weight: 900;

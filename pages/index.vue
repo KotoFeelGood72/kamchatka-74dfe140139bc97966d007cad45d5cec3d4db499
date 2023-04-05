@@ -35,9 +35,10 @@ import ContactQueue from '../components/ContactQueue/ContactQueue';
 import HomeFooter from '../sections/footer';
 import kamSlider from "../components/kam-slider/kam-slider";
 import tripSlider from "../components/Advisor/slider";
-
+import seoHead from "@/mixins/seo-head";
 
 export default {
+		mixins: [seoHead],
     computed: {
         ...mapGetters(["getRouterStatus", "SCREEN"]),
         isShowFeedback() {
@@ -64,27 +65,13 @@ export default {
     data() {
         return {
             loadedTours: false,
+						seo: null,
             dataPage: {
                 loadedActivities: false,
                 dataActivities: null,
-                seo: null,
                 tours: null,
             },
             showMenu: false,
-        };
-    },
-    head() {
-        return {
-            title: this.seo ? this.seo.title : "",
-            meta: [
-                {hid: "description", name: "description", content: this.seo ? this.seo.description : "",},
-                {hid: "image", name: "image", content: this.dataPage && this.dataPage.homeHeader ? this.dataPage.homeHeader.img.src : "",},
-                {hid: "og:title", name: "og:title", content: this.seo ? this.seo.title : "",},
-                {hid: "og:description", name: "og:description", content: this.seo ? this.seo.description : "",},
-                {hid: "og:image", name: "og:image", content: this.dataPage && this.dataPage.homeHeader ? this.dataPage.homeHeader.img.src : "",},
-                {hid: "cmsmagazine", name: "cmsmagazine", content: "9dece2e20769e5fefc2f5dec3eee83ae",},
-                {hid: "yandex-verification", name: "yandex-verification", content: this.$i18n.locale === "ru" ? "a85d5b9f54b2958d" : "81bc8d9d86628e2b",},
-            ],
         };
     },
     methods: {

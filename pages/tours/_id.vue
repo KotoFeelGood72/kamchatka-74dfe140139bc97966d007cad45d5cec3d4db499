@@ -1,180 +1,172 @@
 <template>
-    <section v-if="data" class="tour-item tour-item-list_styler">
-        <div class="container">
-            <div class="activity-watch__header">
-                <HeadingStatic tag="h1" size="lg" color="white" v-html="data.name"/>
-                <imgAnimation :img="data.bannerImg" :isAnimationT="true"/>
-            </div>
-        </div>
-        <div class="container--middle-tour tour-item__await-you">
-            <dynamic-info
-                v-if="this.data.topContentBlock"
-                :template="`<div class='tour-item__top'><div class='container__tours'>` + allTopContentWithoutLastDiv + `</div></div>`"
-            />
-        </div>
-        <div class="container" v-if="data.locations && data.locations.length">
-            <h1 class="location-title">{{ $t("tour.locationsProgram") }}</h1>
-        </div>
-        <div class="container grid__container-block">
-            <grid-loc
-                class="activity-grid"
-                v-if="data.locations && data.locations.length"
-                :data="data.locations"
-                :isPopup="true"
-            />
-        </div>
-        <div class="container--middle-tour tour-item__selected-date">
-            <div class="middle_heading_padding" v-if="data.datesInfoContent" v-html="data.datesInfoContent"/>
-            <anim-button @endAnim="changeOpenFeedback" color="white">{{ $t('tour.request') }}</anim-button>
-            <!-- <h2 v-html="$t('tour.textBottomDatesTitle')" />
-            <p class="mw-600" v-html="$t('tour.textBottomDatesDesc')" /> -->
-        </div>
-        <div class="container--middle-tour tour-item__await-you">
-            <dynamic-info :template="`<div><div>` + data.middleContentBlock + `</div></div>`"/>
-        </div>
-        <div class="container">
-            <div v-if="data.team && data.team.length" class="tour-item__teams row">
-                <div
-                    v-for="(team, index) in data.team"
-                    :key="'team-' + index"
-                    class="tour-item__team col-md-6 col-12"
-                >
-                    <div class="tour-item__team-block">
-                        <img-com :img="team.img"/>
-                        <div class="tour-item__team-container">
-                            <p class="tour-item__team-name" v-if="team.name" v-html="team.name"/>
-                            <p class="tour-item__team-text" v-if="team.text" v-html="team.text"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+	<section class="tour-item tour-item-list_styler">
+			<div class="container">
+					<div class="activity-watch__header">
+							<HeadingStatic tag="h1" size="lg" color="white">{{ data.name }}</HeadingStatic>
+							<imgAnimation :img="data.bannerImg" :isAnimationT="true"/>
+					</div>
+			</div>
+			<div class="container--middle-tour tour-item__await-you">
+					<dynamic-info
+							v-if="blockTop"
+							:template="`<div class='tour-item__top'><div class='container__tours'>` + blockTop + `</div></div>`"
+					/>
+					<!-- {{ blockTop }} -->
+					<!-- <dynamic-info
+							v-if="data.blockMiddle"
+							:template="`<div class='tour-item__top'><div class='container__tours'>` + data.blockMiddle + `</div></div>`"
+					/> -->
+			</div>
+			<div class="container" v-if="data.locations && data.locations.length">
+					<h1 class="location-title">{{ $t("tour.locationsProgram") }}</h1>
+			</div>
+			<div class="container grid__container-block">
+					<grid-loc
+							class="activity-grid"
+							v-if="data.locations && data.locations.length"
+							:data="data.locations"
+							:isPopup="true"
+					/>
+			</div>
+			<client-only>
+					<div class="container--middle-tour tour-item__selected-date">
+							<anim-button @endAnim="changeOpenFeedback" color="white">{{ $t('tour.request') }}</anim-button>
+					</div>
+					<div class="container--middle-tour tour-item__await-you" v-if="data.middleContentBlock">
+							<dynamic-info :template="`<div><div>` + data.middleContentBlock + `</div></div>`"/>
+					</div>
+			</client-only>
+			<div class="container">
+					<div v-if="data.team && data.team.length" class="tour-item__teams row">
+							<div
+									v-for="(team, index) in data.team"
+									:key="'team-' + index"
+									class="tour-item__team col-md-6 col-12"
+							>
+									<div class="tour-item__team-block">
+											<img-com :img="team.img"/>
+											<div class="tour-item__team-container">
+													<p class="tour-item__team-name" v-if="team.name" v-html="team.name"/>
+													<p class="tour-item__team-text" v-if="team.text" v-html="team.text"/>
+											</div>
+									</div>
+							</div>
+					</div>
+			</div>
 
-        <div class="container--middle-tour tour-item__await-you">
-            <dynamic-info :template="`<div><div>` + data.middleContentBlock2 + `</div></div>`"/>
-        </div>
-        <div class="container">
-            <!-- <h2 class="tour-item-h2" v-if="data.stages && data.stages.length" v-html="$t('tour.stages')" /> -->
-            <div v-if="data.stages && data.stages.length" class="tour-item__stages">
-                <div
-                    v-for="(stage, index) in data.stages"
-                    :key="'stage-' + index"
-                    class="tour-item__stage row"
-                >
-                    <div class="tour-item__stage-left col-lg-6 col-12">
-                        <!-- <p
-                          class="text--header tour-item__stage-day"
-                          v-html="(index + 1) < 10 ? ($t('tour.stageDay') + ' <span>0' +  (index+1)) +'</span>' : $t('tour.stageDay') + ' ' + (index + 1)"
-                        /> -->
-                        <div>
-                            <p class="tour-item__stage-name" v-html="stage.name"/>
-                            <div class="tour-item__stage-text" v-html="stage.text"/>
-                        </div>
-                    </div>
-                    <div v-if="slickComp" class="tour-item__stage-right col-12">
-                        <component
-                            :is="slickComp"
-                            :ref="'slick-img-stage-' + index"
-                            class="slick-stages"
-                            :options="slickContentOptions"
-                        >
-                            <div v-for="(thumb, index2) in stage.gallery" :key="'thumb-' + index2">
-                                <img-com :img="thumb"/>
-                            </div>
-                        </component>
-                    </div>
-                </div>
-            </div>
-            <div class="tour-item__first-step-enjoy">
-                <h2 v-if="data.prices && data.prices.title" v-html="data.prices.title"/>
-                <p class="fw-500" v-if="data.prices && data.prices.text" v-html="data.prices.text"/>
-                <div
-                    class="tour-item__price row"
-                    v-if="data.prices && data.prices.list && data.prices.list.length"
-                >
-                    <div
-                        v-for="(price, index) in data.prices.list"
-                        :key="index"
+			<div class="container--middle-tour tour-item__await-you" v-if="data.middleContentBlock2">
+					<dynamic-info :template="`<div><div>` + data.middleContentBlock2 + `</div></div>`"/>
+			</div>
+			<div class="container">
+					<div v-if="data.stages && data.stages.length" class="tour-item__stages">
+							<div
+									v-for="(stage, index) in data.stages"
+									:key="'stage-' + index"
+									class="tour-item__stage row"
+							>
+									<div class="tour-item__stage-left col-lg-6 col-12">
 
-                        class="tour-item-container__items col-xl-3 col-lg-4 col-sm-6 col-md-6 col-12"
-                    >
-                        <div class="tour-item-container__items__block" @click.prevent="changeOpenFeedback">
-                            <p class="tour-item__price-desc" v-html="price.description"/>
-                            <p class="tour-item__price-value">{{ price.value }}</p>
-                        </div>
-                    </div>
-                    <!-- <li v-for="(price, index) in data.prices.list" :key="index">
-                      <p class="tour-item__price-desc" v-html="price.description" />
-                      <p class="tour-item__price-value">{{price.value}} ₽</p>
-                    </li>-->
-                </div>
+											<div>
+													<p class="tour-item__stage-name" v-html="stage.name"/>
+													<div class="tour-item__stage-text" v-html="stage.text"/>
+											</div>
+									</div>
+									<div v-if="slickComp" class="tour-item__stage-right col-12">
+											<component
+													:is="slickComp"
+													:ref="'slick-img-stage-' + index"
+													class="slick-stages"
+													:options="slickContentOptions"
+											>
+													<div v-for="(thumb, index2) in stage.gallery" :key="'thumb-' + index2">
+															<img-com :img="thumb"/>
+													</div>
+											</component>
+									</div>
+							</div>
+					</div>
+					<div class="tour-item__first-step-enjoy">
+							<h2 v-if="data.prices && data.prices.title" v-html="data.prices.title"/>
+							<p class="fw-500" v-if="data.prices && data.prices.text" v-html="data.prices.text"/>
+							<div
+									class="tour-item__price row"
+									v-if="data.prices && data.prices.list && data.prices.list.length"
+							>
+									<div
+											v-for="(price, index) in data.prices.list"
+											:key="index"
 
-                <div class="block-after-price">
-                    <h3 v-html="blockAfterPrice"></h3>
-                </div>
+											class="tour-item-container__items col-xl-3 col-lg-4 col-sm-6 col-md-6 col-12"
+									>
+											<div class="tour-item-container__items__block">
+													<p class="tour-item__price-desc" v-html="price.description"/>
+													<p class="tour-item__price-value">{{ price.value }}</p>
+											</div>
+									</div>
+							</div>
 
-                <anim-button
-                    v-if="data.prices"
-                    class="anim-button_gradient"
-                    @endAnim="changeOpenFeedback"
-                    color="white"
-                >{{ $t('tour.book') }}
-                </anim-button>
-            </div>
-            <!-- <button v-if="data.prices" @click="changeOpenFeedback">{{ $t('tour.book') }}</button> -->
-        </div>
+							<div class="block-after-price">
+									<h3 v-html="blockAfterPrice"></h3>
+							</div>
+							<client-only>
+									<anim-button
+											v-if="data.prices"
+											class="anim-button_gradient"
+											@endAnim="changeOpenFeedback"
+											color="white"
+									>{{ $t('tour.book') }}
+									</anim-button>
+							</client-only>
+					</div>
+			</div>
 
-        <div class="block-after-price container">
-            <h1 v-html="blockAfterButton"></h1>
-        </div>
+			<div class="block-after-price container">
+					<h1 v-html="blockAfterButton"></h1>
+			</div>
 
 
-        <dynamic
-            :template="`<div class='tour-item__result'><div class='container--middle-tour'>` + data.bottomContentBlock + `</div class='container'></div>`"
-        />
+			<dynamic
+					v-if="data.bottomContentBlock"
+					:template="`<div class='tour-item__result'><div class='container--middle-tour'>` + data.bottomContentBlock + `</div class='container'></div>`"
+			/>
+			<client-only>
+					<div class="container tour-item__activities">
+							<h2 v-if="data.activities && data.activities.length" v-html="$t('tour.interested')"/>
+							<grid
+									class="mt-40"
+									v-if="data.activities && data.activities.length"
+									:data="data.activities"
+									:isPopup="true"
+							/>
+					</div>
+			</client-only>
+			<div class="container tour-item__navigation">
+					<div v-if="data.previousTour || data.nextTour" class="tour-item__change">
+							<div v-if="data.previousTour" class="tour-item__change-item">
+									<nuxt-link
+											:to="$i18n.locale === 'en' ? '/tours/' + data.previousTour.slug + '/' : '/tours/' + data.previousTour.slug + '/'"
+									>
 
-        <div class="container tour-item__activities">
-            <h2 v-if="data.activities && data.activities.length" v-html="$t('tour.interested')"/>
-            <grid
-                class="mt-40"
-                v-if="data.activities && data.activities.length"
-                :data="data.activities"
-                :isPopup="true"
-                :urlParent="false"
-            />
-        </div>
-        <div class="container tour-item__navigation">
-            <div v-if="data.previousTour || data.nextTour" class="tour-item__change">
-                <div v-if="data.previousTour" class="tour-item__change-item">
-                    <nuxt-link
-                        :to="$i18n.locale === 'en' ? '/tours/' + data.previousTour.slug + '/' : '/tours/' + data.previousTour.slug + '/'"
-                    >
-                        <!-- <arrow-long v-if="screen.width < 767"/> -->
-                        <!--            {{screen.width > 767 ? data.previousTour.name : ($i18n.locale === 'en' ? 'Previous' : 'Назад')}}-->
-                        {{ data.previousTour.name }}
-                    </nuxt-link>
-                </div>
-                <div v-if="data.nextTour" class="tour-item__change-item">
-                    <nuxt-link
-                        :to="$i18n.locale === 'en' ? '/tours/' + data.nextTour.slug + '/' : '/tours/' + data.nextTour.slug + '/'"
-                    >
-                        <!--            {{screen.width > 767 ? data.nextTour.name : ($i18n.locale === 'en' ? 'Next' : 'Вперед')}}-->
-                        {{ data.nextTour.name }}
-                        <!-- <arrow-long :rotate="true" v-if="screen.width < 767"/> -->
-                    </nuxt-link>
-                </div>
-            </div>
-        </div>
-    </section>
+											{{ data.previousTour.name }}
+									</nuxt-link>
+							</div>
+							<div v-if="data.nextTour" class="tour-item__change-item">
+									<nuxt-link
+											:to="$i18n.locale === 'en' ? '/tours/' + data.nextTour.slug + '/' : '/tours/' + data.nextTour.slug + '/'"
+									>
+											{{ data.nextTour.name }}
+
+									</nuxt-link>
+							</div>
+					</div>
+			</div>
+	</section>
 </template>
 
 <script>
-// import InfoSlider from "../../components/infoSlider/infoSlider";
-// import infoSliderOutside from "../../components/infoSlider/infoSliderOutside";
 import VideoEmbed from "../../components/content/videoEmbed";
 import PageHeader from "../../components/content/pageHeader";
 import contentImage from "../../components/content/contentImage";
-import {Api} from "../../api/api";
 import Heading from "../../components/content/heading";
 import HeadingStatic from "../../components/content/headingStep";
 import Dynamic from "../../components/dynamic";
@@ -182,137 +174,62 @@ import DynamicInfo from "../../components/dynamicInfoSlider";
 import animButton from "../../components/button/button";
 import Grid from "../../components/grid/grid";
 import GridLoc from '../../components/grid/gridLocations';
-// import ArrowLong from "../../components/icons/arrow-long";
 import imgAnimation from '../../components/img/imgAnimation'
-import $ from "jquery";
+import seoHead from "../../mixins/seo-head";
+import { fetchDataPost } from '~/utils/fetchDataPost';
+import blocksStandart from '~/components/blocks/blocks-standart'
+import InfoSlider from "../../components/infoSlider/infoSlider";
+import infoSliderOutside from "../../components/infoSlider/infoSliderOutside";
 
 export default {
     name: "tourSlug",
+		mixins: [seoHead],
     components: {
-        // ArrowLong,
         Grid,
         GridLoc,
-        Dynamic,
         Heading,
         HeadingStatic,
         PageHeader,
         VideoEmbed,
-        // InfoSlider,
-        // infoSliderOutside,
         contentImage,
         animButton,
-        DynamicInfo,
+        InfoSlider,
+        infoSliderOutside,
+				DynamicInfo,
         imgAnimation,
-        // Slick: () => import("vue-slick")
+				blocksStandart,
+				Slick: () => import("vue-slick")
     },
-    asyncData({route, params, error, payload, store}) {
-        let lang = "";
-        if (route.name.indexOf("_en") >= 0) {
-            lang = "en";
-        } else {
-            lang = "ru";
-        }
-        return Api.get(`tours/${params.id}?lang=${store.$i18n.locale}&router=${route.path}`).then(
-            response => {
-                try {
-                    console.log(response.data.data)
-                    if (response.data.data.length === 0) {
-                        error({statusCode: 404})
-                    }
-                    return {
-                        seo: response.data.seo,
-                        data: response.data.data
-                    };
-                } catch(e) {
-                    console.log(e)
-                }
-            }
-        );
+		computed: {
+        slickContentOptions() {
+            return {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                infinite: true
+            };
+        },
     },
     data() {
         return {
-            data: "",
-            seo: "",
-            // slickComp: false,
+            data: {},
+						slickComp: false,
+            seo: {},
             screen: this.$store.getters.SCREEN,
             count_background: 0,
             blockAfterPrice: '',
             blockAfterButton: '',
-            allTopContentWithoutLastDiv: null,
+            blockTop: null,
+						blockMiddle: null,
         };
     },
-    head() {
-        return {
-            title: this.seo ? this.seo.title : "",
-            meta: [
-                {
-                    hid: "description",
-                    name: "description",
-                    content: this.seo ? this.seo.description : ""
-                },
-                {
-                    hid: "keywords",
-                    name: "keywords",
-                    content: this.seo ? this.seo.keywords : ""
-                },
-                {
-                    hid: "image",
-                    name: "image",
-                    content:
-                        this.data && this.data.bannerImg ? this.data.bannerImg.src : ""
-                },
-                {
-                    hid: "og:title",
-                    name: "og:title",
-                    content: this.seo ? this.seo.title : ""
-                },
-                {
-                    hid: "og:description",
-                    name: "og:description",
-                    content: this.seo ? this.seo.description : ""
-                },
-                {
-                    hid: "og:keywords",
-                    name: "og:keywords",
-                    content: this.seo ? this.seo.keywords : ""
-                },
-                {
-                    hid: "og:image",
-                    name: "og:image",
-                    content:
-                        this.data && this.data.bannerImg ? this.data.bannerImg.src : ""
-                }
-            ]
-        };
-    },
-    computed: {
-        // slickContentOptions() {
-        //     return {
-        //         slidesToShow: 1,
-        //         slidesToScroll: 1,
-        //         infinite: true
-        //     };
-        // },
-    },
-    watch: {
-        $route() {
-            this.init();
-        }
-    },
+		async asyncData({ route, store }) {
+			const { seo, data } = await fetchDataPost('tours/', { route, store });
+			return {
+				seo,
+				data,
+			};
+		},
     methods: {
-        init() {
-            Api.get(
-                `tours/${this.$route.params.id}?lang=${this.$i18n.locale}&router=${this.$route.path}`
-            ).then(response => {
-                this.seo = response.data.seo;
-                this.data = response.data.data;
-                let breadCrumbs = [
-                    {name: "breadCrumbs.tour", link: "/tours"},
-                    {name: this.data.name}
-                ];
-                this.$store.dispatch("changeBreadcrumbs", breadCrumbs);
-            });
-        },
         changeOpenFeedback() {
             this.$store.dispatch(
                 "changeIsShowFeedback",
@@ -322,107 +239,32 @@ export default {
         parserHtmlTopContentBlock() {
             let parser = new DOMParser();
             let doc = parser.parseFromString(this.data.topContentBlock, 'text/html');
-            console.log(doc)
-            let blockAfterPrice = doc.body.removeChild(doc.body.lastChild);
+            let docInfo = parser.parseFromString(this.data.datesInfoContent, 'text/html');
+            this.blockTop = doc.body.innerHTML;
+            this.blockMiddle = docInfo.body.innerHTML;
 
-            this.blockAfterPrice = blockAfterPrice?.querySelector('h3')?.innerHTML || '';
-            this.blockAfterButton = blockAfterPrice?.querySelector('h1')?.innerHTML || '';
-            this.allTopContentWithoutLastDiv = doc.body.innerHTML;
-            console.log(this.data)
-        }
+						console.log(this.blockTop)
+        },
     },
 
     updated() {
-        let animate_item_heading = document.querySelectorAll(
-            ".tour-item h2, .tour-item h3, .tour-item ul, .tour-item p, .info-slider__content, .tour-item__stage-text"
-        );
-        for (let i = 0; i < animate_item_heading.length; i++) {
-            animate_item_heading[i].style.opacity = 0;
-            animate_item_heading[i].classList.add("animated-text");
-            animate_item_heading[0].classList.add("animated");
-            animate_item_heading[1].classList.add("animated");
-            animate_item_heading[1].classList.add("fadeInLeft")
-            animate_item_heading[0].classList.add("fadeInLeft");
-        }
         let videoLink = document.querySelectorAll('.inner_video>a')
         Array.from(videoLink).map((el) => {
-            el.dataset.fancybox
-            console.log(el.dataset.fancybox = '', 'Good')
+            el.dataset.fancybox = "";
         })
     },
     mounted() {
-        let animate_item_heading = document.querySelectorAll(
-            ".tour-item h2, .tour-item h3, .tour-item ul, .tour-item p, .info-slider__content, .tour-item__stage-text"
-        );
-        for (let i = 0; i < animate_item_heading.length; i++) {
-            animate_item_heading[i].style.opacity = 0;
-            animate_item_heading[i].classList.add("animated-text");
-            animate_item_heading[0].classList.add("animated");
-            animate_item_heading[0].classList.add("fadeInLeft");
-            if(animate_item_heading[1] !== undefined) {
-                animate_item_heading[1].classList.add("animated");
-                animate_item_heading[1].classList.add("fadeInLeft");
-            }
-        }
-        var Visible = function () {
-            [].forEach.call(
-                document.querySelectorAll(
-                    ".tour-item h2, .tour-item h3, .tour-item ul, .tour-item p, .info-slider__content, .tour-item__stage-text"
-                ),
-                function (div) {
-                    var target = div;
-                    var targetPosition = {
-                            top: window.pageYOffset + target.getBoundingClientRect().top,
-                            left: window.pageXOffset + target.getBoundingClientRect().left,
-                            right: window.pageXOffset + target.getBoundingClientRect().right,
-                            bottom: window.pageYOffset + target.getBoundingClientRect().bottom
-                        },
-                        windowPosition = {
-                            top: window.pageYOffset,
-                            left: window.pageXOffset,
-                            right: window.pageXOffset + document.documentElement.clientWidth,
-                            bottom: window.pageYOffset + document.documentElement.clientHeight
-                        };
-                    if (
-                        targetPosition.bottom > windowPosition.top &&
-                        targetPosition.top < windowPosition.bottom &&
-                        targetPosition.right > windowPosition.left &&
-                        targetPosition.left < windowPosition.right
-                    ) {
-                        if (div.classList.contains("animated-text")) {
-                            div.classList.remove("animated-text");
-                            div.classList.add("animated");
-                            div.classList.add("fadeInLeft");
-                        }
-                    } else {
-                        div.classList.add("animated-text");
-                        div.classList.remove("animated");
-                        div.classList.remove("fadeInLeft");
-                        // div.style.opacity = 0;
-                    }
-                }
-            );
-        };
 
-        window.addEventListener("scroll", function () {
-            Visible();
-        });
-        if (document.querySelector('.tour-item__price')) {
-            document.querySelector('.tour-item__price').addEventListener('scroll', function () {
-                Visible();
-            })
-        }
 
         let breadCrumbs = [
             {name: "breadCrumbs.tour", link: "/tours"},
             {name: this.data ? this.data.name : ""}
         ];
         this.$store.dispatch("changeBreadcrumbs", breadCrumbs);
-        // this.$nextTick(function () {
-        //     this.slickComp = "Slick";
-        // });
+				this.$nextTick(function () {
+            this.slickComp = "Slick";
+        });
         this.parserHtmlTopContentBlock();
-
     },
 
 
@@ -433,7 +275,7 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/mixins";
 @import "~@/assets/scss/config";
-// @import "wow.js/css/libs/animate.css";
+@import "wow.js/css/libs/animate.css";
 // Fix__rublia
 
 /deep/ .inner_video {
@@ -472,23 +314,6 @@ export default {
                 transform: scale(1.1) translate(-45%, -45%);
             }
         }
-    //&:after {
-    //    position: absolute;
-    //    top: 50%;
-    //    left: calc(50% - 4px);
-    //    transform: translate(-50%, -50%);
-    //    border-radius: 50%;
-    //    width: 100px;
-    //    height: 100px;
-    //    background-color: rgba(255, 255, 255, 0.14);
-    //    content: '';
-    //    pointer-events: none;
-    //    transition: all .3s ease;
-    //    @include respond-to(sm) {
-    //        width: 70px;
-    //        height: 70px;
-    //    }
-    //}
     &:before {
         content: '';
         position: absolute;
@@ -562,6 +387,9 @@ export default {
     font-family: -apple-system;
 }
 
+.animated-trim {
+    opacity: 0;
+}
 
 .slick-stages {
     height: 100%;
@@ -1099,18 +927,6 @@ export default {
                 margin-right: -25px;
             }
 
-            // .tour-item-container__morethree {
-            //   justify-content: space-between;
-            // }
-            // .tour-item-container__morethree div {
-            //   margin-top: 30px;
-            // }
-            // .tour-item-container__lessthree div {
-            //   margin-left: 30px;
-            // }
-            // .tour-item-container__lessthree div:first-child {
-            //   margin-left: 0px;
-            // }
             .tour-item-container__items {
                 height: 360px;
                 margin-top: 10px;
@@ -1157,66 +973,19 @@ export default {
             }
 
             .tour-item__price-value {
-                // Fix_font-size
                 font-size: 45px;
                 color: #1DCFFF;
                 position: absolute;
                 bottom: 15px;
                 font-family: Helvetica, -apple-system;
-                // left:0;
-                // right:0;
-                // text-align: center;
                 @include respond-to(sm) {
-                    // Fix_font-size
+
                     font-size: 35px;
                     line-height: 1.5;
                     margin: 0;
                 }
             }
 
-            // li {
-            //   display: flex;
-            //   justify-content: space-between;
-            //   align-items: flex-end;
-            //   max-width: 620px;
-            //   width: 100%;
-            //   padding-left: 30px;
-            //   position: relative;
-            //   list-style-type: none;
-            //   margin-bottom: 8px;
-            //   @include respond-to(sm) {
-            //     flex-direction: column;
-            //     align-items: flex-start;
-            //   }
-            //   p {
-            //     @include respond-to(sm) {
-            //       font-size: 22px;
-            //       line-height: 24px;
-            //     }
-            //   }
-            //   &:before {
-            //     content: "";
-            //     width: 12px;
-            //     height: 12px;
-            //     background-color: #1dcfff;
-            //     border-radius: 50%;
-            //     position: absolute;
-            //     left: 0;
-            //     top: 38px;
-            //     @include respond-to(sm) {
-            //       top: 20px;
-            //     }
-            //   }
-            // }
-            // .tour-item__price-value {
-            //   font-size: 50px;
-            //   line-height: 42px;
-            //   @include respond-to(sm) {
-            //     font-size: 40px;
-            //     line-height: 40px;
-            //     margin: 0;
-            //   }
-            // }
         }
     }
 

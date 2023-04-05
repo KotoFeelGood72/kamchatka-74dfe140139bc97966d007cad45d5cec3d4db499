@@ -1,69 +1,69 @@
 <template>
     <client-only>
-        <div v-if="activity.intro" class="activity-slug">
+        <div v-if="data.intro" class="activity-slug">
             <PageHeader
-                v-if="activity.intro.bannerImage"
-                :data="activity.intro.bannerImage"
+                v-if="data.intro.bannerImage"
+                :data="data.intro.bannerImage"
                 class="activity-slug__header"
-            >{{activity.intro.bannerText}}</PageHeader>
+            >{{data.intro.bannerText}}</PageHeader>
             <div class="container--middle-tour activity-slug__content text--small">
                 <Heading
-                    v-if="activity.intro.title"
+                    v-if="data.intro.title"
                     tag="h2"
                     color="lightBlue"
                     size
-                    v-html="activity.intro.title"
+                    v-html="data.intro.title"
                 />
                 <div
-                    v-if="activity.intro.text"
+                    v-if="data.intro.text"
                     class="text--small upper-video__content text-controller"
-                    v-html="activity.intro.text"
+                    v-html="data.intro.text"
                 />
-                <div v-if="activity.intro.video && activity.intro.videoImg" class="activity-slug__video">
-                    <videoEmbed isContainer="true" :url="activity.intro.video" :data="activity.intro.videoImg" />
+                <div v-if="data.intro.video && data.intro.videoImg" class="activity-slug__video">
+                    <videoEmbed isContainer="true" :url="data.intro.video" :data="data.intro.videoImg" />
                 </div>
                 <ContentImage
                     isBack="true"
-                    v-for="(img, i) in activity.intro.images"
+                    v-for="(img, i) in data.intro.images"
                     :key="'images-' + i"
                     :data="img"
                 />
                 <Heading
                     class="under-ing__heading"
-                    v-if="activity.intro.bottomTitle"
+                    v-if="data.intro.bottomTitle"
                     tag="h2"
                     color="lightBlue"
                     size
-                    v-html="activity.intro.bottomTitle"
+                    v-html="data.intro.bottomTitle"
                 />
                 <div
-                    v-if="activity.intro.bottomText"
+                    v-if="data.intro.bottomText"
                     class="text--small text-controller"
-                    v-html="activity.intro.bottomText"
+                    v-html="data.intro.bottomText"
                 />
             </div>
             <div class="container grid__container-block">
                 <Heading v-if="$t('home.activity')" tag="h2" color="black" size v-html="$t('home.activity')" />
                 <grid
-                    v-if="activity && activity.activities && activity.activities.length"
-                    :data="activity.activities"
+                    v-if="data && data.activities && data.activities.length"
+                    :data="data.activities"
                 />
             </div>
             <div class="container tour-item__navigation">
-                <div v-if="activity.previous || activity.next" class="tour-item__change">
-                    <div v-if="activity.previous" class="tour-item__change-item previews">
+                <div v-if="data.previous || data.next" class="tour-item__change">
+                    <div v-if="data.previous" class="tour-item__change-item previews">
                         <nuxt-link
-                            :to="$i18n.locale === 'en' ? '/activities/' + activity.previous.slug + '/' : '/activities/' + activity.previous.slug + '/'"
+                            :to="$i18n.locale === 'en' ? '/activities/' + data.previous.slug + '/' : '/activities/' + data.previous.slug + '/'"
                         >
                             <!-- <arrow-long v-if="screen.width < 767" /> -->
-                            {{screen.width > 767 ? activity.previous.name : $i18n.locale === 'en' ? 'Previous' : 'Назад'}}
+                            {{screen.width > 767 ? data.previous.name : $i18n.locale === 'en' ? 'Previous' : 'Назад'}}
                         </nuxt-link>
                     </div>
-                    <div v-if="activity.next" class="tour-item__change-item next">
+                    <div v-if="data.next" class="tour-item__change-item next">
                         <nuxt-link
-                            :to="$i18n.locale === 'en' ? '/activities/' + activity.next.slug + '/' : '/activities/' + activity.next.slug + '/'"
+                            :to="$i18n.locale === 'en' ? '/activities/' + data.next.slug + '/' : '/activities/' + data.next.slug + '/'"
                         >
-                            {{screen.width > 767 ? activity.next.name : $i18n.locale === 'en' ? 'Next' : 'Вперед'}}
+                            {{screen.width > 767 ? data.next.name : $i18n.locale === 'en' ? 'Next' : 'Вперед'}}
                             <!-- <arrow-long v-if="screen.width < 767" /> -->
                         </nuxt-link>
                     </div>
@@ -75,13 +75,15 @@
 <script>
 import PageHeader from "../../components/content/pageHeader";
 import Heading from "../../components/content/heading";
-import { Api } from "../../api/api";
 import ContentImage from "../../components/content/contentImage";
 import VideoEmbed from "../../components/content/videoEmbed";
 import Grid from "../../components/grid/grid";
+import seoHead from "@/mixins/seo-head";
+import { fetchData } from '~/utils/fetchData';
 
 export default {
   name: "activityactivity-slug",
+	mixins: [seoHead],
   components: {
     Grid,
     VideoEmbed,
@@ -90,70 +92,17 @@ export default {
     PageHeader,
     // ArrowLong
   },
-  head() {
-    return {
-      title: this.seo ? this.seo.title : "",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: this.seo ? this.seo.description : ""
-        },
-        {
-          hid: "image",
-          name: "image",
-          content:
-            this.data && this.data.intro && this.data.intro.bannerImage
-              ? this.data.intro.bannerImage.src
-              : ""
-        },
-        {
-          hid: "og:title",
-          name: "og:title",
-          content: this.seo ? this.seo.title : ""
-        },
-        {
-          hid: "og:description",
-          name: "og:description",
-          content: this.seo ? this.seo.description : ""
-        },
-        {
-          hid: "og:image",
-          name: "og:image",
-          content:
-            this.data && this.data.intro && this.data.intro.bannerImage
-              ? this.data.intro.bannerImage.src
-              : ""
-        }
-      ]
-    };
-  },
   data() {
     return {
-      activity: {},
+      data: {},
       seo: "",
       screen: this.$store.getters.SCREEN
     };
   },
-  asyncData({ route, params, error, payload, store }) {
-    let lang = "";
-    if (route.name.indexOf("_en") >= 0) {
-      lang = "en";
-    } else {
-      lang = "ru";
-    }
-    return Api.get(
-      `activities/${params.id}?lang=${store.$i18n.locale}&router=${route.path}`
-    ).then(response => {
-      if(response.data.data.length === 0){
-        error({ statusCode: 404 })
-      }
-       return {
-        seo: response.data.seo,
-        activity: response.data.data
-      }
-    });
-  },
+	async asyncData(context) {
+			return fetchData('activities', context);
+		},
+	
   methods: {
     init() {
       Api.get(

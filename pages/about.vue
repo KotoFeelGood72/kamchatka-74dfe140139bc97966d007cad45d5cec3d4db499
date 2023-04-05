@@ -1,11 +1,10 @@
 <template>
-    <div v-if="about.intro" class="about-us">
+    <div v-if="data.intro" class="about-us">
         <parallax :layers="layers" />
-        <PageHeader class="header__padding about-us__header">{{ about.intro.bannerText }}</PageHeader>
-        <client-only>
+        <PageHeader class="header__padding about-us__header">{{ data.intro.bannerText }}</PageHeader>
             <div class="about-us__wrap">
               <div class="container--middle-tour page-content text--24 about-us__bg_without_pb">
-                  <div v-for="(textBlock, index) in about.intro.textBlocks" :key="'text-block-' + index">
+                  <div v-for="(textBlock, index) in data.intro.textBlocks" :key="'text-block-' + index">
                     <Heading tag="h2" class="text--40" color="lightBlue" v-html="textBlock.title"/>
                     <p class="text--24" v-html="textBlock.text"/>
                     <Heading />
@@ -15,9 +14,9 @@
               </div>
             <div class="container page-content_without_ptop text--24 about-us__bg">
 
-                <Heading v-if="about.team && about.team.title" class="text--40 team-title" tag="h2" color="lightBlue" v-html="about.team.title"/>
-                <div v-if="about.team && about.team.team.length" class="about__teams row">
-                    <div v-for="(team, index) in about.team.team" :key="'team-' + index" class="about__team col-md-6 col-12">
+                <Heading v-if="data.team && data.team.title" class="text--40 team-title" tag="h2" color="lightBlue" v-html="data.team.title"/>
+                <div v-if="data.team && data.team.team.length" class="about__teams row">
+                    <div v-for="(team, index) in data.team.team" :key="'team-' + index" class="about__team col-md-6 col-12">
                         <div class="about__team-block">
                             <img-com :img="team.img"/>
                             <div class="about__team-container">
@@ -27,10 +26,10 @@
                         </div>
                     </div>
                 </div>
-                <Heading v-if="about.advantages.length" tag="h2" size="lg" class="text--70" color="lightBlue">{{$t('about-us.ourAdvantages')}}</Heading>
+                <Heading v-if="data.advantages.length" tag="h2" size="lg" class="text--70" color="lightBlue">{{$t('about-us.ourAdvantages')}}</Heading>
                 <div class="row about-us__advantages">
                     <div class="about-us__advantages-content col-md-8 col-lg-6">
-                        <div v-for="(item, index) in about.advantages" :key="'about-us__advantages-' + index">
+                        <div v-for="(item, index) in data.advantages" :key="'about-us__advantages-' + index">
                             <Heading tag="h2" color="white" size="md" v-html="item.name"/>
                             <p class="text--24" v-html="item.text"/>
                         </div>
@@ -41,10 +40,7 @@
                 </div>
             </div>
         </div>
-        </client-only>
-
         <ContactQueue :isAboutPage="true"/>
-        <!-- <TripadvisorReviews/> -->
     </div>
 </template>
 <script>
@@ -52,16 +48,15 @@ import Heading from '../components/content/heading';
 import ContentImage from '../components/content/contentImage';
 import videoEmbed from '../components/content/videoEmbed';
 import PageHeader from '../components/content/pageHeader';
-import {Api} from '../api/api';
 import parallax from '../components/parallax/index';
-import Vue from 'vue';
 import ContactQueue from '../components/ContactQueue/ContactQueue'
-// import TripadvisorReviews from "../components/content/TripadvisorReviews";
+import seoHead from '../mixins/seo-head';
+import { fetchData } from '~/utils/fetchData';
 
 export default {
     name: 'aboutUs',
+		mixins: [seoHead],
     components: {
-        // TripadvisorReviews,
         PageHeader,
         Heading,
         ContentImage,
@@ -69,22 +64,10 @@ export default {
         parallax,
         ContactQueue
     },
-    head () {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                { hid: 'description', name: 'description', content: this.seo ? this.seo.description : '' },
-                { hid: 'image', name: 'image', content: this.data && this.data.intro ? this.data.intro.bannerImage.src : ''},
-                { hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : '' },
-                { hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : '' },
-                { hid: 'og:image', name: 'og:image', content: this.data && this.data.intro ? this.data.intro.bannerImage.src : '' }
-            ]
-        }
-    },
     data() {
         return {
             hover: false,
-            about: {},
+            data: {},
             seo: '',
             layers: [
                 {
@@ -113,27 +96,12 @@ export default {
             person.hoverStatus = !person.hoverStatus;
         }
     },
-    asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`about?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
-            return {
-                seo: response.data.seo,
-                about:response.data.data
-            }
-        });
-    },
-    created() {
-        let name = '';
-        if (this.about && this.about.intro && this.about.intro.bannerText) {
-            name = this.about.intro.bannerText;
-        }
+		async asyncData(context) {
+			return fetchData('about', context);
+		},
+		mounted() {
         let breadCrumbs = [
-            {name}
+            {name: this.data.intro.bannerText}
         ];
         this.$store.dispatch('changeBreadcrumbs', breadCrumbs);
     }

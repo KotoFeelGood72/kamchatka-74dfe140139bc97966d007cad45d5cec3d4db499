@@ -8,21 +8,22 @@ export default {
             {hid: 'cmsmagazine', name: 'cmsmagazine', content: '9dece2e20769e5fefc2f5dec3eee83ae'}
         ],
         script: [
-            { src: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js' },
+            // { src: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js' },
         ],
         link: [
             {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
         ],
     },
-    server: {
-        port: 3000, // default: 3000
-        host: '0.0.0.0' // default: localhost
-    },
+    // server: {
+    //     port: 3000, // default: 3000
+    //     host: '0.0.0.0' // default: localhost
+    // },
     plugins: [
 
         {src: '~/plugins/vue-mask.js', ssr: false},
         {src: '~/plugins/vue-particle-effect-buttons.js', mode: 'client', ssr: false},
-        {src: '~/plugins/analytics.js', mode: 'client'},
+        // {src: '~/plugins/analytics.js', mode: 'client'},
+				{src: '~/plugins/vue-slick.js', mode: 'client', ssr: false},
     ],
     /*
     ** Customize the progress bar color
@@ -60,6 +61,17 @@ export default {
             differentDomains: true,
             detectBrowserLanguage: false
         }],
+				// [
+				// 	'@nuxtjs/yandex-metrika',
+				// 	{
+				// 		id: '61444693',
+				// 		webvisor: true,
+				// 		// clickmap: true,
+				// 		// useCDN: false,
+				// 		// trackLinks: true,
+				// 		// accurateTrackBounce: true,
+				// 	}
+				// ],
         [
             'nuxt-compress',
             {
@@ -72,23 +84,23 @@ export default {
             },
         ],
     ],
-    gtm: {
-        id: 'GTM-NB69J66',
+    // gtm: {
+    //     id: 'GTM-NB69J66',
 
-        enabled: true,
-        debug: true,
+    //     enabled: true,
+    //     debug: true,
 
-        pageTracking: true,
-        pageViewEventName: 'nuxtRoute',
+    //     pageTracking: true,
+    //     pageViewEventName: 'nuxtRoute',
 
-        autoInit: true,
-        respectDoNotTrack: true,
+    //     autoInit: true,
+    //     respectDoNotTrack: true,
 
-        scriptId: 'gtm-script',
-        scriptDefer: true,
-        scriptURL: 'https://www.googletagmanager.com/gtm.js',
-        crossOrigin: true,
-    },
+    //     scriptId: 'gtm-script',
+    //     scriptDefer: true,
+    //     scriptURL: 'https://www.googletagmanager.com/gtm.js',
+    //     crossOrigin: true,
+    // },
     build: {
         analyze: {
             analyzerMode: 'static'
@@ -107,27 +119,17 @@ export default {
                 }
             }
         },
-				// extend(config, { isDev, isClient }) {
-				// 	config.resolve.alias["vue$"] = "vue/dist/vue.esm.js";
-
-				// 	// проверяем, определено ли свойство module.rules
-				// 	if (config.module.rules) {
-				// 		const cssRule = config.module.rules.find(rule => rule.test.test('.css'))
-				// 		if (cssRule && cssRule.use) {
-				// 			cssRule.use.unshift('style-loader')
-				// 		}
-				// 	}
-
-				// 	if (isDev && isClient) {
-				// 		config.module.rules.push({
-				// 			enforce: 'pre',
-				// 			test: /\.(js|vue)$/,
-				// 			loader: 'eslint-loader',
-				// 			exclude: /(node_modules)/
-				// 		})
-				// 	}
-				// }
-
+			// 	extend(config, {isDev, isClient }) {
+			// 		config.resolve.alias["vue$"] = "vue/dist/vue.esm.js";
+			// 		if (isDev && isClient) {
+			// 				config.module.rules.push({
+			// 						enforce: 'pre',
+			// 						test: /\.(js|vue)$/,
+			// 						loader: 'eslint-loader',
+			// 						exclude: /(node_modules)/
+			// 				})
+			// 		}
+			// }
     },
     router: {
       base: "/",

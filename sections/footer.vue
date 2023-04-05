@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import TimeZone from '../shared/layouts/TimeZone';
-import FooterMenu from '../shared/layouts/FooterMenu';
-import ContactUs from '../shared/layouts/ContactUs';
-import Socials from '../shared/layouts/Socials';
-import RussianGerb from '../shared/layouts/RussianGerb.vue'
+import TimeZone from '@/shared/TimeZone';
+import FooterMenu from '@/shared/FooterMenu';
+import ContactUs from '@/shared/ContactUs';
+import Socials from '@/shared/Socials';
+import RussianGerb from '@/shared/RussianGerb'
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 

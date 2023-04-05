@@ -1,177 +1,53 @@
 <template>
-  <div v-if="blog" class="blog-entry">
-    <PageHeader v-if="blog.banner" :data="blog.banner">{{ blog.name }}</PageHeader>
-    <dynamic
-      v-if="blog.content"
-      :template="`<div class='text--small content-block animated-blog blog__item_ullishka'><div class='container blog__item_ullishka'>` + blog.content + `</div></div>`"
-    />
+  <div v-if="data" class="blog-entry">
+    <PageHeader v-if="data.banner" :data="data.banner">{{ data.name }}</PageHeader>
+    <div v-if="data.content" class="text--small content-block animated-blog blog__item_ullishka">
+      <div class="container blog__item_ullishka" v-html="data.content"></div>
+    </div>
   </div>
 </template>
 
 <script>
 import PageHeader from "../../components/content/pageHeader";
-import { Api } from "../../api/api";
-import Dynamic from "../../components/dynamic";
+import seoHead from "../../mixins/seo-head";
+import { fetchDataPost } from '~/utils/fetchDataPost';
 
 export default {
   name: "blogEntry",
   components: {
-    Dynamic,
     PageHeader
   },
+  mixins: [seoHead],
   data() {
     return {
-        blog: "",
-        seo: "",
-        url: ""
+      seo: {},
+      data: {},
+      url: ""
     };
   },
-  head() {
+  async asyncData({ route, store }) {
+    const { seo, data } = await fetchDataPost('blog/', { route, store });
     return {
-      title: this.seo ? this.seo.title : "",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: this.seo ? this.seo.description : ""
-        },
-        {
-          hid: "image",
-          name: "image",
-          content: this.blog && this.blog.banner ? this.blog.banner.src : ""
-        },
-        {
-          hid: "og:title",
-          name: "og:title",
-          content: this.seo ? this.seo.title : ""
-        },
-        {
-          hid: "og:description",
-          name: "og:description",
-          content: this.seo ? this.seo.description : ""
-        },
-        {
-          hid: "og:image",
-          name: "og:image",
-          content: this.blog && this.blog.banner ? this.blog.banner.src : ""
-        }
-      ]
+      seo,
+      data,
     };
-  },
-  asyncData({ route, params, error, payload, store }) {
-    let lang = "";
-    if (route.name.indexOf("_en") >= 0) {
-      lang = "en";
-    } else {
-      lang = "ru";
-    }
-    return Api.get(`blog/${params.id}?lang=${store.$i18n.locale}&router=${route.path}`).then(
-      response => {
-      if(response.data.data.length === 0){
-          error({ statusCode: 404 })
-      }
-        return {
-          seo: response.data.seo,
-          blog: response.data.data
-        };
-      }
-    );
-  },
-  methods: {
-    init() {
-      Api.get(
-        `blog/${this.$route.params.id}?lang=${this.$i18n.locale}&router=${this.$route.path}`
-      ).then(response => {
-        this.seo = response.data.seo;
-        this.blog = response.data.data;
-        let breadCrumbs = [
-          { name: "breadCrumbs.blog", link: "/blog" },
-          { name: this.blog.name }
-        ];
-        this.$store.dispatch("changeBreadcrumbs", breadCrumbs);
-      });
-    },
-  },
-  watch: {
-    $route() {
-      this.init();
-    }
-  },
-  updated() {
-    let animate_item_heading = document.querySelectorAll(
-      ".animated-blog h4, .animated-blog h3, .animated-blog p, .animated-blog ul, .animated-blog h1, .text--blue, .animated-blog h2"
-    );
-    for (let i = 0; i < animate_item_heading.length; i++) {
-      animate_item_heading[i].style.opacity = 0;
-      animate_item_heading[i].classList.add("animated-text");
-    }
   },
   mounted() {
-    let animate_item_heading = document.querySelectorAll(
-      ".animated-blog h4, .animated-blog h3, .animated-blog p, .animated-blog ul, .animated-blog h1, .text--blue, .animated-blog h2"
-    );
-    for (let i = 0; i < animate_item_heading.length; i++) {
-      animate_item_heading[i].style.opacity = 0;
-      animate_item_heading[i].classList.add("animated-text");
-    }
-
-    var Visible = function() {
-      [].forEach.call(
-        document.querySelectorAll(
-          ".animated-blog h4, .animated-blog h3, .animated-blog p, .animated-blog ul, .animated-blog h1, .text--blue, .animated-blog h2"
-        ),
-        function(div) {
-          var target = div;
-          var targetPosition = {
-              top: window.pageYOffset + target.getBoundingClientRect().top,
-              left: window.pageXOffset + target.getBoundingClientRect().left,
-              right: window.pageXOffset + target.getBoundingClientRect().right,
-              bottom: window.pageYOffset + target.getBoundingClientRect().bottom
-            },
-            windowPosition = {
-              top: window.pageYOffset,
-              left: window.pageXOffset,
-              right: window.pageXOffset + document.documentElement.clientWidth,
-              bottom: window.pageYOffset + document.documentElement.clientHeight
-            };
-          if (
-            targetPosition.bottom > windowPosition.top &&
-            targetPosition.top < windowPosition.bottom &&
-            targetPosition.right > windowPosition.left &&
-            targetPosition.left < windowPosition.right
-          ) {
-            if (div.classList.contains("animated-text")) {
-              div.classList.remove("animated-text");
-              div.classList.add("animated");
-              div.classList.add("fadeInLeft");
-            }
-          } else {
-            div.classList.add("animated-text");
-            div.classList.remove("animated");
-            div.classList.remove("fadeInLeft");
-            div.style.opacity = 0;
-          }
-        }
-      );
-    };
-    window.addEventListener("scroll", function() {
-      Visible();
-    });
-
     let breadCrumbs = [
       { name: "breadCrumbs.blog", link: "/blog" },
-      { name: this.blog.name }
+      { name: this.data.name }
     ];
     this.$store.dispatch("changeBreadcrumbs", breadCrumbs);
     this.url = window.location.href;
-  }
+  },
 };
 </script>
+
 
 <style lang="scss" scoped>
 @import "~assets/scss/config";
 @import "~assets/scss/mixins";
-@import "wow.js/css/libs/animate.css";
+// @import "wow.js/css/libs/animate.css";
 /deep/ .container {
   width: 1200px;
   max-width: initial;

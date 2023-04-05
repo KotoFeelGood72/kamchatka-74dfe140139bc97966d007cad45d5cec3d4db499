@@ -3,11 +3,11 @@
     <div class="faq-menu__container container">
       <div class="row">
         <div class="col-md-6 faq-menu__left">
-          <h1 v-bind:class="{ 'animate-route' : !getRouterStatus(), 'animate-load' : !getRouterStatus()}" class="headline text--headline animated fadeInLeft" v-html="$t('faq.title')" />
-          <p v-bind:class="{ 'animate-route' : getRouterStatus(), 'animate-load' : !getRouterStatus()}" class="faq-menu__description text animated fadeInLeft" v-html="$t('faq.description')" />
+          <h1 class="headline text--headline animated fadeInLeft" v-html="$t('faq.title')" />
+          <p class="faq-menu__description text animated fadeInLeft" v-html="$t('faq.description')" />
         </div>
         <div class="col-md-6 faq-menu__right text">
-          <li v-bind:class="{ 'animate-route' : getRouterStatus(), 'animate-load' : !getRouterStatus()}" v-for="(nav, index) in menu" :key="'topMenu-' + index" class="animated fadeInLeft">
+          <li v-for="(nav, index) in menu" :key="'topMenu-' + index">
             <nuxt-link
               :to="$i18n.locale === 'en' ? nav.to + '/' : nav.to + '/'"
               active-class="active"
@@ -24,7 +24,6 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  computed: mapGetters(["getRouterStatus"]),
   name: "faqMenu",
   data() {
     return {
@@ -64,15 +63,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/config";
-@import "~assets/scss/mixins";
-@import "wow.js/css/libs/animate.css";
-.animate-route {
-  animation-delay: 5s;
-}
-.animate-load {
-  animation-delay: 2.5s;
-}
+@import "~@/assets/scss/config";
+@import "~@/assets/scss/mixins";
+
 .faq-menu {
   overflow-x: hidden;
 }

@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import ContactUs from '../../shared/layouts/ContactUs';
-import Socials from '../../shared/layouts/Socials';
+import ContactUs from '@/shared/ContactUs';
+import Socials from '@/shared/Socials'
 
 export default {
     name: 'subFooter',

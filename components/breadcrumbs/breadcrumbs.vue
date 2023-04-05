@@ -22,8 +22,8 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "~assets/scss/config";
-    @import "~assets/scss/mixins";
+    @import "~@/assets/scss/config";
+    @import "~@/assets/scss/mixins";
     .breadcrumbs {
         color: #FBFBFB;
         margin: 10px 0;
@@ -65,7 +65,6 @@
             font-size: 16px;
             line-height: 1.5;
             color: #FBFBFB;
-            /*border-bottom: 1px solid;*/
             white-space: nowrap;
             display: flex;
             flex-direction: row;
@@ -73,10 +72,6 @@
                 font-size: 12px;
                 line-height: 1.5;
             }
-        }
-        div > span,
-        span{
-            /*border-bottom: 1px solid transparent;*/
         }
     }
 </style>

@@ -3,7 +3,7 @@
 			<div class="tripadvisor-reviews__container">
 					<div class="tripadvisor-reviews__title section-grid__title">{{$t('home.advisorTitle')}}</div>
 					<div class="tripslider_w">
-						<div v-if="!sliderTrip" class="tripslider swiper-container">
+						<div v-if="advisorSlider" class="trip-slider swiper-container">
 							<div class="swiper-wrapper">
 								<div class="swiper-slide" v-for="(review, index) in reviews.ru" :key="'slide-' + index">
 									<slide
@@ -43,7 +43,7 @@ export default {
 	},
 	data() {
 		return {
-			sliderTrip: null,
+			advisorSlider: null,
 			reviews: {
 					ru: [
 							{
@@ -174,31 +174,21 @@ export default {
 			},
 	},
 	mounted() {
-		this.initSliderTrip();
-	},
-
-	methods: {
-		initSliderTrip() {
-			const sliderTrip = new Swiper('.tripslider', {
+		this.advisorSlider = new Swiper('.trip-slider', {
 				speed: 600,
-				// slidesPerView: '2',
+				slidesPerView: '2',
 				navigation: {
 					nextEl: '.trip_slideNavNext',
 					prevEl: '.trip_slideNavPrev'
 				},
-				breakpoints: {
-					480: {
-						slidesPerView: '1',
-					},
-					768: {
-						slidesPerView: '2',
-					}
-				},
 			});
-			console.log('Good')
-			sliderTrip.init()
-		}
 	},
+	beforeDestroy() {
+    if (this.advisorSlider) {
+      this.advisorSlider.destroy(true, true);
+      this.advisorSlider = null;
+    }
+  },
 }
 </script>
 
@@ -210,8 +200,6 @@ export default {
 	background: #21232a;
 	color: #ffffff;
 	min-height: calc(100vh - 100px);
-	// display: flex;
-	// align-items: center;
 	padding: 64px 65px;
 
 }

@@ -36,11 +36,11 @@
     </footer>
 </template>
 <script>
-import TimeZone from '../../shared/layouts/TimeZone';
-import ContactUs from '../../shared/layouts/ContactUs';
-import Socials from '../../shared/layouts/Socials';
-import FooterMenu from '../../shared/layouts/FooterMenu';
-import RussianGerb from '../../shared/layouts/RussianGerb.vue';
+import TimeZone from '@/shared/TimeZone';
+import ContactUs from '@/shared/ContactUs';
+import Socials from '@/shared/Socials';
+import FooterMenu from '@/shared/FooterMenu';
+import RussianGerb from '@/shared/RussianGerb';
 import { mapState } from 'vuex'
 
 
