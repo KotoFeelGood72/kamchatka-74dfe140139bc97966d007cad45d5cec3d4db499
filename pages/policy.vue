@@ -1,9 +1,9 @@
 <template>
     <div v-if="policy" class="policy">
         <div class="container">
-            <Heading color="blue-simple" tag="h1">{{ $t('politic') }}</Heading>
+            <Heading color="blue-simple" tag="h1">Политика конфиденциальности</Heading>
             <div v-for="(item, index) in policy" :key="'policy-' + index">
-                <Heading tag="h2" color="blue-simple" v-if="item.headline" v-html="item.headline"/>
+                <Heading tag="h2" color="blue-simple" v-if="item.headline">{{ item.headline }}</Heading>
                 <div v-if="item.text" v-html="item.text"/>
             </div>
         </div>

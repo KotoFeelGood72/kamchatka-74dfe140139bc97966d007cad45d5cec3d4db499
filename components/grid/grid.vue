@@ -22,7 +22,7 @@
                 <img-com :img="activeItem.img"/>
                 <HeadingStep :modalProps="true" tag="h2" color="white" size="sm">{{ activeItem.name }}</HeadingStep>
                 <div class="popup-active-grid__text" v-html="activeItem.text"/>
-                <p class="popup-active-grid__close-text" @click="closePopupLocation">{{ $t('close') }}</p>
+                <p class="popup-active-grid__close-text" @click="closePopupLocation">Закрыть</p>
             </div>
         </div>
         </vodal>

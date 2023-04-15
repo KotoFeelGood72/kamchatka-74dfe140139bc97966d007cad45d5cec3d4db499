@@ -91,3 +91,28 @@
 // }
 
 // End global mod
+
+@mixin animate-link {
+	position: relative;
+	transition: all .3s ease;
+	&:hover {
+		color: $light-blue;
+		&:before, &:after {
+			width: 0;
+		}
+	}
+	&:before, &:after {
+		width: 50%;
+		position: absolute;
+		content: '';
+		border-bottom: .1rem solid $white;
+		bottom: 0;
+		transition: all .3s ease;
+	}
+	&:before {
+		left: 0;
+	}
+	&:after {
+		right: 0;
+	}
+}

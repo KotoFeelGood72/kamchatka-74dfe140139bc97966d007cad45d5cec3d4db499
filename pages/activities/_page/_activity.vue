@@ -1,10 +1,9 @@
 <template>
     <div v-if="data" class="activity-location">
         <PageHeader class="activity-location__header" v-if="data.bannerImage" :data="data.bannerImage">{{ data.name }}</PageHeader>
-        <dynamic v-if="data.content" :template="`<div class='text--small activity-location__content content-block'><div class='container--middle-tour animate-activities'>` + activity.content + `</div></div>`"/>
-        <!-- <animated-number :value='20000' :formatValue='formatToPrice' :duration='4000'/> -->
+        <dynamic v-if="data.content" :template="`<div class='text--small activity-location__content content-block'><div class='container--middle-tour '>` + activity.content + `</div></div>`"/>
         <div class="container activity-location__bottom">
-            <Heading v-if="data.locations && data.locations.length" class="location-title" tag="h2">{{ $t('locations') }}</Heading>
+            <Heading v-if="data.locations && data.locations.length" class="location-title" tag="h2">Локации</Heading>
             <grid v-if="data && data.locations && data.locations.length" :data="data.locations" urlParent="/locations/"/>
         </div>
     </div>
@@ -58,98 +57,6 @@ export default {
         '$route'() {
             this.init();
         }
-    },
-    updated(){
-        [].forEach.call(document.querySelectorAll('.animate-counter'), function(div) {
-            if(parseInt(div.innerText) != NaN){
-                div.classList.add('detected-animation')
-            }
-        });
-        let activities__item = document.querySelectorAll('.animate-activities p, .animate-activities h1')
-        for(let i = 0; i<activities__item.length; i++){
-            activities__item[i].style.opacity = 0;
-            activities__item[i].classList.add('animate-text')
-        }
-
-    },
-    mounted() {
-        let activities__item = document.querySelectorAll('.animate-activities p, .animate-activities h1')
-        for(let i = 0; i<activities__item.length; i++){
-            activities__item[i].style.opacity = 0;
-            activities__item[i].classList.add('animate-text')
-        }
-        [].forEach.call(document.querySelectorAll('.animate-counter'), function(div) {
-            if(parseInt(div.innerText) != NaN){
-                div.classList.add('detected-animation')
-            }
-        });
-        var Visible = function () {
-            [].forEach.call(document.querySelectorAll('.animate-counter, .animate-activities p, .animate-activities h1'), function(div) {
-                var target = div;
-                var targetPosition = {
-                        top: window.pageYOffset + target.getBoundingClientRect().top,
-                        left: window.pageXOffset + target.getBoundingClientRect().left,
-                        right: window.pageXOffset + target.getBoundingClientRect().right,
-                        bottom: window.pageYOffset + target.getBoundingClientRect().bottom
-                    },
-                    windowPosition = {
-                        top: window.pageYOffset,
-                        left: window.pageXOffset,
-                        right: window.pageXOffset + document.documentElement.clientWidth,
-                        bottom: window.pageYOffset + document.documentElement.clientHeight
-                    };
-                if (targetPosition.bottom > windowPosition.top &&
-                    targetPosition.top < windowPosition.bottom &&
-                    targetPosition.right > windowPosition.left &&
-                    targetPosition.left < windowPosition.right) {
-                    let values = parseInt(div.innerText)
-                    let div_values = div.innerHTML
-                    let div_small =  div.querySelector('small')
-                    if(div.classList.contains('detected-animation')){
-                        div.classList.remove('detected-animation')
-                        $({ Counter: 0 }).animate({ Counter: parseInt(div.innerText) }, {
-                            duration: 2500,
-                            easing: 'swing',
-                            step: function () {
-                                if(div_small){
-                                    div.innerHTML=Math.ceil(this.Counter)+`<small>${div_small.innerHTML}</small>`;
-                                }
-                                else{
-                                    div.innerHTML=Math.ceil(this.Counter);
-                                }
-
-                            },
-                            complete:function(){
-                                div.innerHTML = div_values.toString()
-                            }
-                        });
-
-                    }
-                    else if(div.classList.contains('animate-text')){
-                        div.classList.remove("animate-text");
-                        div.classList.add("animated");
-                        div.classList.add("fadeInLeft");
-                    }
-                }
-                else{
-                    div.classList.add("animate-text");
-                    div.classList.remove("animated");
-                    div.classList.remove("fadeInLeft");
-                    div.style.opacity = 0;
-                }
-            });
-        };
-        window.addEventListener('scroll', function() {
-            Visible ();
-        });
-        let breadCrumbs = [
-            {name: 'breadCrumbs.activities', link: '/activities'},
-            {name:this.activity.category.name, link: `/activities/${this.activity.category.slug}`},
-            {name: this.activity ? this.activity.name: ''}
-        ];
-        this.$store.dispatch('changeBreadcrumbs', breadCrumbs);
-        this.$store.commit('TRANSPARENT', true);
-
     },
     created() {
         this.$store.commit('TRANSPARENT', true);

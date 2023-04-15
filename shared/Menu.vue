@@ -8,16 +8,13 @@
         </div>
 
         <div class="header__menu" :class="{'active': menuStatus}">
-            <transition name="base-header">
-                <div class="header__menu-container" v-if="menuStatus">
-                    <p class="header__menu-item" v-for="(item, index) in menu" :key="'menu-' + index">
-                        <nuxt-link :to="localePath(item.link) + '/'" v-html="$t(item.name)"/>
-                    </p>
-                    <lang class="lang-menu"/>
-                    <ContactUs :contactsData="contacts ? contacts.data.contacts[0]  : ''" :menuContacts="true" :notShowContacts="false"/>
-                    <Socials classPage="header__menu-socials"/>
-                </div>
-            </transition>
+					<div class="header__menu-container" v-if="menuStatus">
+							<p class="header__menu-item" v-for="(item, index) in nav.siteNav" :key="'menu-' + index">
+									<nuxt-link :to="item.link">{{ item.name }}</nuxt-link>
+							</p>
+							<ContactUs :contactsData="contacts ? contacts.data.contacts[0]  : ''" :menuContacts="true" :notShowContacts="false"/>
+							<Socials classPage="header__menu-socials"/>
+					</div>
         </div>
     </div>
 </template>
@@ -25,61 +22,18 @@
 <script>
     import ContactUs from "./ContactUs";
     import Socials from "./Socials";
-    import Lang from "./lang";
     import {mapState, mapActions, mapMutations} from 'vuex'
+		import nav from "../components/navigation/nav";
 
     export default {
         name: "Menu",
-        components: {Lang, Socials, ContactUs},
+        components: { Socials, ContactUs},
         data() {
             return {
+								nav,
                 menuStatus: false,
                 isShowSearch: false,
                 isMobile: false,
-                socials: [
-                    {
-                        icon: "facebook",
-                        url: "#"
-                    },
-                    {
-                        icon: "instagram",
-                        url: "#"
-                    },
-                    {
-                        icon: "youtube",
-                        url: "#"
-                    },
-                    {
-                        icon: "tripadvisor",
-                        url: "#"
-                    }
-                ],
-                menu: [
-                    {
-                        name: "footer.navOne",
-                        link: "/tours/"
-                    },
-                    {
-                        name: "footer.navTwo",
-                        link: "/activities/"
-                    },
-                    {
-                        name: "footer.navThree",
-                        link: "/about/"
-                    },
-                    {
-                        name: "footer.navFour",
-                        link: "/faq/"
-                    },
-                    {
-                        name: "footer.navFive",
-                        link: "/blog/"
-                    },
-                    {
-                        name: "footer.navSix",
-                        link: "/contacts/"
-                    }
-                ]
             };
         },
         mounted() {

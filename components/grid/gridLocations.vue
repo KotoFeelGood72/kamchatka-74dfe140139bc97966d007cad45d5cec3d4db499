@@ -43,7 +43,7 @@
                 </div>
 
 
-                <p class="popup-active-grid__close-text" @click="closePopupLocation">{{ $t('close') }}</p>
+                <p class="popup-active-grid__close-text" @click="closePopupLocation">Закрыть</p>
             </div>
         </div>
         </vodal>

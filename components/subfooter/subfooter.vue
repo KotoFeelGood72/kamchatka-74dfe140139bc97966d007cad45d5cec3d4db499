@@ -1,6 +1,6 @@
 <template>
     <div class="container--middle subfooter">
-        <h3 class="subfooter__heading text--middle" v-html="$t('faq.answerQuestions')"/>
+        <h3 class="subfooter__heading text--middle">Ответим на все ваши вопросы</h3>
         <ContactUs/>
         <Socials/>
     </div>

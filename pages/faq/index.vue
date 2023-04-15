@@ -9,7 +9,6 @@
 
 <script>
 import FaqMenu from '../../components/faqMenu/faqMenu';
-import FaqContacts from '../../components/faqMenu/faqContacts';
 import According from '../../components/according/according';
 import { fetchData } from '~/utils/fetchData';
 import seoHead from '../../mixins/seo-head';
@@ -20,7 +19,7 @@ export default {
     components: {
         According,
         FaqMenu,
-        FaqContacts
+
     },
     watch: {
         isParallax(val) {

@@ -1,7 +1,7 @@
 <template>
     <div class="contacts">
         <parallax :layers="layers" />
-        <PageHeader class="header__padding"><span v-html="data.intro.bannerText"/></PageHeader>
+        <PageHeader class="header__padding">{{ data.intro.bannerText }}</PageHeader>
         <div class="contacts__wrap">
             <div class="container contacts__info">
                 <Heading tag="h2" color="white"><span v-html="data.intro.title"></span></Heading>

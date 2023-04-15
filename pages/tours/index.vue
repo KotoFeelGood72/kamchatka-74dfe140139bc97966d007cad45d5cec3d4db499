@@ -8,16 +8,13 @@
         <div class="tours-entry activity-slug">
             <div class="container--middle-tour activity-slug__content text--small">
                     <Heading
-                        v-if="toursText.h2"
                         tag="h2"
                         color="lightBlue"
                         size
-                        v-html="toursText.h2"
-                    />
+                    >Наши программы</Heading>
                 <div
-                    v-if="this.$store.$i18n.loadedLanguages[0] === 'ru' ? toursText.text_ru : toursText.text_en"
                     class="text--small upper-video__content text-controller"
-                    v-html="this.$store.$i18n.loadedLanguages[0] === 'ru' ? toursText.text_ru : toursText.text_en"
+										v-html="toursText.pageContent"
                 />
             </div>
         </div>
@@ -47,47 +44,7 @@ export default {
             data: [],
             seo: '',
             toursText: {
-                h2: "Наши программы",
-                text_ru: `
-                    <style>
-                        .tours-entry .text-controller h2,
-                        .tours-entry .text-controller h3,
-                        .tours-entry .text-controller h4,
-                        .tours-entry .text-controller h5,
-                        .tours-entry .text-controller h6 {
-                            font-size: 1.5rem;
-                        }
-                        .tours-entry .text-controller h2,
-                        .tours-entry .text-controller h3,
-                        .tours-entry .text-controller h4,
-                        .tours-entry .text-controller h5,
-                        .tours-entry .text-controller h6,
-                        .tours-entry .text-controller ul,
-                        .tours-entry .text-controller p {
-                            padding-bottom: 20px;
-                        }
-                        .tours-entry .text-controller p:last-child {
-                            padding-bottom: 40px;
-                        }
-                        .tours-entry .text-controller ul {
-                            padding-left: 20px;
-                        }
-                        @media (max-width: 767.98px) {
-                            .tours-entry .text-controller h2 {
-                               margin-bottom: 0;
-                            }
-                            .tours-entry .text-controller p {
-                                padding-bottom: 10px;
-                            }
-                            .tours-entry .text-controller h2,
-                            .tours-entry .text-controller h3,
-                            .tours-entry .text-controller h4,
-                            .tours-entry .text-controller h5,
-                            .tours-entry .text-controller h6 {
-                                font-size: 1rem;
-                            }
-                        }
-                    </style>
+                pageContent: `
                     <h2>Индивидуальные программы туров на Камчатку</h2>
                     <p>Для тех, кто ищет интеллектуальный отдых, для тех, кто ценит сервис и комфорт, для тех, кто ждет неповторимых ощущений и незабываемых впечатлений мы организуем туры на Камчатку и Курильские острова премиум-класса.</p>
                     <p>Вы не поверите своим глазам! Ваше сердце будет биться чаще, чем обычно! Вы увидите самые необычные чудеса, созданные природой, но для этого вам не придется преодолевать огромные расстояния с рюкзаком и иметь соответствующую физическую подготовку. Мы все сделаем за вас. Организуем уникальный тур именно под ваши пожелания, доставим на место, предложим комфортабельное проживание и питание!</p>
@@ -115,74 +72,6 @@ export default {
                     <p>И никто другой не сможет организовать для вас тур на Камчатку на таком профессиональном уровне, как  Enjoy Kamchatka. </p>
                      <p>Пляжный и экскурсионный отдых подождет, потому что вас ждут незабываемые туры на Камчатку и Курильские острова. Не многие знают, но в советские времена туризм на Камчатку был запрещен как иностранным, так и русским гражданам. И только сейчас мы подняли уровень туров до достойного премиального уровня! И мы гордимся тем, что мы можем вам предложить!</p>
                     <p>Никакие слова не передадут те впечатления, которые вы получите от тура на Камчатку с Enjoy Kamchatka. </p>
-                `,
-                text_en: `
-                    <style>
-                        .tours-entry .text-controller h2,
-                        .tours-entry .text-controller h3,
-                        .tours-entry .text-controller h4,
-                        .tours-entry .text-controller h5,
-                        .tours-entry .text-controller h6 {
-                            font-size: 1.5rem;
-                        }
-                        .tours-entry .text-controller h2,
-                        .tours-entry .text-controller h3,
-                        .tours-entry .text-controller h4,
-                        .tours-entry .text-controller h5,
-                        .tours-entry .text-controller h6,
-                        .tours-entry .text-controller ul,
-                        .tours-entry .text-controller p {
-                            padding-bottom: 20px;
-                        }
-                        .tours-entry .text-controller p:last-child {
-                            padding-bottom: 40px;
-                        }
-                        .tours-entry .text-controller ul {
-                            padding-left: 20px;
-                        }
-                        @media (max-width: 767.98px) {
-                            .tours-entry .text-controller h2 {
-                               margin-bottom: 0;
-                            }
-                            .tours-entry .text-controller p {
-                                padding-bottom: 10px;
-                            }
-                            .tours-entry .text-controller h2,
-                            .tours-entry .text-controller h3,
-                            .tours-entry .text-controller h4,
-                            .tours-entry .text-controller h5,
-                            .tours-entry .text-controller h6 {
-                                font-size: 1rem;
-                            }
-                        }
-                    </style>
-                    <h2>Individual programs of tours to Kamchatka</h2>
-                    <p>For those who are looking for intelligent leisure, for those who appreciate service and comfort, for those who are waiting for a unique experience and an unforgettable experience, we organize tours to Kamchatka and the Kuril Islands, premium class.</p>
-                    <p>You won't believe your eyes! Your heart will beat more often than usual! You will see the most unusual wonders created by nature, but for this you will not have to overcome huge distances with a backpack and have the appropriate physical preparation. We will do everything for you. We will organize a unique tour exactly what you want, we will deliver you to the place, we will offer comfortable accommodation and meals! Translated with www.DeepL.com/Translator (free version)</p>
-                    <h3>Nothing is almost impossible for us!</h3>
-                    <p>We will take you where others can't! You will feel yourself a part of the most unexplored and wild corners of Kamchatka and the Kuril Islands!</p>
-                    <p>And most importantly, we will provide you with complete safety, including, if you travel with children and the highest level of service, because we - the experts on Kamchatka and the Kuril Islands!</p>
-                    <p>We organize tours to active and dormant volcanoes, you will see real bears and other animals living in the wild, our helicopters will take you to the most inaccessible places in Kamchatka, you can swim in hot mineral springs, watch orcas with experienced divers, immerse yourself in the folk culture and folklore of Kamchatka, and take tours of rivers, lakes and the ocean with professional guides.</p>
-                    <ul>
-                        <li>We organize only exclusive tours in Kamchatka at the highest level.</li>
-                        <li>We are as competent as possible in what we do!</li>
-                        <li>We are equipped with the most professional equipment and transport to take you safely to the ends of the earth.</li>
-                    </ul>
-                    <h4>You've never felt that before!</h4>
-                    <p>We will fill your life and memories with new colors and emotions. And we will break the stereotype about the low level of organization and service of tourism in Russia.</p>
-                    <p>The respondents of our unique tours will confirm our words! If you go to Kamchatka, then only with Enjoy Kamchatka.</p>
-                    <ul>
-                        <li>We love Kamchatka and are ready to pass on our love and knowledge to you!</li>
-                        <li>We have an individual approach to each client, so we always work through dialogue!</li>
-                        <li>In the tour we will take into account all your wishes on hotels, food, locations, complexity level of routes!</li>
-                    </ul>
-                    <h5>We will help you overcome yourself while comprehending the beauty of Kamchatka!</h5>
-                    <p>The boundless power of mountains and volcanoes will make you feel like a grain of sand in the big world. We will ascend together with you above the clouds, and you will see the mind-boggling beauty of the Kamchatka nature. We will visit Kuril islands, reserves and historical places, watch rare birds, whales and seals. Even in winter you will have a chance to bathe in hot thermal springs, go on a photo-tour with wild animals and watch a real active volcano.</p>
-                    <h6>You will be</h6>
-                    <p>Flying, swimming, climbing, somewhere even crawling, but all this will leave you with the most unforgettable emotions in your life! And we will be there for you all the time.</p>
-                    <p>No one else will be able to organize your tour to Kamchatka on such a professional level as Enjoy Kamchatka.</p>
-                     <p>Beach and sightseeing vacation will wait, because unforgettable tours to Kamchatka and the Kuril Islands are waiting for you. Not many people know, but in Soviet times, tourism to Kamchatka was forbidden to both foreign and Russian citizens. And only now we have raised the level of tours to a worthy premium level! And we are proud of what we can offer you!</p>
-                    <p>No words can describe what you get from a tour to Kamchatka with Enjoy Kamchatka.</p>
                 `,
             }
         };
@@ -231,8 +120,23 @@ export default {
 @import "~@/assets/scss/mixins";
 @import "~@/assets/scss/config";
 
+.text-controller {
+	/deep/h2, /deep/h3, /deep/h4, /deep/h5, /deep/h6 {
+		font-size: 24px;
+		padding: 15px 0;
+	}
+	/deep/p, /deep/span {
+		display: block;
+		padding: 10px 0;
+	}
+	/deep/ul {
+		padding: 15px 0 15px 20px;
+	}
+}
+
 .tours-entry {
     background: #0e121a;
+		padding: 40px 0 60px 0;
     h2 {
         padding: 20px 0 40px 0;
         @include respond-to(sm) {

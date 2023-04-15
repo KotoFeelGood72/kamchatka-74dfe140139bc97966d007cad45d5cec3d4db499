@@ -1,16 +1,8 @@
 <template>
-    <form
-        enctype="multipart/form-data"
-        class="feedback-modal__form"
-        :class="{'feedback-form-3': idForm === '3'}"
-        autocomplete="off"
-    >
-        <div class>
+    <form enctype="multipart/form-data" class="feedback-modal__form" :class="{'feedback-form-3': idForm === '3'}" autocomplete="off">
+        <div>
             <div class="row">
-                <div
-                    class="col-sm-12 col-md-6 feedback__field"
-                    :class="{'error-field' : errorFio && model.fio.length < 2}"
-                >
+                <div class="col-sm-12 col-md-6 feedback__field" :class="{'error-field' : errorFio && model.fio.length < 2}">
                     <input
                         v-model="model.fio"
                         id="feedbackFIO"
@@ -20,29 +12,15 @@
                         type="text"
                         maxlength="25"
                     />
-                    <span class="bar"/>
-                    <label class="feedback-modal-prehover" for="feedbackFIO" v-html="$t('feedback.name')"/>
-                    <span class="error" v-if="model.fio.length < 2 && errorFio" v-html="$t(errorFio)"/>
-                </div>
-                <div v-if="idForm !== '1'" class="col-sm-12 col-md-6 feedback__field">
-                    <input
-                        v-model="model.city"
-                        id="feedbackСity"
-                        autocomplete="false"
-                        required="false"
-                        name="city"
-                        type="text"
-                        maxlength="25"
-                    />
-                    <span class="bar"/>
-                    <label class="feedback-modal-prehover" for="feedbackСity" v-html="$t('feedback.city')"/>
+                    <span class="bar"></span>
+                    <label class="feedback-modal-prehover" for="feedbackFIO">Имя</label>
+                    <span class="error" v-if="model.fio.length < 2 && errorFio">Необходимо заполнить поле</span>
                 </div>
             </div>
             <div class="row">
                 <div
                     class="col-sm-6 col-md-6 feedback__field"
-                    :class="{'error-field' : errorPhone && !model.phone}"
-                >
+                    :class="{'error-field' : errorPhone && !model.phone}">
                     <input-mask
                         v-model="model.phone"
                         id="feedbackTel"

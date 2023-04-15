@@ -2,7 +2,7 @@
     <div class="mod-grid-3">
         <nuxt-link
             ref="tours"
-            :to="$i18n.locale === 'en' ? '/tours/' + tour.slug + '/' : '/tours/' + tour.slug + '/'"
+            :to="'/tours/' + tour.slug + '/'"
             class="tours__item"
             v-for="(tour, index) in data" :key="'tour-' + index"
             >
@@ -22,23 +22,10 @@
 
 export default {
     name: 'ToursComponent',
-    props: ['columns', 'data'],
-    computed: {
-        // classWrapper: function() {
-        //     // Если надо что бы на главной было в 4 ряда
-        //     // return this.columns === '4' ? 'home-section' : '';
-        //     return this.columns === '4' ? '' : '';
-        // },
-        // classColumn: function() {
-        //     // Если надо что бы на главной было в 4 ряда
-        //     // return this.columns === '4' ? 'col-lg-3 col-md-4' : 'col-lg-4';
-        //     return this.columns === '4' ? 'col-lg-4 col-md-4' : 'col-lg-4';
-        // }
-    },
+    props: ['data'],
     methods: {
         highlight() {
             const boundary = window.innerHeight / 2;
-            // highlight(this.$refs.tourCreate.$el);
             this.$refs.tours.forEach(({$el}) => {
                 highlight($el);
             });
@@ -135,7 +122,6 @@ export default {
     flex-direction: column;
     p {
         color: #1dcfff;
-        // font-size: 14px;
         display: block;
         margin-top: 10px;
         @include respond-to(md) {
@@ -143,15 +129,12 @@ export default {
             bottom: -25px;
             margin-top: 0;
             font-size: 14px;
-            //left: 50%;
-            //transform: translateX(0%);
         }
         &:hover {
             color: #fff;
         }
     }
     @include respond-to(md) {
-        //position: static;
         bottom: 40px;
         width: 100%;
         left: 0;
@@ -304,19 +287,6 @@ export default {
     }
 }
 
-// @media screen and (min-width:0\0) and (min-resolution: +72dpi) {
-//     // IE9+ CSS
-//     .tours__item-img {
-//         opacity: .1;
-//     }
-//     .tours__item:hover {
-//         .tours__item-img {
-//             opacity: 1;
-//         }
-//     }
-// }
-
-// New style tours
 
 .mod-grid-3 {
     display: grid;

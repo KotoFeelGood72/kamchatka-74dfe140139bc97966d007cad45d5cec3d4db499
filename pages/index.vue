@@ -12,7 +12,7 @@
 			</div>
 			<about-us-home :critical="true"/>
 			<div v-if="dataPage.loadedActivities">
-				<kam-slider :data="dataPage.dataActivities"/>
+				<kam-slider :data="dataPage.dataActivities" :url="activities"/>
 			</div>
 			<contact-queue :critical="true" />
 			<tripSlider/>
@@ -53,7 +53,8 @@ export default {
     },
     name: "home",
     components: {
-				srcVideo,
+				srcVideo: () => import('../components/srcVideo/srcVideo'),
+				// srcVideo,
         PageHeader,
         Tours,
         AboutUsHome,

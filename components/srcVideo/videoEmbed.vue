@@ -1,5 +1,5 @@
 <template>
-    <div class="video-embed" :class="{'video-is-container': isContainer}">
+    <div class="video-embed">
         <a class="video-embed__link" :href="url + '&autoplay=1'" data-fancybox>
             <img-com :img="data" classImg="video-embed__img"/>
         </a>
@@ -7,25 +7,14 @@
 </template>
 
 <script>
-import Modal from '../../components/modal/modal';
 export default {
     name: 'videoEmbed',
-    components: {
-        Modal
-    },
-    props: [
-        'url',
-        'data',
-        'isContainer'
-    ],
+    props: ['url', 'data']
 };
 </script>
 
 <style lang="scss" scoped>
 
-.ytp-large-play-button.ytp-button.ytp-large-play-button-red-bg {
-    display: none!important;
-}
     @import "~@/assets/scss/mixins";
     @import "~@/assets/scss/config";
 

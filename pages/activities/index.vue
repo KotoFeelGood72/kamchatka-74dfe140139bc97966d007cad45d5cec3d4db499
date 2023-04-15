@@ -7,22 +7,18 @@
                 <div v-if="data.intro && data.intro.introText" v-html="data.intro.introText" class="activity-all__info text--small vlog"/>
                 <div v-for="(item, index) in data.activities" :key="'activity-' + index">
                    <nuxt-link :to="'/activities/' + item.slug + '/'">
-                       <client-only>
-                        <Heading tag="h1" v-if="item.name" color="gray" size="lg" class="activities__mainTitle" v-html="item.name"></Heading>
-                       </client-only>
+                        <Heading tag="h1" v-if="item.name" color="gray" size="lg" class="activities__mainTitle">{{ item.name }}</Heading>
                    </nuxt-link>
                    <nuxt-link style="color:#2a2e39" :to="'/activities/' + item.slug + '/'">
-                       <client-only>
                         <div class="vlog subtitling_vlog" v-if="item.text" v-html="item.text"/>
-                       </client-only>
                    </nuxt-link>
                     <Heading  color="blue" tag="p" size="md" fw="600" class="activities__link_cont">
-                        <nuxt-link class="border-b activities__link" :to="'/activities/' + item.slug + '/'">{{item.activityCount}} {{ $t('activities.countText') }}</nuxt-link>
+                        <nuxt-link class="border-b activities__link" :to="'/activities/' + item.slug + '/'">{{item.activityCount}} активностей</nuxt-link>
                     </Heading>
                     <videoEmbed isContainer="true" v-if="item.video" :url="item.video" :data="item.img"/>
                     <ContentImage  isBack="true" v-if="item.img && !item.video" :data="item.img"/>
                 </div>
-                <Heading color="blue" tag="p" size="md" fw="600" align="center"><a class="border-b activities__link application-link" @click="changeOpenFeedback">{{ $t('feedback.titleForm') }}</a></Heading>
+                <Heading color="blue" tag="p" size="md" fw="600" align="center"><a class="border-b activities__link application-link" @click="changeOpenFeedback">Оставить заявку</a></Heading>
             </div>
         </div>
     </div>
@@ -30,9 +26,9 @@
 
 <script>
 import PageHeader from '../../components/content/pageHeader';
-import VideoEmbed from '../../components/content/videoEmbed';
+import VideoEmbed from '../../components/srcVideo/videoEmbed';
 import Heading from '../../components/content/heading';
-import ContentImage from '../../components/content/contentImage';
+import ContentImage from '../../components/images/contentImage';
 import parallax from '../../components/parallax/index';
 import seoHead from "@/mixins/seo-head";
 import { fetchData } from '~/utils/fetchData';
@@ -112,7 +108,6 @@ export default {
 <style lang="scss" scoped>
     @import "~@/assets/scss/mixins";
     @import "~@/assets/scss/config";
-    @import "wow.js/css/libs/animate.css";
     .page-header {
         position: relative;
         min-height: calc(100vh - 100px);
@@ -163,9 +158,6 @@ export default {
             text-decoration: underline;
         }
     }
-    .vlog{
-        opacity: 0;
-    }
     .subtitling_vlog{
         font-family: "Montserrat";
         font-weight: 400;
@@ -190,9 +182,6 @@ export default {
             margin-bottom: 0;
         }
     }
-    // .activities__link_cont{
-    //     opacity: 0;
-    // }
     .content-image{
      /deep/.img__container {
         width: 100vw;

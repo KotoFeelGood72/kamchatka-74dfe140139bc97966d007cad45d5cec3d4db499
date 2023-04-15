@@ -73,7 +73,9 @@ export default {
 	max-height: 345px;
 	overflow-y: auto;
 	padding-right: 30px;
+	font-weight: 400;
 }
+
 
 
 </style>

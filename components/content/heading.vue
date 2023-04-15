@@ -19,7 +19,7 @@ export default {
     ],
     computed: {
         classes: function() {
-            let classes = ['heading','animate-trim'];
+            let classes = ['heading'];
             let map = ['color', 'size', 'fw', 'align', 'underline', 'margin'];
 
             map.forEach((prop) => {

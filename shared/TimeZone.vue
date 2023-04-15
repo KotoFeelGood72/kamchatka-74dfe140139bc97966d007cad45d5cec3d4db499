@@ -1,6 +1,6 @@
 <template>
     <div class="timezone">
-        <span class="timezone__title" v-html="$t('footer.timeTitle')"/>
+        <span class="timezone__title">Сейчас <br> на Камчатке</span>
         <span class="timezone__time" v-html="time"/>
     </div>
 </template>

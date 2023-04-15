@@ -3,17 +3,12 @@
     <div class="faq-menu__container container">
       <div class="row">
         <div class="col-md-6 faq-menu__left">
-          <h1 class="headline text--headline animated fadeInLeft" v-html="$t('faq.title')" />
-          <p class="faq-menu__description text animated fadeInLeft" v-html="$t('faq.description')" />
+          <h1 class="headline text--headline">FAQ</h1>
+          <p class="faq-menu__description text">В этом разделе мы разместили<br> ответы на самые частые вопросы<br> от туристов.</p>
         </div>
         <div class="col-md-6 faq-menu__right text">
-          <li v-for="(nav, index) in menu" :key="'topMenu-' + index">
-            <nuxt-link
-              :to="$i18n.locale === 'en' ? nav.to + '/' : nav.to + '/'"
-              active-class="active"
-              v-html="$t(nav.name)"
-              exact
-            ></nuxt-link>
+          <li v-for="(item, index) in nav.faqNav" :key="'topMenu-' + index">
+            <nuxt-link :to="item.link" active-class="active" exact>{{item.name}}</nuxt-link>
           </li>
         </div>
       </div>
@@ -22,41 +17,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import nav from "../navigation/nav";
 export default {
   name: "faqMenu",
   data() {
     return {
-      menu: [
-        {
-          name: "faq.navOne",
-          to: "/faq"
-        },
-        {
-          name: "faq.navTwo",
-          to: "/faq/entry-rules"
-        },
-        {
-          name: "faq.navThree",
-          to: "/faq/how-to-get"
-        },
-        {
-          name: "faq.navFour",
-          to: "/faq/where-to-stay"
-        },
-        {
-          name: "faq.navFife",
-          to: "/faq/how-to-dress"
-        },
-        {
-          name: "faq.navSix",
-          to: "/faq/protected-areas"
-        },
-        {
-          name: "faq.navSeven",
-          to: "/faq/safety-tips"
-        }
-      ]
+			nav
     };
   }
 };

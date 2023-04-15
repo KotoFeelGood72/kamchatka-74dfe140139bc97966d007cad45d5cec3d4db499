@@ -11,7 +11,7 @@
                     <div v-if="item.answer" v-html="item.answer"/>
                     <img-com :img="item.img"/>
                     <div v-if="item.text" v-html="item.text"/>
-                    <a class="accordion__item-btn border-b" @click.prevent="changeActive(item)" href="#">{{$t('faq.collapse')}}</a>
+                    <a class="accordion__item-btn border-b" @click.prevent="changeActive(item)" href="#">Свернуть</a>
                 </div>
             </div>
         </div>
@@ -56,7 +56,6 @@ export default {
 <style lang="scss" scoped>
     @import "~assets/scss/config";
     @import "~assets/scss/mixins";
-    @import "wow.js/css/libs/animate.css";
     .accordion {
         counter-reset: faq-counter;
         margin: 30px 0;

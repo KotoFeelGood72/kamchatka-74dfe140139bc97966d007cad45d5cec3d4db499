@@ -6,22 +6,20 @@
             <section class="blog__content container--middle">
 
                 <div class="blog__menu">
-                    <div class="blog__menu-item text--large" :class="{'blog__menu-active': activeMenu === 'all'}" @click="activeMenu = 'all'">
-                        {{ $t('blogPage.all') }}
-                    </div>
+                    <div class="blog__menu-item text--large" :class="{'blog__menu-active': activeMenu === 'all'}" @click="activeMenu = 'all'">Все статьи</div>
                     <div v-for="(item, index) in data.content" :key="'blog__menu' + index" class="blog__menu-item text--large"
                          :class="{'blog__menu-active': item.section && activeMenu === item.section.type}" @click="activeMenu = item.section.type">{{item.section.name}}</div>
                 </div>
 
                 <div class="blog__list" v-for="(article, index) in filteredJob" :key="'blog__item-' + index">
-                    <nuxt-link class="blog__block row" :to="$i18n.locale === 'en' ? '/blog/' + article.slug + '/' : '/blog/' + article.slug + '/'">
+                    <nuxt-link class="blog__block row" :to="'/blog/' + article.slug + '/'">
                         <div class="col-6">
                             <ContentImage isBack="true" v-if="article.img" :data="article.img"/>
                         </div>
                         <div class="col-6 blog__list-info">
                             <Heading tag="h2" size="xs" fw="600" color="craiola">{{article.name}}</Heading>
                             <p class="blog__list-text" v-if="article.text" v-html="article.text"/>
-                            <div class="blog__list-detailed">{{$t('blogPage.detalInfoBlog')}}</div>
+                            <div class="blog__list-detailed">Подробнее</div>
                         </div>
                     </nuxt-link>
                 </div>
@@ -33,7 +31,7 @@
 
 <script>
 import Heading from '../../components/content/heading';
-import ContentImage from '../../components/content/contentImage';
+import ContentImage from '../../components/images/contentImage';
 import {Api} from '../../api/api';
 import PageHeader from '../../components/content/pageHeader';
 import parallax from '../../components/parallax/index';
@@ -134,7 +132,6 @@ export default {
 <style lang="scss" scoped>
     @import "~assets/scss/config";
     @import "~assets/scss/mixins";
-    @import "wow.js/css/libs/animate.css";
     .blog__menu-active {
         color: color(lightBlue) !important;
         border-bottom: 1px solid;

@@ -5,7 +5,7 @@
             <div class="about-us__wrap">
               <div class="container--middle-tour page-content text--24 about-us__bg_without_pb">
                   <div v-for="(textBlock, index) in data.intro.textBlocks" :key="'text-block-' + index">
-                    <Heading tag="h2" class="text--40" color="lightBlue" v-html="textBlock.title"/>
+                    <Heading tag="h2" class="text--40" color="lightBlue">{{ textBlock.title }}</Heading>
                     <p class="text--24" v-html="textBlock.text"/>
                     <Heading />
                     <videoEmbed isContainer="true" v-if="textBlock.video && textBlock.img" :url="textBlock.video" :data="textBlock.img" />
@@ -14,7 +14,7 @@
               </div>
             <div class="container page-content_without_ptop text--24 about-us__bg">
 
-                <Heading v-if="data.team && data.team.title" class="text--40 team-title" tag="h2" color="lightBlue" v-html="data.team.title"/>
+                <Heading v-if="data.team && data.team.title" class="text--40 team-title" tag="h2" color="lightBlue">{{ data.team.title }}</Heading>
                 <div v-if="data.team && data.team.team.length" class="about__teams row">
                     <div v-for="(team, index) in data.team.team" :key="'team-' + index" class="about__team col-md-6 col-12">
                         <div class="about__team-block">
@@ -26,12 +26,12 @@
                         </div>
                     </div>
                 </div>
-                <Heading v-if="data.advantages.length" tag="h2" size="lg" class="text--70" color="lightBlue">{{$t('about-us.ourAdvantages')}}</Heading>
+                <Heading v-if="data.advantages.length" tag="h2" size="lg" class="text--70" color="lightBlue">Наши преимущества</Heading>
                 <div class="row about-us__advantages">
                     <div class="about-us__advantages-content col-md-8 col-lg-6">
                         <div v-for="(item, index) in data.advantages" :key="'about-us__advantages-' + index">
-                            <Heading tag="h2" color="white" size="md" v-html="item.name"/>
-                            <p class="text--24" v-html="item.text"/>
+                            <Heading tag="h2" color="white" size="md">{{ item.name }}</Heading>
+                            <p class="text--24">{{ item.text }}</p>
                         </div>
                     </div>
                     <div class="about-us__advantages-img col-md-4 offset-lg-1 d-none d-md-block">
@@ -45,8 +45,8 @@
 </template>
 <script>
 import Heading from '../components/content/heading';
-import ContentImage from '../components/content/contentImage';
-import videoEmbed from '../components/content/videoEmbed';
+import ContentImage from '../components/images/contentImage';
+import videoEmbed from '../components/srcVideo/videoEmbed';
 import PageHeader from '../components/content/pageHeader';
 import parallax from '../components/parallax/index';
 import ContactQueue from '../components/ContactQueue/ContactQueue'
@@ -111,7 +111,6 @@ export default {
 <style lang="scss" scoped>
     @import "~assets/scss/config";
     @import "~assets/scss/mixins";
-    @import "wow.js/css/libs/animate.css";
     .text--24 {
         font-size: 24px;
         line-height: 1.5;

@@ -29,7 +29,7 @@ deploy_staging:
   environment:
     name: staging
   only:
-    - development
+    - new
 
 deploy_production:
   image: alpine

@@ -3,24 +3,18 @@
         <div class="container">
 					<div class="header_main">
 							<div class="header__logo">
-									<nuxt-link v-if="$route.path !== '/' && $route.path !== '/en/'" :to="localePath('/')">
-											<img src="~assets/img/header/logo.svg" alt/>
+									<nuxt-link to="/">
+											<img src="~assets/img/header/logo.svg" alt="Enjoy kamchatka logotype"/>
 									</nuxt-link>
-									<span @click="clickLogo" v-else>
-											<img src="~assets/img/header/logo.svg" alt/>
-									</span>
 							</div>
 							<div class="header-center">
 									<ul class="header-menu">
-											<li class="header__menu-item" v-for="(item, index) in menu" :key="'menu-' + index">
-													<nuxt-link :to="localePath(item.link) + '/'" v-html="$t(item.name)"/>
+											<li class="header__menu-item" v-for="(item, index) in nav.siteNav" :key="'menu-' + index">
+													<nuxt-link :to="item.link">{{ item.name }}</nuxt-link>
 											</li>
 									</ul>
-									<a class="feedback-button" href="" @click.prevent="changeOpenFeedback">
-											{{$t("feedback.button")}}
-									</a>
+									<a class="feedback-button" href="" @click.prevent="changeOpenFeedback">Связаться с нами</a>
 							</div>
-							<lang class="lang-header"/>
 							<Menu/>
 					</div>
         </div>
@@ -28,21 +22,14 @@
 </template>
 <script>
     import Menu from "./Menu";
-    import Lang from "./lang";
+		import nav from "../components/navigation/nav";
 
     export default {
         data() {
             return {
                 isTransparent: false,
                 screen: this.$store.getters.SCREEN,
-                menu: [
-                    { name: "footer.navOne", link: "/tours/" },
-                    { name: "footer.navTwo", link: "/activities/" },
-                    { name: "footer.navThree", link: "/about/" },
-                    { name: "footer.navFour", link: "/faq/" },
-                    { name: "footer.navFive", link: "/blog/" },
-                    { name: "footer.navSix", link: "/contacts/" }
-                ]
+								nav,
 						}
         },
         watch: {
@@ -56,16 +43,13 @@
             }
         },
         props: ["isFixed", "headerBlack"],
-        components: {Lang, Menu},
+        components: {Menu},
         methods: {
             changeOpenFeedback() {
                 this.$store.dispatch(
                     "changeIsShowFeedback",
                     !this.$store.getters["getIsShowFeedback"]()
                 );
-            },
-            clickLogo() {
-                window.scrollTo(0, 0);
             },
             checkIsTransparent() {
                 let path = this.$route.path;

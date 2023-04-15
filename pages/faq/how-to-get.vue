@@ -2,19 +2,11 @@
     <div class="faq-content">
         <FaqMenu/>
         <div v-if="data.preview" class="container--middle page-content text--small">
-            <Heading
-                v-if="data.preview.heading"
-                tag="p"
-                color="granite"
-                size="sm"
-                fw="600"
-                underline="bottom" v-html="data.preview.heading"/>
+            <Heading tag="p" color="granite" size="sm" fw="600" underline="bottom">{{data.preview.heading}}</Heading>
             <div v-if="data.preview.headingText" v-html="data.preview.headingText"/>
             <contentImage v-if="data.preview.image" width="fullwidth" :data="data.preview.image" isBack="true"/>
-
-            <Heading v-if="data.preview.textBlue" color="blue" tag="div" size="xs" fw="600" v-html="data.preview.textBlue"/>
-
-            <Heading v-if="data.preview.headingSecond" v-html="data.preview.headingSecond"/>
+            <Heading v-if="data.preview.textBlue" color="blue" tag="div" size="xs" fw="600">{{data.preview.textBlue}}</Heading>
+            <Heading v-if="data.preview.headingSecond">{{data.preview.headingSecond}}</Heading>
             <div v-if="data.preview.headingSecondText" v-html="data.preview.headingSecondText"/>
             <div class="display-flex-number">
                 <div class="display-flex-number__item">
@@ -25,21 +17,21 @@
             </div>
             <div class="how-to-get__flight-types" v-for="(flight,index) in data.flightTypes" :key="'flight-' + index">
                 <Divider v-if="flight.name" :type="flight.imageClass" container="middle" align="right">
-                    <Heading v-html="flight.name"/>
+                    <Heading>{{flight.name}}</Heading>
                 </Divider>
                 <div v-for="(direction, index) in flight.flightDirections" :key="'direction-' + index">
                     <Heading  v-if="direction.name" color="bluekm" size="xl"><span class="animate-counter">{{ direction.name }}</span><small>{{ direction.unit }}</small></Heading>
-                    <Heading class="how-to-get__flight-types-desc" v-if="direction.textBlue" color="bluekm" size="xs" fw="600" v-html="direction.textBlue"/>
-                    <Heading v-if="direction.textBlack" tag="p" size="xs" fw="600" color="granite" v-html="direction.textBlack"/>
+                    <Heading class="how-to-get__flight-types-desc" v-if="direction.textBlue" color="bluekm" size="xs" fw="600">{{ direction.textBlue }}</Heading>
+                    <Heading v-if="direction.textBlack" tag="p" size="xs" fw="600" color="granite">{{ direction.textBlack }}</Heading>
                     <p v-for="(air, index) in direction.airlines" :key="'air-' + index" v-html="air"/>
 
-                    <Heading v-if="direction.important.length" color="bluekm">{{$t('how-to-get-distance-1.important')}}</Heading>
+                    <Heading v-if="direction.important.length" color="bluekm">Важно!</Heading>
                     <p v-for="(important, index) in direction.important" :key="'important-' + index" v-html="important"/>
 
                 </div>
-                <Heading color="bluekm" size="sm" fw="600" v-html="flight.bottomText"/>
+                <Heading color="bluekm" size="sm" fw="600">{{ flight.bottomText }}</Heading>
             </div>
-            <Heading v-html="data.footer.heading"/>
+            <Heading>{{ data.footer.heading }}</Heading>
             <div v-html="data.footer.text"/>
         </div>
     </div>
@@ -48,7 +40,7 @@
 <script>
 import FaqMenu from '../../components/faqMenu/faqMenu';
 import Heading from '../../components/content/heading';
-import ContentImage from '../../components/content/contentImage';
+import ContentImage from '../../components/images/contentImage';
 import Divider from '../../components/content/divider';
 import { fetchData } from '~/utils/fetchData';
 import seoHead from '../../mixins/seo-head';

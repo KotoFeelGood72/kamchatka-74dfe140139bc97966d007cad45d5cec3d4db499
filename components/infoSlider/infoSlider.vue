@@ -16,7 +16,6 @@
 																	<img-com :img="thumb.img" classImg="video-embed__img"/>
 															</a>
 													</div>
-													<!-- <videoEmbed isContainer="true" :url="thumb.video" :data="thumb.img"/> -->
 											</template>
 											<template v-else>
 													<img-com :img="thumb.img" classImg="info-slider__img"/>
@@ -120,7 +119,6 @@
 																	<img-com :img="thumb.img" classImg="video-embed__img"/>
 															</a>
 													</div>
-													<!-- <videoEmbed isContainer="true" :url="thumb.video" :data="thumb.img"/> -->
 											</template>
 											<template v-else>
 													<img-com :img="thumb.img" classImg="info-slider__img"/>
@@ -134,7 +132,7 @@
 </template>
 
 <script>
-	import VideoEmbed from "../content/videoEmbed";
+	import VideoEmbed from "../srcVideo/videoEmbed";
 	import {mapGetters} from 'vuex';
 
 	export default {
@@ -194,11 +192,6 @@
 					}
 			},
 			methods: {
-					currentVideo(thumbVideo) {
-							this.currentVideoEmbed = thumbVideo
-							// console.log(this.currentVideoEmbed)
-							this.$refs.modalVideo12.open()
-					},
 					handleAfterChange(event, slick, currentSlide) {
 							this.sliderCount = currentSlide + 1;
 					},

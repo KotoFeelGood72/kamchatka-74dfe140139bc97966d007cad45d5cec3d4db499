@@ -1,85 +1,78 @@
 <template>
-    <client-only>
-        <div v-if="data.intro" class="activity-slug">
+    <div v-if="activity.intro" class="activity-slug">
             <PageHeader
-                v-if="data.intro.bannerImage"
-                :data="data.intro.bannerImage"
+                v-if="activity.intro.bannerImage"
+                :data="activity.intro.bannerImage"
                 class="activity-slug__header"
-            >{{data.intro.bannerText}}</PageHeader>
+            >{{activity.intro.bannerText}}</PageHeader>
             <div class="container--middle-tour activity-slug__content text--small">
                 <Heading
-                    v-if="data.intro.title"
+                    v-if="activity.intro.title"
                     tag="h2"
                     color="lightBlue"
                     size
-                    v-html="data.intro.title"
+                    v-html="activity.intro.title"
                 />
                 <div
-                    v-if="data.intro.text"
-                    class="text--small upper-video__content text-controller"
-                    v-html="data.intro.text"
+                    v-animate-onscroll.repeat="'animated fadeInLeft'"
+                    style="animation-delay: 0.5s"
+                    v-if="activity.intro.text"
+                    class="text--small animated-trim upper-video__content text-controller"
+                    v-html="activity.intro.text"
                 />
-                <div v-if="data.intro.video && data.intro.videoImg" class="activity-slug__video">
-                    <videoEmbed isContainer="true" :url="data.intro.video" :data="data.intro.videoImg" />
+                <div v-if="activity.intro.video && activity.intro.videoImg" class="activity-slug__video">
+                    <videoEmbed isContainer="true" :url="activity.intro.video" :data="activity.intro.videoImg" />
                 </div>
                 <ContentImage
                     isBack="true"
-                    v-for="(img, i) in data.intro.images"
+                    v-for="(img, i) in activity.intro.images"
                     :key="'images-' + i"
                     :data="img"
                 />
                 <Heading
                     class="under-ing__heading"
-                    v-if="data.intro.bottomTitle"
+                    v-if="activity.intro.bottomTitle"
                     tag="h2"
                     color="lightBlue"
                     size
-                    v-html="data.intro.bottomTitle"
+                    v-html="activity.intro.bottomTitle"
                 />
                 <div
-                    v-if="data.intro.bottomText"
-                    class="text--small text-controller"
-                    v-html="data.intro.bottomText"
+                    v-animate-onscroll.repeat="'animated fadeInLeft'"
+                    style="animation-delay: 0.5s"
+                    v-if="activity.intro.bottomText"
+                    class="text--small animated-trim text-controller"
+                    v-html="activity.intro.bottomText"
                 />
             </div>
             <div class="container grid__container-block">
-                <Heading v-if="$t('home.activity')" tag="h2" color="black" size v-html="$t('home.activity')" />
+                <Heading tag="h2" color="black">Активности</Heading>
                 <grid
-                    v-if="data && data.activities && data.activities.length"
-                    :data="data.activities"
+                    v-if="activity && activity.activities && activity.activities.length"
+                    :data="activity.activities"
                 />
             </div>
             <div class="container tour-item__navigation">
-                <div v-if="data.previous || data.next" class="tour-item__change">
-                    <div v-if="data.previous" class="tour-item__change-item previews">
-                        <nuxt-link
-                            :to="$i18n.locale === 'en' ? '/activities/' + data.previous.slug + '/' : '/activities/' + data.previous.slug + '/'"
-                        >
-                            <!-- <arrow-long v-if="screen.width < 767" /> -->
-                            {{screen.width > 767 ? data.previous.name : $i18n.locale === 'en' ? 'Previous' : 'Назад'}}
-                        </nuxt-link>
+                <div v-if="activity.previous || activity.next" class="tour-item__change">
+                    <div v-if="activity.previous" class="tour-item__change-item previews">
+                        <nuxt-link :to="'/activities/' + activity.previous.slug + '/'">Назад</nuxt-link>
                     </div>
-                    <div v-if="data.next" class="tour-item__change-item next">
-                        <nuxt-link
-                            :to="$i18n.locale === 'en' ? '/activities/' + data.next.slug + '/' : '/activities/' + data.next.slug + '/'"
-                        >
-                            {{screen.width > 767 ? data.next.name : $i18n.locale === 'en' ? 'Next' : 'Вперед'}}
-                            <!-- <arrow-long v-if="screen.width < 767" /> -->
-                        </nuxt-link>
+                    <div v-if="activity.next" class="tour-item__change-item next">
+                        <nuxt-link :to="'/activities/' + activity.next.slug + '/'">Вперед</nuxt-link>
                     </div>
                 </div>
             </div>
         </div>
-    </client-only>
 </template>
 <script>
+import { Api } from "../../api/api";
 import PageHeader from "../../components/content/pageHeader";
 import Heading from "../../components/content/heading";
-import ContentImage from "../../components/content/contentImage";
-import VideoEmbed from "../../components/content/videoEmbed";
+import ContentImage from "../../components/images/contentImage";
+import VideoEmbed from "../../components/srcVideo/videoEmbed";
 import Grid from "../../components/grid/grid";
 import seoHead from "@/mixins/seo-head";
-import { fetchData } from '~/utils/fetchData';
+// import { fetchData } from '~/utils/fetchData';
 
 export default {
   name: "activityactivity-slug",
@@ -94,15 +87,34 @@ export default {
   },
   data() {
     return {
-      data: {},
+      activity: {},
       seo: "",
       screen: this.$store.getters.SCREEN
     };
   },
-	async asyncData(context) {
-			return fetchData('activities', context);
-		},
-	
+	// async asyncData(context) {
+	// 		return fetchDataPost('activities', context);
+	// 	},
+
+  asyncData({ route, params, error, payload, store }) {
+    let lang = "";
+    if (route.name.indexOf("_en") >= 0) {
+      lang = "en";
+    } else {
+      lang = "ru";
+    }
+    return Api.get(
+      `activities/${params.id}?lang=${store.$i18n.locale}&router=${route.path}`
+    ).then(response => {
+      if(response.data.data.length === 0){
+        error({ statusCode: 404 })
+      }
+       return {
+        seo: response.data.seo,
+        activity: response.data.data
+      }
+    });
+  },
   methods: {
     init() {
       Api.get(
@@ -150,7 +162,6 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/mixins";
 @import "~@/assets/scss/config";
-@import "wow.js/css/libs/animate.css";
 .text-controller{
    font-family: "Montserrat";
         font-weight: 400;

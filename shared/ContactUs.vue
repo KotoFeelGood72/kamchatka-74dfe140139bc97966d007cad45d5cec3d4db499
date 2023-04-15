@@ -5,7 +5,7 @@
 								@click.prevent="changeOpenFeedback"
                 href=""
                 class="contact-us__btn"
-                v-html="contactsData && contactsData.title ? contactsData.title : $t('footer.contactUsTitle')"
+                v-html="contactsData && contactsData.title ? contactsData.title : 'Отправиться в путешествие'"
             />
             <div class="contact-us__icons">
                 <a

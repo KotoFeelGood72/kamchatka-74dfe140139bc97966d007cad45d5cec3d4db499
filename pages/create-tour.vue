@@ -5,8 +5,8 @@
                 <div class="create-tour__steps">
                     <div class="create-tour__step" :class="{'pointer': index + 1 <= stepMax}" @click="changeActive(false,step)" v-for="(step, index) in steps" :key="'step-' + index">
                         <Heading :createrTour="true" v-if="activeStep === index + 1" color="blue-simple" class="create-tour__step-title"
-                                 size="lg" v-html="step.title"/>
-                        <Heading :createrTour="true" v-else color="gray" class="create-tour__step-title gray" size="lg" v-html="step.title"/>
+                                 size="lg">{{ step.title }}</Heading>
+                        <Heading :createrTour="true" v-else color="gray" class="create-tour__step-title gray" size="lg">{{ step.title }}</Heading>
                         <p v-if="activeStep === index + 1" class="create-tour__step-desc text--blue"
                            v-html="$t(step.desc)"/>
                         <p v-else class="create-tour__step-desc " v-html="$t(step.desc)"/>
@@ -15,10 +15,10 @@
             </div>
             <div class="create-tour__container">
                 <div v-if="activeStep === 1 && !success" class="create-tour__dates">
-                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white" v-html="$t('createTour.step1Title')"/>
+                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white">Даты путешествия</Heading>
                     <div class="create-tour__dates-container">
                         <div class="create-tour__date">
-                            <label for="dateFrom" v-html="$t('createTour.step1From')"/>
+                            <label for="dateFrom">Заезд</label>
                             <date-picker id="dateFrom" @change="selectStartDate" :format="$i18n.locale === 'en' ? 'MM.DD.YYYY' : 'DD.MM.YYYY'" :lang="$i18n.locale === 'en' ? 'en' : 'ru'" v-model="dateFrom" :placeholder="$t('createTour.step1Placeholder')" :disabled-date="nowDateFunc" :input-attr="{readonly: 'readonly'}"></date-picker>
                         </div>
                         <div class="create-tour__date">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div v-if="activeStep === 2 && !success" class="create-tour__peoples">
-                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white" v-html="$t('createTour.step2Title')"/>
+                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white">Состав участников</Heading>
                     <div>
                         <label v-html="$t('createTour.step2label')"/>
                         <div class="create-tour__people-container">
@@ -46,12 +46,12 @@
                             </div>
                             <div v-if="showPeoples" class="create-tour__people-change">
                                 <div class="people-change">
-                                    <p>{{ $t('createTour.step2Adults') }}</p>
+                                    <p>Взрослых</p>
                                     <p class="people-change__right"><span @click="changeAdults('minus')">-</span><span
                                         v-html="adults"/><span @click="changeAdults('plus')">+</span></p>
                                 </div>
                                 <div class="people-change">
-                                    <p>{{ $t('createTour.step2Children') }}</p>
+                                    <p>Детей</p>
                                     <p class="people-change__right"><span @click="changeChildren('minus')">-</span><span
                                         v-html="children"/><span @click="changeChildren('plus')">+</span></p>
                                 </div>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div v-if="activeStep === 3 && !success" class="create-tour-formats">
-                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white" v-html="$t('createTour.step3Title')"/>
+                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white">Формат тура</Heading>
                     <div class="row">
                         <div v-for="(format, index) in formats" :key="'formats-' + index" @click="activeFormat = format.id, activeFormatName = format.name"
                              class="create-tour-format col-lg-4" :class="{'active': activeFormat === format.id}">
@@ -75,13 +75,13 @@
                                 <p v-for="(includ, index) in format.included" :key="'includ' + index"
                                    v-html="'- '+ includ"/>
                             </div>
-                            <p class="create-tour-format__more" v-if="!format.active" @click="format.active = true" v-html="$t('tours.more')"/>
-                            <p class="create-tour-format__more" v-if="format.active" @click="format.active = false" v-html="$t('tours.hide')"/>
+                            <p class="create-tour-format__more" v-if="!format.active" @click="format.active = true">Подробнее</p>
+                            <p class="create-tour-format__more" v-if="format.active" @click="format.active = false">Скрыть</p>
                         </div>
                     </div>
                 </div>
                 <div v-if="activeStep === 4 && locations.length && !success" class="create-tour-locations">
-                    <h2>{{ $t('createTour.step4Title') }} <span class="create-tour-locations__number">({{ locations.length }})</span></h2>
+                    <h2>Выбор локаций <span class="create-tour-locations__number">{{ locations.length }}</span></h2>
                     <div class="create-tour-locations__slider" v-if="screen.width >= 768 && screen.width < 1280 && selectedLocationToView != null">
                         <div class="create-tour-locations__arrows">
                             <a class="create-tour-locations__arrows-previous" href="" @click.prevent="selectLocationToView('previous')"><arrow_long/>Previous</a>
@@ -153,61 +153,50 @@
                     </div>
                 </div>
                 <div class="create-tour__review" v-if="activeStep === 5 && !success">
-                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white" v-html="$t('createTour.step5Title')"/>
+                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white">Проверка заявки</Heading>
                     <div class="create-tour__review-block">
-                        <p class="create-tour__review-title" v-html="$t('createTour.step5Desc')"/>
+                        <p class="create-tour__review-title">Даты поездки</p>
                         <p class="create-tour__review-desc" v-if="dateFrom && dateTo">{{ dateFrom.toLocaleDateString()}} - {{ dateTo.toLocaleDateString() }}</p>
                     </div>
                     <div class="create-tour__review-block">
-                        <p class="create-tour__review-title" v-html="$t('createTour.step5Desc2')"/>
+                        <p class="create-tour__review-title">Состав участников</p>
                         <p class="create-tour__review-desc" v-if="people" v-html="people"/>
                     </div>
                     <div class="create-tour__review-block">
-                        <p class="create-tour__review-title" v-html="$t('createTour.step5Desc3')"/>
+                        <p class="create-tour__review-title">Формат тура</p>
                         <p class="create-tour__review-desc" v-html="getNameFormat"/>
                     </div>
                     <div class="create-tour__review-block">
-                        <p class="create-tour__review-title" v-html="$t('createTour.step5Desc4')"/>
-                        <p class="create-tour__review-desc" v-if="!getLocationNames.length" v-html="$t('notSpecified')"></p>
+                        <p class="create-tour__review-title">Локации</p>
+                        <p class="create-tour__review-desc" v-if="!getLocationNames.length">Не заданы</p>
                         <p class="create-tour__review-desc" v-else v-for="(location, index) in getLocationNames" :key="'location-' + index" v-html="location"/>
                     </div>
 
                 </div>
                 <div class="create-tour__feedback" v-if="activeStep === 6 && !success">
-                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white" v-html="$t('createTour.step6Title')"/>
+                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="md" color="white">Оставить заявку</Heading>
                     <FormFeedback
                         :notDateAndCountPeople="true"
                         @isSuccess="successForm" idForm="3"
                         :dataForm3="{adult: adults, children : children, locations: locations.filter((item)=> {if(selectLocations.includes(item.id)){return item.name}}), dateFrom: dateFrom, dateTo: dateTo, format: activeFormatName}"/>
                 </div>
                 <div v-if="success" class="create-tour__success">
-                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="lg" color="white" v-html="$t('createTour.successTitle')"/>
-                    <Heading :stepAnimate="true" :createrTour="true" tag="h3" size="sm" color="white" v-html="$t('createTour.successDesc')"/>
-                    <nuxt-img quality="75" loading="lazy" format="webp" src="~assets/img/form/success.png" :alt="$t('createTour.successTitle')"/>
-                    <nuxt-link class="mobile" :to="$i18n.locale === 'en' ? '/' : '/'" v-html="$t('createTour.successLink')"/>
+                    <Heading :stepAnimate="true" :createrTour="true" tag="h2" size="lg" color="white">Спасибо! Ваша заявка отправлена</Heading>
+                    <Heading :stepAnimate="true" :createrTour="true" tag="h3" size="sm" color="white">мы свяжемся с вами в ближайшее время</Heading>
+                    <nuxt-img quality="75" loading="lazy" format="webp" src="~assets/img/form/success.png" alt="мы свяжемся с вами в ближайшее время"/>
+                    <nuxt-link class="mobile" to="/">На главную</nuxt-link>
                 </div>
             </div>
             <!-- Desctiop -->
             <div class="change-step-flex">
             <div v-if="activeStep!== 1 && activeStep !== 6 && !success" class="change-steps mobile-back">
                 <animButton @endAnim="backActive" :class="{'disabled': activeStep == 1}">{{$t('createTour.prevButton')}}</animButton>
-                <!-- <button @click="changeActive">Далее</button> -->
             </div>
             <div v-if="activeStep !== 6 && !success" v-bind:class="{'hideBackIcon': activeStep!== 1}" class="change-steps mobile">
                 <animButton @endAnim="changeActive" :class="{'disabled': !getPermissionToGo}">{{$t('createTour.nextButton')}}</animButton>
-                <!-- <button @click="changeActive">Далее</button> -->
             </div>
             </div>
-            <!-- <div v-if="activeStep !== 6 && !success" class="change-steps mobile">
-                <animButton @endAnim="changeActive" :class="{'disabled': !getPermissionToGo}">Далее</animButton>
-                <button @click="changeActive">Далее</button>
-            </div> -->
         </div>
-        <!-- Mobile -->
-        <!-- <div v-if="activeStep !== 6 && !success" class="change-steps change-steps-mobile mobile">
-            <animButton @endAnim="changeActive">Далее</animButton>
-            <button @click="changeActive">Далее</button>
-        </div> -->
         <div v-if="activeLocation" class="popup-active-location">
             <div class="popup-active-location__overlay"/>
             <div class="popup-active-location__body">
@@ -220,7 +209,6 @@
                 <img-com :img="activeLocation.img"/>
                 <Heading :createrTour="true" tag="h2" color="white" size="sm">{{ activeLocation.name }}</Heading>
                 <div v-html="activeLocation.text"/>
-               <!-- <a target="_blank" :href="$i18n.locale === 'en' ? '/en/locations/' + activeLocation.slug + '/' : '/locations/' + activeLocation.slug + '/'" v-html="$t('tours.more')"/> -->
             </div>
         </div>
     </div>
@@ -232,7 +220,7 @@ import {Api} from '../api/api';
 import seoHead from '../mixins/seo-head';
 //import vueCustomScrollbar from 'vue-custom-scrollbar';
 // import '../assets/scss/_scrollBar.scss';
-import FormFeedback from '../components/feedback/section/formFeedback';
+import FormFeedback from '../components/feedback/form/formFeedback';
 import animButton from '../components/button/button'
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
@@ -344,23 +332,7 @@ export default {
             this.adaltesStep2to6 = ['adult','adults','adults']
             this.childrenStep2to6 = ['child','children','children']
         }
-        //    adaltesStep2to6:[],
-        //     childrenStep2to6:[],
-        // if(this.$i18n.locale )
-        //console.log(this.formats)
-        //document.addEventListener('input', function(event) {
-        //    if(this.activeStep === 6) {
-        //        let requiredFields = document.querySelectorAll('.create-tour__feedback form input[required]'),
-        //            requiredFieldsFilled = document.querySelectorAll('.create-tour__feedback form input[required]:not(:invalid)');
-        //        if (requiredFields.length === requiredFieldsFilled.length) {
-        //        }
-        //    }
-        //}.bind(this))
-        //console.log(this.$refs)
         window.addEventListener('resize', function () {
-            //console.log(this.$refs)
-            //if(this.$refs.ps_locations && this.screen.width < 768) this.$refs.ps_locations.destroy()
-            //else new PerfectScrollbar(this.$refs.ps_locations)
         }.bind(this))
         let elements = document.querySelectorAll('.mx-input');
         for(let elem of elements) {
@@ -368,19 +340,10 @@ export default {
         }
     },
     created() {
-        //let breadCrumbs = [
-        //    {name: 'Создание тура'}
-        //];
-        //this.$store.dispatch('changeBreadcrumbs', breadCrumbs);
         this.initDatePickers();
     },
     updated() {
         if(this.$refs.ps_locations && this.screen.width < 768) this.$refs.ps_locations.destroy()
-        // if(this.activeStep == 4 && this.screen.width < 768) {
-        //     window.addEventListener('touchstart', function (event) {
-        //        event.stopPropagation();
-        //     }, true);
-        // }
     },
     watch: {
         activeStep(value, previous) {

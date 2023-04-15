@@ -31,7 +31,7 @@
 <script>
 import FaqMenu from "../../components/faqMenu/faqMenu";
 import Heading from "../../components/content/heading";
-import ContentImage from "../../components/content/contentImage";
+import ContentImage from "../../components/images/contentImage";
 import Divider from "../../components/content/divider";
 import { fetchData } from '~/utils/fetchData';
 import seoHead from "../../mixins/seo-head";

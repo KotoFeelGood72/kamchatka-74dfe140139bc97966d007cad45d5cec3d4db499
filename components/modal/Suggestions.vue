@@ -1,23 +1,11 @@
 <template>
     <transition name="slide-fade">
         <div v-if="this.showModal" class="modal_questions">
-<!--            <div @click="closeModal" class="close">-->
-<!--                <div></div>-->
-<!--                <div></div>-->
-<!--            </div>-->
             <svg @click="closeModal" class="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <g data-name="Layer 2">
                     <path d="m13.41 12 4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z" data-name="close"/>
                 </g>
             </svg>
-<!--            <div class="logo">-->
-<!--                <span>-->
-<!--                    <img src="~assets/img/header/logo_black_symbol.svg" alt/>-->
-<!--                </span>-->
-<!--            </div>-->
-<!--            <div class="dots">-->
-<!--                <div class="dot" v-for="(item, index) in dots" :key="index"></div>-->
-<!--            </div>-->
             <div class="info">
                 <div class="turs" v-if="this.$i18n.locale === 'ru'">
                     <div v-for="(item, index) in turs.ru" :key="index">

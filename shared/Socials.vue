@@ -1,47 +1,22 @@
 <template>
     <div class="social-icons" :class="classPage">
-        <a v-for="(item, index) in socials" :key="'social-' + index"
+        <a v-for="(item, index) in social.socials" :key="'social-' + index"
            class="social-icons__item"
            target="_blank"
            rel="nofollow"
            :href="item.url"
-           :title="$t('footer.' + [item.titleKey])"
+           :title="item.titleKey"
            :class="'icon-' + item.icon"/>
     </div>
 </template>
 <script>
+import social from '../components/navigation/social';
 export default {
     name: 'Socials',
     props: ['classPage'],
     data() {
         return {
-            socials: [
-                {
-                    icon: 'facebook',
-                    titleKey: 'facebook',
-                    url: 'https://www.facebook.com/enjoykamchatka/',
-                },
-                {
-                    icon: 'instagram',
-                    titleKey: 'instagram',
-                    url: 'https://www.instagram.com/enjoykamchatka/',
-                },
-                {
-                    icon: 'youtube',
-                    titleKey: 'youtube',
-                    url: 'https://www.youtube.com/channel/UCiCctSojN47lZ-O2_bAeSpw/featured',
-                },
-                {
-                    icon: 'tripadvisor',
-                    titleKey: 'tripadvisor',
-                    url: 'https://www.tripadvisor.ru/Attraction_Review-g298492-d13277122-Reviews-Enjoy_Kamchatka-Petropavlovsk_Kamchatsky_Kamchatka_Krai_Far_Eastern_District.html',
-                },
-                {
-                    icon: 'new-york-times',
-                    titleKey: 'newYorkTimes',
-                    url: 'https://www.nytimes.com/2019/10/07/travel/russia-kamchatka-bears-volcanoes.html',
-                }
-            ]
+					social,
         };
     },
 };

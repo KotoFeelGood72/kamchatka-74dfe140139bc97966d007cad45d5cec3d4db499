@@ -29,7 +29,7 @@ import FaqMenu from '../../components/faqMenu/faqMenu';
 import According from '../../components/according/according';
 import { fetchData } from '~/utils/fetchData';
 import Heading from '../../components/content/heading';
-import ContentImage from '../../components/content/contentImage';
+import ContentImage from '../../components/images/contentImage';
 import seoHead from '../../mixins/seo-head';
 export default {
     name: 'howToDress',

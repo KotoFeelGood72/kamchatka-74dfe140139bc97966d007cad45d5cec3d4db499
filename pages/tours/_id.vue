@@ -18,7 +18,7 @@
 					/> -->
 			</div>
 			<div class="container" v-if="data.locations && data.locations.length">
-					<h1 class="location-title">{{ $t("tour.locationsProgram") }}</h1>
+					<h1 class="location-title">Локации, включённые в программу:</h1>
 			</div>
 			<div class="container grid__container-block">
 					<grid-loc
@@ -30,7 +30,7 @@
 			</div>
 			<client-only>
 					<div class="container--middle-tour tour-item__selected-date">
-							<anim-button @endAnim="changeOpenFeedback" color="white">{{ $t('tour.request') }}</anim-button>
+							<anim-button @endAnim="changeOpenFeedback" color="white">Запросить даты</anim-button>
 					</div>
 					<div class="container--middle-tour tour-item__await-you" v-if="data.middleContentBlock">
 							<dynamic-info :template="`<div><div>` + data.middleContentBlock + `</div></div>`"/>
@@ -109,13 +109,7 @@
 									<h3 v-html="blockAfterPrice"></h3>
 							</div>
 							<client-only>
-									<anim-button
-											v-if="data.prices"
-											class="anim-button_gradient"
-											@endAnim="changeOpenFeedback"
-											color="white"
-									>{{ $t('tour.book') }}
-									</anim-button>
+									<anim-button v-if="data.prices" class="anim-button_gradient" @endAnim="changeOpenFeedback" color="white" >Бронировать тур </anim-button>
 							</client-only>
 					</div>
 			</div>
@@ -131,7 +125,7 @@
 			/>
 			<client-only>
 					<div class="container tour-item__activities">
-							<h2 v-if="data.activities && data.activities.length" v-html="$t('tour.interested')"/>
+							<h2 v-if="data.activities && data.activities.length">Активности в туре</h2>
 							<grid
 									class="mt-40"
 									v-if="data.activities && data.activities.length"
@@ -164,9 +158,9 @@
 </template>
 
 <script>
-import VideoEmbed from "../../components/content/videoEmbed";
+import VideoEmbed from "../../components/srcVideo/videoEmbed";
 import PageHeader from "../../components/content/pageHeader";
-import contentImage from "../../components/content/contentImage";
+import contentImage from "../../components/images/contentImage";
 import Heading from "../../components/content/heading";
 import HeadingStatic from "../../components/content/headingStep";
 import Dynamic from "../../components/dynamic";
@@ -177,7 +171,7 @@ import GridLoc from '../../components/grid/gridLocations';
 import imgAnimation from '../../components/img/imgAnimation'
 import seoHead from "../../mixins/seo-head";
 import { fetchDataPost } from '~/utils/fetchDataPost';
-import blocksStandart from '~/components/blocks/blocks-standart'
+
 import InfoSlider from "../../components/infoSlider/infoSlider";
 import infoSliderOutside from "../../components/infoSlider/infoSliderOutside";
 
@@ -197,7 +191,6 @@ export default {
         infoSliderOutside,
 				DynamicInfo,
         imgAnimation,
-				blocksStandart,
 				Slick: () => import("vue-slick")
     },
 		computed: {

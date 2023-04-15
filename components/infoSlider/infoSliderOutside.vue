@@ -18,7 +18,6 @@
 																			<img-com :img="thumb.img" classImg="video-embed__img"/>
 																	</a>
 															</div>
-															<!-- <videoEmbed isContainer="true" :url="thumb.video" :data="thumb.img"/> -->
 													</template>
 													<template v-else>
 															<img-com :img="thumb.img" classImg="info-slider__img"/>
@@ -119,11 +118,10 @@
 											<div v-for="(thumb, index) in data" :key="'thumb-' + index">
 													<template v-if="thumb.video">
 															<div class="video-embed">
-																	<a class="video-embed__link" @click.prevent="currentVideo(thumb.video)" href="#">
+																	<a class="video-embed__link"  href="#">
 																			<img-com :img="thumb.img" classImg="video-embed__img"/>
 																	</a>
 															</div>
-															<!-- <videoEmbed isContainer="true" :url="thumb.video" :data="thumb.img"/> -->
 													</template>
 													<template v-else>
 															<img-com :img="thumb.img" classImg="info-slider__img"/>
@@ -132,7 +130,6 @@
 									</component>
 							</div>
 					</div>
-					<Modal ref="modalVideo12" :videoLink="this.currentVideoEmbed"/>
 			</div>
 			</div>
 	</div>
@@ -140,8 +137,7 @@
 	</template>
 
 	<script>
-			import VideoEmbed from "../content/videoEmbed";
-			import Modal from '../../components/modal/modal';
+			import VideoEmbed from "../srcVideo/videoEmbed";
 			import {mapGetters} from 'vuex';
 
 			export default {
@@ -149,7 +145,6 @@
 					props: ["data", "url"],
 					components: {
 							VideoEmbed,
-							Modal,
 							Slick: () => import("vue-slick")
 					},
 					mounted: function () {
@@ -202,11 +197,6 @@
 							}
 					},
 					methods: {
-							currentVideo(thumbVideo) {
-									this.currentVideoEmbed = thumbVideo
-									// console.log(this.currentVideoEmbed)
-									this.$refs.modalVideo12.open()
-							},
 							handleAfterChange(event, slick, currentSlide) {
 									this.sliderCount = currentSlide + 1;
 							},

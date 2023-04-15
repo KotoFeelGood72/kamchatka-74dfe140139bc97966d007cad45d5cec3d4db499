@@ -9,24 +9,26 @@
                     <TimeZone/>
                 </div>
                 <div class="col-md-4">
-                    <img @click="$emit('clickLogo')" class="home-footer__logo" src="@/assets/img/logo.svg" alt="">
+										<nuxt-link to="/">
+                    	<img class="home-footer__logo" src="@/assets/img/logo.svg" alt="">
+										</nuxt-link>
                 </div>
             </div>
             <div class="home-footer__row">
                 <ContactUs :contactsData="contacts ? contacts.data.contacts[0]  : ''" :notShowContacts="false"/>
             </div>
             <div class="row home-footer__row home-footer__mdadaptive">
-                <div class="col-md-8 home-footer__copyright" v-html="$t('footer.copyright')"/>
+                <div class="col-md-8 home-footer__copyright">© {{new Date().getFullYear()}} Enjoy Kamchatka. <br/> Все права защищены. Копирование материалов<br/>без активной ссылки на источник запрещено.</div>
                 <div class="col-md-6 home-footer__socials">
                 <a href="https://tourism.gov.ru/reestry/reestr-turoperatorov/show.php?id=105762" target="_blank" class="rt-block rt-block--light none-link">
                     <RussianGerb width="40px" height="40px"/>
                     <div class="rt-block__content"><div class="rt-block__title">Мы в реестре туроператоров</div> <div class="rt-block__desc">ООО « Инджой Камчатка » РТО 018714</div></div>
                 </a>
-                    <Socials/>
+								<Socials/>
                 </div>
                 <div class="home-footer__development">
-                    <p><a href="https://www.artlebedev.ru/enjoy-kamchatka/" v-html="$t('footer.artLebedev')"/></p>
-                    <p><a href="https://digital-lab.ru/project/kamchatka/" v-html="$t('footer.firm')"/></p>
+										<p><a href="https://www.artlebedev.ru/enjoy-kamchatka/">Задизайнено <b>Студия Артемия Лебедева</b></a></p>
+                    <p><a href="https://digital-lab.ru/project/kamchatka/">Разработано <b>Digital lab</b></a></p>
                 </div>
             </div>
         </div>
@@ -36,11 +38,10 @@
 
 <script>
 import TimeZone from '@/shared/TimeZone';
-import FooterMenu from '@/shared/FooterMenu';
 import ContactUs from '@/shared/ContactUs';
 import Socials from '@/shared/Socials';
 import RussianGerb from '@/shared/RussianGerb'
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 
 export default {
@@ -49,7 +50,6 @@ export default {
         TimeZone,
         Socials,
         ContactUs,
-        FooterMenu,
         RussianGerb
     },
     computed: {
@@ -62,9 +62,6 @@ export default {
     @import "~assets/scss/config";
     @import "~assets/scss/mixins";
 
-    .none-link {
-        pointer-events: none;
-    }
 
     .home-footer {
         position: relative;

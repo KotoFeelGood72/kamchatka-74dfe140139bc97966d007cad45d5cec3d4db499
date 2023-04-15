@@ -4,7 +4,7 @@
             <div v-if="upcoming" class="about-us__tours section-grid__item section-grid__item--bg">
                 <img-com :img="upcoming.img"/>
                 <div class="section-grid__title">
-                    <nuxt-link :to="'/create-tour/'" v-html="$t('tours.createTour')"/>
+                    <nuxt-link :to="'/create-tour/'">Создать свой тур</nuxt-link>
                 </div>
             </div>
             <div class="about-us__faq section-grid__item" ref="faq">

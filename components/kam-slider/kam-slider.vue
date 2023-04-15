@@ -8,11 +8,7 @@
 							<div class="trip_slider--count"></div>
 							<div class="global_slideTxt">
 								<h3 class="size-big">
-									<nuxt-link
-										v-if="slide.slug || url !== undefined"
-										:to="$i18n.locale === 'en' ?  url + slide.slug + '/' : url + slide.slug + '/'"
-										v-html="slide.name"
-									/>
+									<nuxt-link :to="`/activities/${slide.slug}`">{{ slide.name }}</nuxt-link>
 								</h3>
 								<p class="size-medium" v-html="slide.text"/>
 							</div>

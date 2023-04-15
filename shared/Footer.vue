@@ -1,35 +1,45 @@
 <template>
-    <footer>
+    <footer class="footer-base">
         <div class="container">
             <div class="row">
                 <div class="block block-1">
                     <div class="logo">
-                        <nuxt-link to="/">
-                            <img src="~assets/img/logo.svg" alt="">
-                        </nuxt-link>
+											<nuxt-link to="/">
+													<img src="~assets/img/header/logo.svg" alt="Enjoy kamchatka logotype"/>
+											</nuxt-link>
                     </div>
                     <div class="timezone">
                         <TimeZone/>
                     </div>
                 </div>
                 <div class="block block-2">
-                    <div class="title" v-html="$t('footer.sectionsTitle')"></div>
-                    <FooterMenu/>
+                    <div class="title">Разделы</div>
+                    <ul class="footer-menu">
+												<li class="footer-menu__item" v-for="(item, index) in nav.siteNav" :key="'menu-item-' + index">
+													<nuxt-link :to="item.link">{{item.name}}</nuxt-link>
+												</li>
+										</ul>
                 </div>
                 <div class="block block-3">
-                    <div class="title" v-html="$t('footer.navSix')"></div>
+                    <div class="title">Контакты</div>
                     <ContactUs :contactsData="contacts ? contacts.data.contacts[0]  : ''" :notShowContacts="false"/>
                 </div>
                 <div class="block block-4">
                     <Socials class="footer__socials"/>
                 </div>
                 <div class="block block-5">
-                    <a href="https://tourism.gov.ru/reestry/reestr-turoperatorov/show.php?id=105762" target="_blank" class="rt-block rt-block--light none-link"><RussianGerb width="40px" height="40px"/> <div class="rt-block__content"><div class="rt-block__title">Мы в реестре туроператоров</div> <div class="rt-block__desc">ООО « Инджой Камчатка » РТО 018714</div></div></a>
-                    <p v-html="$t('footer.copyrightRouting')"/>
+                    <a href="https://tourism.gov.ru/reestry/reestr-turoperatorov/show.php?id=105762" target="_blank" class="rt-block rt-block--light none-link">
+											<RussianGerb width="40px" height="40px"/>
+											<div class="rt-block__content">
+												<div class="rt-block__title">Мы в реестре туроператоров</div>
+												<div class="rt-block__desc">ООО « Инджой Камчатка » РТО 018714</div>
+												</div>
+												</a>
+                    <p>© {{new Date().getFullYear()}} Enjoy Kamchatka. <br/> Все права защищены. Копирование материалов<br/>без активной ссылки на источник запрещено.</p>
                 </div>
                 <div class="block block-6">
-                    <p><a href="https://www.artlebedev.ru/enjoy-kamchatka/" v-html="$t('footer.artLebedev')"/></p>
-                    <p><a href="https://digital-lab.ru/project/kamchatka/" v-html="$t('footer.firm')"/></p>
+                    <p><a href="https://www.artlebedev.ru/enjoy-kamchatka/">Задизайнено <b>Студия Артемия Лебедева</b></a></p>
+                    <p><a href="https://digital-lab.ru/project/kamchatka/">Разработано <b>Digital lab</b></a></p>
                 </div>
             </div>
         </div>
@@ -39,8 +49,8 @@
 import TimeZone from '@/shared/TimeZone';
 import ContactUs from '@/shared/ContactUs';
 import Socials from '@/shared/Socials';
-import FooterMenu from '@/shared/FooterMenu';
 import RussianGerb from '@/shared/RussianGerb';
+import nav from '@/components/navigation/nav';
 import { mapState } from 'vuex'
 
 
@@ -49,13 +59,13 @@ export default {
     components: {
         TimeZone,
         ContactUs,
-        FooterMenu,
         Socials,
         RussianGerb,
     },
     data() {
         return {
-            contactsData: ''
+            contactsData: '',
+						nav,
         }
     },
     computed: {
@@ -68,7 +78,29 @@ export default {
     @import "~@/assets/scss/mixins";
 
     /* footer */
+    .footer-menu {
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -25px;
+        margin-right: -25px;
+    }
 
+    .footer-menu__item {
+        a {
+            display: block;
+            padding: .5em 25px;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: 900;
+            color: color(marengo);
+            transition: all .3s ease-in-out;
+            &:hover {
+                color:#0091FF!important;
+
+            }
+        }
+    }
     .none-link {
         pointer-events: none;
     }

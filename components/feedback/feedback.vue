@@ -4,21 +4,14 @@
             <img v-if="!isMobile" src="~@/assets/img/search/close.png" alt v-on:click="toggleFeedback" />
             <div v-if="!isSuccess" class="feedback-modal__container">
                 <img v-if="isMobile" src="~@/assets/img/search/close.png" alt v-on:click="toggleFeedback" />
-                <Heading
-                    class="feedback-modal__headline"
-                    tag="H2"
-                    size="lg"
-                    color="white"
-                    v-html="$t('feedback.titleForm')"
-                    :stepAnimate="true"
-                />
+                <Heading class="feedback-modal__headline fz60" tag="H2">Оставить заявку</Heading>
                 <FormFeedback @isSuccess="isSuccessFunc" idForm="1" />
             </div>
             <div v-if="isSuccess" class="feedback__success">
                 <img src="~@/assets/img/search/close.png" alt v-on:click="toggleFeedback" />
                 <div class="feedback__success-text">
-                    <Heading tag="H2" :stepAnimate="true" v-html="$t('feedback.successForm')" />
-                    <p v-html="$t('feedback.successForm2')" />
+                    <Heading tag="H2" :stepAnimate="true">"Ваша заявка отправлена</Heading>
+                    <p>мы свяжемся с вами в ближайшее время</p>
                 </div>
             </div>
         </div>
@@ -27,7 +20,7 @@
 
 <script>
 import Heading from "../content/headingStep";
-import FormFeedback from "./section/formFeedback";
+import FormFeedback from "./form/formFeedback";
 
 export default {
     name: "feedback",
@@ -198,11 +191,7 @@ img {
         }
     }
     .feedback-modal__headline {
-        margin-top: 60px;
-        margin-bottom: 40px !important;
-        font-size: 60px;
-        font-weight: 700;
-        line-height: 1.5;
+				margin: 60px 0 40px 0;
 
         @include respond-to(md) {
             font-size: 36px;

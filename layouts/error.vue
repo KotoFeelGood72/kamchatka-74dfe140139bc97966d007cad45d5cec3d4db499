@@ -13,7 +13,7 @@
             media="(max-height: 415px) and (max-width: 1279px)"/>
             <nuxt-img loading="lazy" format="webp" quality="75" src="~assets/img/error/bg1920.png" alt=""/>
         </picture>
-        <animButton @endAnim="changeActive" class="error-page__button">{{$t('buttonHome')}}</animButton>
+        <animButton @endAnim="changeActive" class="error-page__button">На главную</animButton>
     </div>
 </template>
 
