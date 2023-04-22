@@ -76,26 +76,8 @@ export default {
             }
         };
     },
-    head() {
-        return {
-            title: this.seo ? this.seo.title : '',
-            meta: [
-                {hid: 'description', name: 'description', content: this.seo ? this.seo.description : ''},
-                {hid: 'image', name: 'image', content: this.data && this.data.intro && this.data.intro.bannerImage ? this.data.intro.bannerImage.src : ''},
-                {hid: 'og:title', name: 'og:title', content: this.seo ? this.seo.title : ''},
-                {hid: 'og:description', name: 'og:description', content: this.seo ? this.seo.description : ''},
-                {hid: 'og:image', name: 'og:image', content: this.data && this.data.intro && this.data.intro.bannerImage ? this.data.intro.bannerImage.src : ''}
-            ]
-        }
-    },
     asyncData({route, params, store}) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`tours?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
+        return Api.get(`tours?router=${route.path}`).then((response) => {
             try {
                 return {
                 seo: response.data.seo,

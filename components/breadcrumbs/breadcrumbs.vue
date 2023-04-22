@@ -3,8 +3,8 @@
         <div class="breadcrumbs">
             <nuxt-link to="/"><span>Enjoykamchatka</span></nuxt-link>
             <div v-for="(breadcrumb, index) in breadcrumbData" :key="index">
-                <nuxt-link v-if="index !== breadcrumbData.length -1" :to="$i18n.locale === 'en' ? breadcrumb.link + '/' : breadcrumb.link + '/'"><span>{{$t(breadcrumb.name)}}</span></nuxt-link>
-                <span v-if="index === breadcrumbData.length -1">{{ $t(breadcrumb.name) }}</span>
+                <nuxt-link v-if="index !== breadcrumbData.length -1" :to=" breadcrumb.link + '/'"><span>{{breadcrumb.name}}</span></nuxt-link>
+                <span v-if="index === breadcrumbData.length -1">{{ breadcrumb.name }}</span>
             </div>
         </div>
     </section>

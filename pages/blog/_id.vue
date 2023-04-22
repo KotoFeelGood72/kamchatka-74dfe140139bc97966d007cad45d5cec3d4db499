@@ -1,7 +1,7 @@
 <template>
   <div v-if="data" class="blog-entry">
     <PageHeader v-if="data.banner" :data="data.banner">{{ data.name }}</PageHeader>
-    <div v-if="data.content" class="text--small content-block animated-blog blog__item_ullishka">
+    <div v-if="data.content" class="text--small content-block blog__item_ullishka">
       <div class="container blog__item_ullishka" v-html="data.content"></div>
     </div>
   </div>
@@ -47,7 +47,6 @@ export default {
 <style lang="scss" scoped>
 @import "~assets/scss/config";
 @import "~assets/scss/mixins";
-// @import "wow.js/css/libs/animate.css";
 /deep/ .container {
   width: 1200px;
   max-width: initial;

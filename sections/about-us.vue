@@ -26,38 +26,38 @@
                         </defs>
                     </svg>
 
-                    <nuxt-link :to="$i18n.locale === 'en' ? '/faq/' : '/faq/'"/>
+                    <nuxt-link to="/faq/"></nuxt-link>
                 </div>
             </div>
             <div class="about-us__blog section-grid__item section-grid__item--bg">
                 <img src="~assets/img/home/blog-bg.svg" alt="">
                 <div class="section-grid__content">
-                  <nuxt-link :to="$i18n.locale === 'en' ? blogContentAdmin.link : blogContentAdmin.link"><h2 class="section-grid__title" v-html="blogContentAdmin.title"/></nuxt-link>
+                  <nuxt-link :to="blogContentAdmin.link"><h2 class="section-grid__title">{{blogContentAdmin.title}}</h2></nuxt-link>
                     <div class="blog-entries section_heading__new_blog--hover">
                         <ul class="blog-entries__list">
                             <li v-for="(entry, index) in data" :key="'entry-' + index">
-                                <nuxt-link :to="$i18n.locale === 'en' ? '/blog/' + entry.slug + '/' : '/blog/' + entry.slug + '/'" v-html="entry.name"> </nuxt-link>
+                                <nuxt-link :to="'/blog/' + entry.slug + '/'">{{entry.name}} </nuxt-link>
                             </li>
                         </ul>
-                        <nuxt-link class="blog-entries__all" :to="$i18n.locale === 'en' ? blogContentAdmin.link : blogContentAdmin.link" v-html="blogContentAdmin.linkText"/>
+                        <nuxt-link class="blog-entries__all" :to="blogContentAdmin.link">{{blogContentAdmin.linkText}}</nuxt-link>
                     </div>
                 </div>
             </div>
             <div class="about-us__contacts section-grid__item" ref="contacts">
                 <div class="section-grid__title section-grid__title--sm">
-                    <nuxt-link :to="$i18n.locale === 'en' ? + ourContacted.link : ourContacted.link" v-html="ourContacted.title"/>
+                    <nuxt-link :to="ourContacted.link">{{ourContacted.title}}</nuxt-link>
                 </div>
             </div>
             <div class="about-us__application section-grid__item">
                 <img src="~assets/img/home/Enjoy.svg" alt="">
                 <div class="section-grid__link-wrapper">
-                    <a @click.prevent="changeOpenFeedback" href="" v-html="applicationText.title"/>
+                    <a @click.prevent="changeOpenFeedback" href="">{{applicationText.title}}</a>
                 </div>
             </div>
             <div v-if="about" class="about-us__we section-grid__item section-grid__item--bg">
                 <img-com :img="about.img"/>
                 <div class="section-grid__title">
-                    <nuxt-link :to="$i18n.locale === 'en' ? about.link : about.link" v-html="about.title"/>
+                    <nuxt-link :to="about.link">{{about.title}}</nuxt-link>
                 </div>
             </div>
         </div>
@@ -71,9 +71,9 @@ export default {
     name: 'AboutUsHome',
     components: {ImgCom},
     computed: {
-        currentRouteName() {
-            return this.$store.$i18n.loadedLanguages[0];
-        },
+        // currentRouteName() {
+        //     return this.$store.$i18n.loadedLanguages[0];
+        // },
         currentRoutePath() {
             return this.$route.path;
         }
@@ -110,8 +110,7 @@ export default {
             }
         },
         asyncBlocks() {
-            const lang = this.currentRouteName === 'ru' ? 'ru' : 'en';
-            Api.get(`mainBlocks?lang=${lang}&router=${this.currentRoutePath}`)
+            Api.get(`mainBlocks?router=${this.currentRoutePath}`)
             .then((response) => {
                 if(response.status === 200) {
                     this.blocks = response.data.data.blocks
@@ -120,8 +119,7 @@ export default {
             })
         },
         asyncBlog() {
-            const lang = this.currentRouteName === 'ru' ? 'ru' : 'en';
-            Api.get(`mainBlog?lang=${lang}&router=${this.currentRoutePath}`)
+            Api.get(`mainBlog?router=${this.currentRoutePath}`)
                 .then((response) => {
                     if(response.status === 200) {
                         this.data = response.data.data.blog

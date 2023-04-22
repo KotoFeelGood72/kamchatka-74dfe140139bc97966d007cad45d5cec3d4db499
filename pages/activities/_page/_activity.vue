@@ -38,7 +38,7 @@ export default {
 		},
     methods: {
         init() {
-            Api.get(`activity/${this.$route.params.activity}?lang=${this.$i18n.locale}&router=${this.$route.path}`).then((response) => {
+            Api.get(`activity/${this.$route.params.activity}?router=${this.$route.path}`).then((response) => {
                 this.seo = response.data.seo;
                 this.activity = response.data.data;
                 let breadCrumbs = [

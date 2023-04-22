@@ -101,13 +101,7 @@ export default {
         }
     },
     asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`blog?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
+        return Api.get(`blog?router=${route.path}`).then((response) => {
             response.data.data.content = response.data.data.content.filter((item) => {
                 if (item.section) {
                     return item;

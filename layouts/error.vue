@@ -29,7 +29,7 @@
         },
         methods: {
             changeActive() {
-                let url = this.$i18n.locale === 'en' ? '/' : '/';
+                let url = '/';
                 this.$router.push(url);
             }
         },

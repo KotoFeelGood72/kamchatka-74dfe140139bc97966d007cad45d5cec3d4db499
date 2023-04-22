@@ -1,7 +1,7 @@
 <template>
     <div v-if="data.length" class="row">
         <div v-for="(item, index) in data" class="col-12" :class="['col-xl-' + dataCol[isMobile][data.length][index], 'col-sm-' + dataCol[isMobile][data.length][index]]" :key="item.id">
-            <nuxt-link v-if="urlParent" :to="$i18n.locale === 'en' ? '/'+ urlParent + + item.slug + '/' : urlParent + item.slug + '/'" class="grid-item animate-trim">
+            <nuxt-link v-if="urlParent" :to="'/'+ urlParent + + item.slug + '/'" class="grid-item">
                 <img-com  :img="item.img" classImg="grid-image"/>
                 <div class="grid-name">
                     <span>{{item.name}}</span>

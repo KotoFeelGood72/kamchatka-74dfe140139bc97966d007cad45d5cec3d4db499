@@ -2,7 +2,7 @@
     <div v-if="data.length" class="row">
         <div v-for="(item, index) in data" class="col-12" :class="['col-xl-' + dataCol[isMobile][data.length][index], 'col-sm-' + dataCol[isMobile][data.length][index]]" :key="item.id">
             <nuxt-link
-                :to="urlParent !== undefined ? $i18n.locale === 'en' ? urlParent + item.slug + '/' : urlParent + item.slug + '/' : `${ item.slug}/`" class="grid-item animate-trim">
+                :to="urlParent + item.slug + '/'" class="grid-item animate-trim">
                 <img-com  :img="item.img" classImg="grid-image"/>
                 <div class="grid-name">
                     <span>{{item.name}}</span>

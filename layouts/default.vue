@@ -173,7 +173,6 @@ export default {
         });
     },
     created() {
-        this.$store.dispatch("changeLang", this.$i18n.locale);
         if (process.client) {
             window.addEventListener("resize", this.listenResize);
             this.listenResize();

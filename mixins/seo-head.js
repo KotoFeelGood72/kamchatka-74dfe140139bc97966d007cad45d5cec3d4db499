@@ -30,7 +30,7 @@ export default {
 							{
 								hid: "yandex-verification",
 								name: "yandex-verification",
-								content: this.$i18n.locale === "ru" ? "a85d5b9f54b2958d" : "81bc8d9d86628e2b",},
+								content: "81bc8d9d86628e2b"},
 					],
 			};
 	},

@@ -23,7 +23,7 @@ export default {
         {src: '~/plugins/vue-mask.js', ssr: false},
         {src: '~/plugins/vue-particle-effect-buttons.js', mode: 'client', ssr: false},
         // {src: '~/plugins/analytics.js', mode: 'client'},
-				{src: '~/plugins/vue-slick.js', mode: 'client', ssr: false},
+				// {src: '~/plugins/vue-slick.js', mode: 'client', ssr: false},
     ],
     /*
     ** Customize the progress bar color
@@ -37,30 +37,30 @@ export default {
         '@nuxt/image',
         '@nuxtjs/gtm',
 				'@nuxtjs/axios',
-        ['nuxt-i18n', {
-            lazy:true,
-            locales: [
-                {
-                    name: 'RU',
-                    code: 'ru',
-                    iso: 'ru-RU',
-                    file: 'ru-ru.js',
-                    domain: 'enjoykamchatka.ru'
-                },
-                {
-                    name: 'EN',
-                    code: 'en',
-                    iso: 'en-EN',
-                    file: 'en-en.js',
-                    domain: 'enjoykamchatka.com'
-                }
-            ],
-            loadLanguagesAsync: true,
-            langDir: '/lang/',
-            defaultLocale: 'ru',
-            differentDomains: true,
-            detectBrowserLanguage: false
-        }],
+        // ['nuxt-i18n', {
+        //     lazy:true,
+        //     locales: [
+        //         {
+        //             name: 'RU',
+        //             code: 'ru',
+        //             iso: 'ru-RU',
+        //             file: 'ru-ru.js',
+        //             domain: 'enjoykamchatka.ru'
+        //         },
+        //         {
+        //             name: 'EN',
+        //             code: 'en',
+        //             iso: 'en-EN',
+        //             file: 'en-en.js',
+        //             domain: 'enjoykamchatka.com'
+        //         }
+        //     ],
+        //     loadLanguagesAsync: true,
+        //     langDir: '/lang/',
+        //     defaultLocale: 'ru',
+        //     differentDomains: true,
+        //     detectBrowserLanguage: false
+        // }],
 				// [
 				// 	'@nuxtjs/yandex-metrika',
 				// 	{

@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 const store = () => new Vuex.Store({
     state: {
-        lang: 'ru',
+        // lang: 'ru',
         breadcrumbs: [],
         isShowFeedback: false,
         sliderCount: 0,
@@ -50,7 +50,7 @@ const store = () => new Vuex.Store({
     },
 
     getters: {
-        getLang: state => () => state.lang,
+        // getLang: state => () => state.lang,
         getIsShowFeedback: state => () => state.isShowFeedback,
         getBreadcrumbs: state => () => state.breadcrumbs,
         getSliderCount: state => () => state.sliderCount,
@@ -64,13 +64,13 @@ const store = () => new Vuex.Store({
 
     actions: {
         async nuxtServerInit({ commit }, {route, params, store  }) {
-            let lang = '';
-            if (route?.name?.indexOf('_en') >= 0) {
-                lang = 'en';
-            } else {
-                lang = 'ru';
-            }
-            const contactsData = (await Api.get(`contacts?lang=${store.$i18n.locale}&router="/tours/"`)).data
+            // let lang = '';
+            // if (route?.name?.indexOf('_en') >= 0) {
+            //     lang = 'en';
+            // } else {
+            //     lang = 'ru';
+            // }
+            const contactsData = (await Api.get(`contacts?router="/tours/"`)).data
             commit('set', {type: 'contacts', value: contactsData});
 
         },

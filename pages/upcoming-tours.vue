@@ -65,13 +65,7 @@ export default {
         };
     },
     asyncData ({ route, params, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.get(`upcoming-tours?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
+        return Api.get(`upcoming-tours?router=${route.path}`).then((response) => {
             return {
                 seo: response.data.seo,
                 data:response.data.data

@@ -50,9 +50,9 @@ export default {
 		}
 	},
 	computed: {
-			currentRouteName() {
-					return this.$store.$i18n.loadedLanguages[0];
-			},
+			// currentRouteName() {
+			// 		return this.$store.$i18n.loadedLanguages[0];
+			// },
 	},
 	mounted() {
 		this.advisorSlider = new Swiper('.trip-slider', {

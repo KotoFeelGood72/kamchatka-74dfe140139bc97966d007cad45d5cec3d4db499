@@ -2,8 +2,8 @@
 import { Api } from '../api/api';
 
 export async function fetchData(endpoint, { route, store }) {
-  const lang = route.name.includes('_ru') ? 'ru' : 'en';
-  const response = await Api.get(`${endpoint}?lang=${store.$i18n.locale}&router=${route.path}`);
+  // const lang = route.name.includes('_ru') ? 'ru' : 'en';
+  const response = await Api.get(`${endpoint}?router=${route.path}`);
 
   // Обработка данных для FAQ, если они существуют
   let processedData = response.data.data;

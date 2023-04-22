@@ -32,7 +32,7 @@ export default {
         } else {
             lang = 'ru';
         }
-        return Api.get(`policy?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
+        return Api.get(`policy?router=${route.path}`).then((response) => {
             return {
                 seo: response.data.seo,
                 policy:response.data.data.policy

@@ -47,13 +47,7 @@ export default {
         };
     },
     asyncData ({ route, params, error, payload, store }) {
-        let lang = '';
-        if (route.name.indexOf('_en') >= 0) {
-            lang = 'en';
-        } else {
-            lang = 'ru';
-        }
-        return Api.getBase(`pages/locations/${params.id}?lang=${store.$i18n.locale}&router=${route.path}`).then((response) => {
+        return Api.getBase(`pages/locations/${params.id}?router=${route.path}`).then((response) => {
             return {
 
                 seo: response.data.seo,
@@ -63,7 +57,7 @@ export default {
     },
     methods: {
         init() {
-            Api.getBase(`pages/locations/${this.$route.params.id}?lang=${this.$i18n.locale}&router=${this.$route.path}`).then((response) => {
+            Api.getBase(`pages/locations/${this.$route.params.id}?router=${this.$route.path}`).then((response) => {
                 this.seo = response.data.seo;
                 this.location = response.data.data;
                 let breadCrumbs = [

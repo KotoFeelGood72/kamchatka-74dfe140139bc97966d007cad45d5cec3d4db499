@@ -7,15 +7,8 @@
                 </g>
             </svg>
             <div class="info">
-                <div class="turs" v-if="this.$i18n.locale === 'ru'">
+                <div class="turs">
                     <div v-for="(item, index) in turs.ru" :key="index">
-                        <a :href="item.link">
-                            {{item.name}}
-                        </a>
-                    </div>
-                </div>
-                <div class="turs" v-else>
-                    <div v-for="(item, index) in turs.en" :key="index">
                         <a :href="item.link">
                             {{item.name}}
                         </a>
@@ -27,7 +20,7 @@
                                 <path d="M483.6 923.2 903.3 500 483.6 76.8l-2.5 2v162L738.3 500 481.1 759.2v161.5l2.5 2.5z"/>
                                 <path d="M99.2 923.2 519.4 500 99.2 76.8l-2 2v162L353.9 500 97.2 759.2v161.5l2 2.5z"/>
                         </svg>
-                        {{this.$i18n.locale === 'ru' ? this.btn_ru : btn_en}}
+                        {{this.btn_ru}}
                     </a>
                 </div>
             </div>

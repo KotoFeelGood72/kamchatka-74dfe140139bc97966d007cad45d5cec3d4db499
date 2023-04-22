@@ -45,7 +45,7 @@
 																	class="info-slider__title "
 															>
 																	<nuxt-link v-if="slide.slug"
-																						 :to="$i18n.locale === 'en' ? '/' + url + slide.slug + '/' : url + slide.slug + '/'"
+																						 :to="url + slide.slug + '/'"
 																						 v-html="titleSplit(slide.name)"
 																						 style="border:none"
 																	/>
@@ -89,7 +89,7 @@
 															>
 																	<nuxt-link
 																			v-if="slide.slug || url !== undefined"
-																			:to="$i18n.locale === 'en' ?  url + slide.slug + '/' : url + slide.slug + '/'"
+																			:to="url + slide.slug + '/'"
 																			v-html="titleSplit(slide.name)"
 																			style="border:none"
 																	/>

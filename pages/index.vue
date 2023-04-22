@@ -44,9 +44,9 @@ export default {
         isShowFeedback() {
             return this.$store.getters["getIsShowFeedback"]();
         },
-        currentRouteName() {
-            return this.$store.$i18n.loadedLanguages[0];
-        },
+        // currentRouteName() {
+        //     return this.$store.$i18n.loadedLanguages[0];
+        // },
         currentRoutePath() {
             return this.$route.path;
         }
@@ -86,8 +86,7 @@ export default {
             return window.innerWidth < 768;
         },
         asyncActivities() {
-            const lang = this.currentRouteName === 'ru' ? 'ru' : 'en';
-            Api.get(`mainActivities?lang=${lang}&router=${this.currentRoutePath}`)
+            Api.get(`mainActivities?router=${this.currentRoutePath}`)
                 .then((response) => {
                     if(response.status === 200) {
                         this.dataPage.dataActivities = response.data.data.activities
@@ -96,8 +95,7 @@ export default {
                 })
         },
         asyncTours() {
-            const lang = this.currentRouteName === 'ru' ? 'ru' : 'en';
-            Api.get(`mainTours?lang=${lang}&router=${this.currentRoutePath}`)
+            Api.get(`mainTours?router=${this.currentRoutePath}`)
                 .then((response) => {
                     if(response.status === 200) {
                         this.dataPage.tours = response.data.data.tours

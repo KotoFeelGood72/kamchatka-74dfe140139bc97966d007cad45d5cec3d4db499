@@ -97,14 +97,8 @@ export default {
 	// 	},
 
   asyncData({ route, params, error, payload, store }) {
-    let lang = "";
-    if (route.name.indexOf("_en") >= 0) {
-      lang = "en";
-    } else {
-      lang = "ru";
-    }
     return Api.get(
-      `activities/${params.id}?lang=${store.$i18n.locale}&router=${route.path}`
+      `activities/${params.id}?router=${route.path}`
     ).then(response => {
       if(response.data.data.length === 0){
         error({ statusCode: 404 })
@@ -118,7 +112,7 @@ export default {
   methods: {
     init() {
       Api.get(
-        `activities/${this.$route.params.id}?lang=${this.$i18n.locale}&router=${this.$route.path}`
+        `activities/${this.$route.params.id}?router=${this.$route.path}`
       ).then(response => {
         this.seo = response.data.seo;
         this.activity = response.data.data;
