@@ -11,11 +11,6 @@
 							v-if="blockTop"
 							:template="`<div class='tour-item__top'><div class='container__tours'>` + blockTop + `</div></div>`"
 					/>
-					<!-- {{ blockTop }} -->
-					<!-- <dynamic-info
-							v-if="data.blockMiddle"
-							:template="`<div class='tour-item__top'><div class='container__tours'>` + data.blockMiddle + `</div></div>`"
-					/> -->
 			</div>
 			<div class="container" v-if="data.locations && data.locations.length">
 					<h1 class="location-title">Локации, включённые в программу:</h1>
@@ -28,14 +23,12 @@
 							:isPopup="true"
 					/>
 			</div>
-			<client-only>
 					<div class="container--middle-tour tour-item__selected-date">
 							<anim-button @endAnim="changeOpenFeedback" color="white">Запросить даты</anim-button>
 					</div>
 					<div class="container--middle-tour tour-item__await-you" v-if="data.middleContentBlock">
 							<dynamic-info :template="`<div><div>` + data.middleContentBlock + `</div></div>`"/>
 					</div>
-			</client-only>
 			<div class="container">
 					<div v-if="data.team && data.team.length" class="tour-item__teams row">
 							<div
@@ -108,9 +101,7 @@
 							<div class="block-after-price">
 									<h3 v-html="blockAfterPrice"></h3>
 							</div>
-							<client-only>
 									<anim-button v-if="data.prices" class="anim-button_gradient" @endAnim="changeOpenFeedback" color="white" >Бронировать тур </anim-button>
-							</client-only>
 					</div>
 			</div>
 
@@ -138,7 +129,7 @@
 					<div v-if="data.previousTour || data.nextTour" class="tour-item__change">
 							<div v-if="data.previousTour" class="tour-item__change-item">
 									<nuxt-link
-											:to="$i18n.locale === 'en' ? '/tours/' + data.previousTour.slug + '/' : '/tours/' + data.previousTour.slug + '/'"
+											:to="'/tours/' + data.previousTour.slug + '/'"
 									>
 
 											{{ data.previousTour.name }}
@@ -146,7 +137,7 @@
 							</div>
 							<div v-if="data.nextTour" class="tour-item__change-item">
 									<nuxt-link
-											:to="$i18n.locale === 'en' ? '/tours/' + data.nextTour.slug + '/' : '/tours/' + data.nextTour.slug + '/'"
+											:to="'/tours/' + data.nextTour.slug + '/'"
 									>
 											{{ data.nextTour.name }}
 
